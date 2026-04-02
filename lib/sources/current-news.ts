@@ -1,4 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
+import { resolveCountryCodesFromText } from "@/lib/countries/match";
 import { starterCountries } from "@/lib/countries/starter-countries";
 import { clamp, hashString, toIsoString } from "@/lib/utils";
 import type { CountrySummary, NormalizedEvent, RiskDomain } from "@/lib/types/score";
@@ -178,7 +179,7 @@ const macroSpilloverTerms = [
   "economic"
 ];
 
-const historicalContextTerms = ["battle site", "remains recovery", "memorial", "anniversary", "veteran", "museum", "commemoration", "historic"];
+const historicalContextTerms = ["battle site", "remains recovery", "memorial", "anniversary", "veteran", "museum", "commemoration", "historic", "epic", "documentary", "film", "novel", "book", "review", "preceded the war", "revolt that preceded"];
 const reliefTerms = ["rally", "rallies", "ease", "eases", "eased", "possible end", "hopes for a possible end", "relief", "showcases strength", "strength"];
 
 type ParsedItem = {
@@ -353,6 +354,7 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
       const publishedAt = item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString();
       const severityNormalized = buildSeverity(classification.score, publishedAt);
       const publisher = getPublisher(item);
+      const countryCodes = resolveCountryCodesFromText(`${title} ${description}`, country.code);
 
       return {
         id: `current-news:${country.code}:${hashString(`${title}:${publishedAt}`)}`,
@@ -361,7 +363,7 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
         title,
         summary: `${publisher} reported a recent ${classification.domain.replaceAll("_", " ")} signal connected to ${country.name}.`,
         url: item.link,
-        countryCodes: [country.code],
+        countryCodes,
         region: country.region,
         occurredAt: publishedAt,
         ingestedAt: new Date().toISOString(),

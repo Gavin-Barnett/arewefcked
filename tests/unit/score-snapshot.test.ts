@@ -1,4 +1,4 @@
-﻿import { buildScoreSnapshot } from "@/lib/scoring/engine";
+import { buildScoreSnapshot } from "@/lib/scoring/engine";
 
 function jsonResponse(body: unknown) {
   return new Response(JSON.stringify(body), {
@@ -46,6 +46,35 @@ const ukraineConflictRss = `<?xml version="1.0" encoding="UTF-8"?>
       <link>https://news.example.com/ukraine-3</link>
       <pubDate>${new Date().toUTCString()}</pubDate>
       <description>Airstrike damage and bombardment continue amid wider conflict pressure.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+  </channel>
+</rss>`;
+
+const israelConflictRss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Israel feed</title>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <item>
+      <title>Israel and Iran exchange missile fire as war enters another week - Example Outlet</title>
+      <link>https://news.example.com/israel-1</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Missile attacks continue around Tel Aviv as the war with Iran intensifies.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+    <item>
+      <title>IDF says attacks continue as Tehran launches drones toward Tel Aviv - Example Outlet</title>
+      <link>https://news.example.com/israel-2</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Drone and missile fire continued overnight.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+    <item>
+      <title>Netanyahu warns the regional war is expanding after more strikes - Example Outlet</title>
+      <link>https://news.example.com/israel-3</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Military strikes and casualties continue across Israel and Gaza.</description>
       <source url="https://news.example.com">Example Outlet</source>
     </item>
   </channel>
@@ -223,6 +252,95 @@ describe("score snapshot", () => {
     expect(snapshot.domainBreakdown.find((item) => item.domain === "governance")?.coverage).toBe("sparse");
   });
 
+  it("treats active Israel war coverage as sustained conflict instead of a mild headline spike", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: URL | RequestInfo) => {
+        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+        if (url.includes("earthquake.usgs.gov")) {
+          return Promise.resolve(
+            jsonResponse({
+              metadata: {
+                generated: Date.now(),
+                title: "USGS Feed",
+                url: "https://earthquake.usgs.gov/"
+              },
+              features: []
+            })
+          );
+        }
+
+        if (url.includes("news.google.com")) {
+          return Promise.resolve(new Response(israelConflictRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+        }
+
+        if (url.includes("api.gdeltproject.org")) {
+          return Promise.reject(new Error("GDELT timeout"));
+        }
+
+        if (url.includes("diseaseoutbreaknews")) {
+          return Promise.resolve(jsonResponse({ value: [] }));
+        }
+
+        if (url.includes("FP.CPI.TOTL.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "IL", "Israel", 2.8)));
+        }
+
+        if (url.includes("SL.UEM.TOTL.ZS")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "IL", "Israel", 3.5)));
+        }
+
+        if (url.includes("NY.GDP.MKTP.KD.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "IL", "Israel", 1.4)));
+        }
+
+        if (url.includes("TM.VAL.FUEL.ZS.UN")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "IL", "Israel", 6.2)));
+        }
+
+        if (url.includes("air-quality")) {
+          return Promise.resolve(
+            jsonResponse({
+              latitude: 0,
+              longitude: 0,
+              current: {
+                time: new Date().toISOString(),
+                us_aqi: 58,
+                pm2_5: 18,
+                pm10: 24,
+                ozone: 11
+              }
+            })
+          );
+        }
+
+        return Promise.resolve(
+          jsonResponse({
+            latitude: 0,
+            longitude: 0,
+            current: {
+              time: new Date().toISOString(),
+              temperature_2m: 24,
+              apparent_temperature: 27,
+              wind_speed_10m: 8,
+              weather_code: 2
+            }
+          })
+        );
+      })
+    );
+
+    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "IL" });
+    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+
+    expect(snapshot.score).toBeGreaterThan(40);
+    expect(snapshot.summaryBullets[2]).toContain("Sustained active-war reporting");
+    expect(conflictDomain?.score).toBeGreaterThanOrEqual(80);
+    expect(conflictDomain?.confidence).toBeGreaterThanOrEqual(0.58);
+    expect(snapshot.evidence.some((item) => item.countryCodes.includes("PS"))).toBe(true);
+  });
+
   it("keeps country scoring focused on direct country evidence and lifts sustained war conditions", async () => {
     vi.stubGlobal(
       "fetch",
@@ -344,12 +462,11 @@ describe("score snapshot", () => {
     expect(snapshot.scope).toBe("country");
     expect(snapshot.countryCode).toBe("UA");
     expect(snapshot.score).toBeGreaterThan(40);
-    expect(snapshot.summaryBullets[2]).toContain("Sustained war-linked reporting");
+    expect(snapshot.summaryBullets[2]).toContain("Sustained active-war reporting");
     expect(conflictDomain?.score).toBeGreaterThanOrEqual(70);
-    expect(conflictDomain?.summary).toContain("sustained conflict stress");
+    expect(conflictDomain?.summary).toContain("sustained active-war stress");
     expect(macroDomain?.score).toBeGreaterThan(0);
     expect(snapshot.evidence.every((item) => item.countryCodes.includes("UA"))).toBe(true);
     expect(snapshot.evidence.some((item) => item.source === "who_don")).toBe(false);
   });
 });
-

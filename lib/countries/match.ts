@@ -2,9 +2,11 @@ import { countries } from "@/lib/countries/starter-countries";
 
 const countryAliases: Partial<Record<string, string[]>> = {
   GB: ["United Kingdom", "Britain", "Great Britain", "UK"],
+  IL: ["Israeli", "IDF", "Tel Aviv", "Jerusalem", "West Jerusalem", "Netanyahu"],
   IR: ["Islamic Republic of Iran"],
   KR: ["South Korea", "Republic of Korea"],
   KP: ["North Korea", "Democratic People's Republic of Korea"],
+  PS: ["Palestinian", "Palestinian Territories", "Gaza", "Gazan", "West Bank"],
   RU: ["Russia", "Russian Federation"],
   SY: ["Syria", "Syrian Arab Republic"],
   TR: ["Turkey", "Turkiye"],
@@ -52,4 +54,3 @@ export function resolveCountryCodesFromText(input: string, fallbackCode?: string
 
   return fallbackCode ? [fallbackCode] : [];
 }
-

@@ -22,8 +22,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       topWash: "rgba(16, 185, 129, 0.12)",
       needleStart: "#eefee7",
       needleEnd: "#86efac",
-      hubTop: "#163423",
-      hubBottom: "#09110d",
+      hubTop: "#0d1611",
+      hubBottom: "#040806",
       outline: "rgba(134, 239, 172, 0.35)"
     }
   },
@@ -36,8 +36,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       topWash: "rgba(234, 179, 8, 0.1)",
       needleStart: "#fff9dd",
       needleEnd: "#bef264",
-      hubTop: "#2c3015",
-      hubBottom: "#0f1008",
+      hubTop: "#15170c",
+      hubBottom: "#060704",
       outline: "rgba(190, 242, 100, 0.34)"
     }
   },
@@ -50,8 +50,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       topWash: "rgba(245, 158, 11, 0.12)",
       needleStart: "#fff1d2",
       needleEnd: "#fbbf24",
-      hubTop: "#3a2510",
-      hubBottom: "#130d09",
+      hubTop: "#181008",
+      hubBottom: "#060403",
       outline: "rgba(251, 191, 36, 0.36)"
     }
   },
@@ -64,8 +64,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       topWash: "rgba(249, 115, 22, 0.13)",
       needleStart: "#ffead5",
       needleEnd: "#fb923c",
-      hubTop: "#3f1e10",
-      hubBottom: "#150b09",
+      hubTop: "#1a0d08",
+      hubBottom: "#050302",
       outline: "rgba(251, 146, 60, 0.36)"
     }
   },
@@ -78,8 +78,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       topWash: "rgba(239, 68, 68, 0.13)",
       needleStart: "#ffe1de",
       needleEnd: "#f87171",
-      hubTop: "#3a1616",
-      hubBottom: "#140808",
+      hubTop: "#180909",
+      hubBottom: "#050202",
       outline: "rgba(248, 113, 113, 0.36)"
     }
   }

@@ -37,7 +37,7 @@ const sourceCoverageMode: Record<string, "measured" | "sparse"> = {
 };
 
 const allDomains = Object.keys(domainWeights) as RiskDomain[];
-const sustainedWarTags = ["missile", "drone", "airstrike", "shelling", "invasion", "frontline", "bombard", "offensive", "rocket", "artillery", "troop", "troops", "clash", "clashes", "strike", "attack", "casualties", "killed"];
+const sustainedWarTags = ["war", "missile", "drone", "airstrike", "shelling", "invasion", "frontline", "bombard", "offensive", "rocket", "artillery", "troop", "troops", "military", "clash", "clashes", "strike", "attack", "casualties", "killed", "war crime"];
 const canUseNextCache = process.env.NODE_ENV !== "test" && process.env.VITEST !== "true";
 
 type SustainedConflictProfile = {
@@ -136,6 +136,7 @@ function buildSustainedConflictProfile(evidence: EvidenceItem[], scope: SourceFe
 
   const averageSeverity = warSignals.reduce((total, event) => total + event.severity, 0) / warSignals.length;
   const peakSeverity = Math.max(...warSignals.map((event) => event.severity));
+  const severeSignalCount = warSignals.filter((event) => event.severity >= 70).length;
 
   if (averageSeverity < 45 || peakSeverity < 55) {
     return null;
@@ -144,9 +145,9 @@ function buildSustainedConflictProfile(evidence: EvidenceItem[], scope: SourceFe
   return {
     signalCount: warSignals.length,
     averageSeverity,
-    conflictFloor: clamp(58 + warSignals.length * 2 + (averageSeverity - 45) * 0.35, 58, 82),
-    sparseMultiplier: 0.8,
-    scoreBoost: clamp(4 + warSignals.length * 1.2 + (averageSeverity - 50) * 0.12, 4, 16)
+    conflictFloor: clamp(66 + warSignals.length * 2.1 + severeSignalCount * 2.5 + (averageSeverity - 45) * 0.45, 66, 90),
+    sparseMultiplier: 1,
+    scoreBoost: clamp(9 + warSignals.length * 1.6 + severeSignalCount * 2.2 + (averageSeverity - 50) * 0.22, 9, 28)
   };
 }
 
@@ -283,7 +284,7 @@ async function buildScoreSnapshotInternal(scope: SourceFetchScope, options: { sc
           : 0.12;
     const adjustedConfidence =
       scope.mode === "country" && domain === "conflict_security" && sustainedConflictProfile && coverage === "sparse"
-        ? round(Math.max(confidence, 0.48), 2)
+        ? round(Math.max(confidence, 0.58), 2)
         : confidence;
 
     return {
@@ -296,7 +297,7 @@ async function buildScoreSnapshotInternal(scope: SourceFetchScope, options: { sc
       evidenceCount: domainEvidence.length,
       summary:
         scope.mode === "country" && domain === "conflict_security" && sustainedConflictProfile
-          ? `${sustainedConflictProfile.signalCount} recent war-linked signals are recurring often enough to treat this as sustained conflict stress, even before fuller structured conflict coverage lands.`
+          ? `${sustainedConflictProfile.signalCount} recent war-linked signals are recurring often enough to treat this as sustained active-war stress, even before fuller structured conflict coverage lands.`
           : summarizeDomain(domain, domainEvidence, coverage, scope),
       topEvidenceIds: domainEvidence.slice(0, 3).map((item) => item.id),
       lastUpdated: domainEvidence[0]?.occurredAt ?? null
@@ -346,7 +347,7 @@ async function buildScoreSnapshotInternal(scope: SourceFetchScope, options: { sc
     `${hottestDomain?.label ?? "No measured domain"} is currently the hottest live lane.`,
     `${evidence.length} live evidence item${evidence.length === 1 ? "" : "s"} are shaping this reading across ${supportedDomains.length} covered domain${supportedDomains.length === 1 ? "" : "s"}.`,
     sustainedConflictProfile && scope.mode === "country"
-      ? "Sustained war-linked reporting is materially lifting the country score rather than being treated as a one-off headline spike."
+      ? "Sustained active-war reporting is materially lifting the country score rather than being treated as a one-off headline spike."
       : sparseReason ?? `Live inputs now include ${liveSourceNames}.`
   ];
   const shortLabel = selectShortLabel(score, options.scope === "global" ? "global" : options.countryCode);

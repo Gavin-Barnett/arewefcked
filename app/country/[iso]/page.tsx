@@ -12,6 +12,7 @@ import { SparseBanner } from "@/components/sparse-banner";
 import { TopDriverGrid } from "@/components/top-driver-grid";
 import { VerdictHero } from "@/components/verdict-hero";
 import { getCountryByCode } from "@/lib/countries/starter-countries";
+import { getSiteUrl } from "@/lib/site";
 import { buildScoreSnapshot } from "@/lib/scoring/engine";
 
 export const revalidate = 900;
@@ -35,6 +36,13 @@ export async function generateMetadata(props: { params: Promise<{ iso: string }>
   }
 
   const description = `Live severity index for ${country.name}, backed by real-world events, risk signals, and current news.`;
+  const siteUrl = getSiteUrl();
+  const socialImage = {
+    url: `/country/${country.code}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: `${country.name} share card with country risk dial`
+  };
 
   return {
     title: country.name,
@@ -45,15 +53,15 @@ export async function generateMetadata(props: { params: Promise<{ iso: string }>
     openGraph: {
       title: `${country.name} | Are we Fcked?`,
       description,
-      url: `/country/${country.code}`,
+      url: new URL(`/country/${country.code}`, siteUrl).toString(),
       type: "website",
-      images: [{ url: `/country/${country.code}/opengraph-image` }]
+      images: [socialImage]
     },
     twitter: {
       card: "summary_large_image",
       title: `${country.name} | Are we Fcked?`,
       description,
-      images: [`/country/${country.code}/opengraph-image`]
+      images: [socialImage]
     }
   };
 }

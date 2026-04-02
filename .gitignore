@@ -11,3 +11,5 @@ dist
 *.log
 prisma/dev.db
 .vercel
+.codex-dev-launch.bat
+tmp-countries.json

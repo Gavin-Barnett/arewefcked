@@ -105,7 +105,7 @@ async function fetchQuery(scope: SourceFetchScope, config: QueryConfig) {
     url,
     {
       headers: { Accept: "application/json" },
-      next: { revalidate: 900 }
+      next: { revalidate: 86400 }
     },
     8000
   );
@@ -243,7 +243,7 @@ export const gdeltAdapter: SourceAdapter = {
         sourceKey: "gdelt",
         name: "GDELT Global Event Monitor",
         status: degraded ? "degraded" : "operational",
-        freshness: ageHours < 12 ? "live-ish" : ageHours < 48 ? "fresh" : ageHours < 96 ? "delayed" : "stale",
+        freshness: ageHours < 36 ? "live-ish" : ageHours < 72 ? "fresh" : ageHours < 120 ? "delayed" : "stale",
         lastSuccessfulSync: toIsoString(new Date(latestSeen)),
         lastAttemptAt: new Date().toISOString(),
         outageMessage: degraded ? `${failures.length} GDELT domain quer${failures.length === 1 ? "y" : "ies"} failed during refresh.` : null,

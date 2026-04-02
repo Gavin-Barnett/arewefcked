@@ -1,6 +1,6 @@
 import { getCountryByCode } from "@/lib/countries/starter-countries";
 
-export const revalidate = 900;
+export const revalidate = 86400;
 
 export async function GET(_request: Request, context: { params: Promise<{ iso: string }> }) {
   const { iso } = await context.params;

@@ -91,8 +91,14 @@ export default async function HomePage(props: { searchParams: Promise<HomeSearch
             </div>
           </Panel>
           <TrendSummary trend={snapshot.trend} />
-          <CountryRankings mostFucked={leaderboard.mostFucked} leastFucked={leaderboard.leastFucked} />
+          <div className="hidden xl:block">
+            <CountryRankings mostFucked={leaderboard.mostFucked} leastFucked={leaderboard.leastFucked} />
+          </div>
         </div>
+      </div>
+
+      <div className="xl:hidden">
+        <CountryRankings mostFucked={leaderboard.mostFucked} leastFucked={leaderboard.leastFucked} />
       </div>
 
       <SourceHealthGrid sources={snapshot.sourceHealth} />

@@ -1,23 +1,107 @@
 # Are we Fcked?
 
-Deployment notes for Vercel.
+A live global severity index for how bad things are right now, built from real-world events, environmental stress, health alerts, macro signals, and current news.
 
-## What is ready
+Live site: [https://arewefcked.vercel.app/](https://arewefcked.vercel.app/)
 
-- Next.js App Router app deploys on Vercel
-- Score pages and APIs run without a local database
-- Historical trend persistence is exposed as a cron-safe HTTP route at `/api/cron/score-recompute`
-- The cron route is protected by `CRON_SECRET`
-- `vercel.json` is included with a conservative daily cron schedule
+## What this project is
 
-## Required Vercel environment variables
+Are we Fcked? is a Next.js risk dashboard with a dark editorial wrapper around a real scoring pipeline.
+
+It answers three questions:
+- how bad are things globally right now
+- why the score moved
+- how a selected country compares with the global baseline
+
+The tone is blunt. The scoring pipeline is not meant to be a joke.
+
+## What it does today
+
+- global score with a dial, verdict, confidence, and evidence-backed drivers
+- country pages with searchable country selection and global comparison
+- domain breakdown across conflict, unrest, macro, health, disasters, climate, cyber, and governance
+- explainable evidence cards with source attribution
+- source health and freshness reporting
+- tracked-country top 5 / bottom 5 leaderboard
+- Open Graph metadata and country-specific sharing URLs
+- scheduled score persistence for trend history on Vercel
+
+## Live data sources currently in runtime
+
+These are the sources actively feeding runtime scores today:
+- USGS Earthquake Catalog
+- Open-Meteo
+- GDELT
+- WHO Disease Outbreak News
+- World Bank indicators
+- Google News RSS signal adapter
+
+No mock runtime data is used in the live scoring path.
+
+## Stack
+
+- Next.js 15 App Router
+- TypeScript
+- Tailwind CSS
+- Prisma
+- Postgres
+- Zod
+- Vitest
+- Playwright
+- Vercel Cron
+
+## Architecture
+
+```text
+app/                    routes, pages, metadata, API handlers
+components/             hero, dial, charts, evidence, rankings, source-health UI
+lib/scoring/            banding, themes, aggregation, trend logic, recompute flow
+lib/sources/            provider adapters and HTTP helpers
+lib/countries/          country directory, matching, lookup helpers
+lib/verdicts/           curated message library and selection
+lib/db/                 Prisma access, persistence, availability checks
+prisma/                 schema and seed logic
+scripts/                local ingestion / recompute entrypoints
+tests/                  unit and UI smoke tests
+```
+
+## Local development
+
+### 1. Install
+
+```bash
+npm install
+```
+
+### 2. Configure env
+
+Copy `.env.example` to `.env` and set what you need.
+
+At minimum for basic local viewing, the app can run without a working database.
+If you want persisted trend history, set a real `DATABASE_URL` and keep snapshot recompute running.
+
+### 3. Start the app
+
+```bash
+npm run dev
+```
+
+### 4. Verify
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+## Environment variables
+
+### Required for persisted history / production cron
 
 - `DATABASE_URL`
-  Use a real hosted Postgres URL. Do not use `localhost` on Vercel.
 - `CRON_SECRET`
-  A long random string. Vercel Cron will send it as a bearer token when configured.
 
-## Optional environment variables
+### Optional provider and monetization variables
 
 - `NEWSAPI_KEY`
 - `ACLED_API_KEY`
@@ -27,46 +111,64 @@ Deployment notes for Vercel.
 - `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT`
 - `NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT_PRIMARY`
 
-## Recommended database setup
+## Scripts
 
-Use a hosted Postgres provider with connection pooling. Prisma on serverless works best with a pooled connection string.
+- `npm run dev` - local Next.js dev server
+- `npm run build` - production build
+- `npm run start` - serve the production build
+- `npm run lint` - lint the repo
+- `npm test` - run unit and UI tests
+- `npm run test:e2e` - run Playwright tests
+- `npm run db:generate` - generate Prisma client
+- `npm run db:migrate` - run Prisma dev migrations
+- `npm run ingest:run` - execute ingestion flow entrypoint
+- `npm run ingest:source:gdelt` - run GDELT ingest entrypoint
+- `npm run ingest:source:newsapi` - run NewsAPI ingest entrypoint scaffold
+- `npm run ingest:source:usgs` - run USGS ingest entrypoint
+- `npm run ingest:source:openmeteo` - run Open-Meteo ingest entrypoint
+- `npm run score:recompute` - rebuild and persist score snapshots
+- `npm run seed:verdicts` - seed curated verdict messages
 
-## Build behavior on Vercel
+## Vercel deployment
+
+This repo is set up for Vercel.
+
+### Required Vercel env vars
+
+- `DATABASE_URL`
+- `CRON_SECRET`
+
+### Optional Vercel env vars
+
+- `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT`
+- `NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT_PRIMARY`
+- any optional provider keys listed above
+
+### Build behavior
 
 `vercel.json` uses:
+- `buildCommand: npm run vercel-build`
+- daily cron hitting `/api/cron/score-recompute`
 
-- `buildCommand = npm run vercel-build`
-
-That command runs:
-
+`npm run vercel-build` runs:
 1. `prisma migrate deploy`
 2. `next build`
 
-If `DATABASE_URL` is missing or invalid, Vercel builds should fail instead of deploying a broken persistence path.
+## Notes on data freshness
 
-## Cron behavior
+The app deliberately caches expensive upstream calls and degrades gracefully when a provider is slow or unavailable.
 
-The repo currently ships with a daily cron:
+Current news-style sources are on daily cache windows to stay within conservative Vercel cron/update expectations.
+Other measured sources can refresh on shorter windows where that improves the score without hammering providers.
 
-- `/api/cron/score-recompute` at `0 3 * * *`
+## Known limits
 
-This is conservative and works as a baseline. If you are on a Vercel plan that supports more frequent cron jobs, you can tighten the schedule in `vercel.json`.
+- historical drift only becomes fully useful once Postgres is running and score snapshots have accumulated over time
+- some domains still rely on proxy/news monitoring rather than best-in-class structured datasets
+- the homepage leaderboard is intentionally limited to tracked countries for cost and latency reasons
+- placeholder `/api/news/*` clustering routes still return empty until a dedicated clustering pipeline is wired in
 
-Examples:
+## Repository goal
 
-- every hour: `0 * * * *`
-- every 15 minutes: `*/15 * * * *`
-
-## First deploy checklist
-
-1. Import the GitHub repo into Vercel.
-2. Set `DATABASE_URL` to a hosted Postgres database.
-3. Set `CRON_SECRET` to a long random value.
-4. Set any optional provider API keys you want live.
-5. Deploy.
-6. After deploy, confirm `/api/cron/score-recompute` returns `401` without auth.
-7. Confirm the cron route succeeds in production logs once Vercel runs it.
-
-## Local note
-
-If local Postgres is down, the app now fails closed for trend persistence instead of repeatedly spamming Prisma connection errors.
+This project should feel like a real intelligence dashboard with an irreverent headline layer on top, not a meme site wearing a chart costume.
+If there is a tradeoff between being clever and being credible, credibility wins.

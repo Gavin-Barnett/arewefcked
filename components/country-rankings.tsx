@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { Panel } from "@/components/panel";
 import { StatusPill } from "@/components/status-pill";
 import type { ScoreSnapshot } from "@/lib/types/score";
@@ -13,7 +13,7 @@ function deltaTone(delta: number) {
 
 export function CountryRankings(props: { mostFucked: RankedSnapshot[]; leastFucked: RankedSnapshot[] }) {
   return (
-    <Panel eyebrow="Rankings" title="Most and least fucked tracked countries" className="h-full">
+    <Panel eyebrow="Rankings" title="Most and least fucked tracked countries">
       <div className="space-y-6">
         <section className="space-y-3">
           <div className="flex items-center justify-between gap-3">

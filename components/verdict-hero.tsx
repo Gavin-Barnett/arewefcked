@@ -32,7 +32,7 @@ export function VerdictHero(props: {
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[#070708]" />
 
       <div className="relative mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-end pt-4">
+        <div className="hidden justify-end pt-4 sm:flex">
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-ink/45">{props.updatedLabel}</p>
         </div>
 

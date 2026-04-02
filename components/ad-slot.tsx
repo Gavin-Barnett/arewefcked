@@ -31,23 +31,7 @@ export function AdSlot(props: { className?: string; slotId?: string }) {
   }, [client, slotId, scriptReady]);
 
   if (!client || !slotId) {
-    return (
-      <aside
-        aria-label="Reserved ad slot"
-        className={cn(
-          "rounded-[1.2rem] border border-dashed border-white/12 bg-white/[0.03] px-5 py-6 shadow-panel backdrop-blur-xl",
-          props.className
-        )}
-      >
-        <div className="flex min-h-[108px] flex-col items-center justify-center gap-2 text-center">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.32em] text-primary/72">Google ad slot ready</p>
-          <p className="text-base font-medium text-ink">Add your real AdSense IDs to enable this placement</p>
-          <p className="max-w-2xl text-sm leading-6 text-ink/62">
-            Set <code className="font-mono">NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT</code> and <code className="font-mono">NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT_PRIMARY</code>, then rebuild.
-          </p>
-        </div>
-      </aside>
-    );
+    return null;
   }
 
   return (

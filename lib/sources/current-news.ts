@@ -299,7 +299,7 @@ async function fetchFeed(country: CountrySummary) {
       Accept: "application/rss+xml, application/xml, text/xml",
       "User-Agent": "Mozilla/5.0 (compatible; AreWeFcked/0.1)"
     },
-    next: { revalidate: 900 }
+    next: { revalidate: 86400 }
   });
 
   if (!response.ok) {
@@ -465,7 +465,14 @@ export const currentNewsAdapter: SourceAdapter = {
         sourceKey: "current_news",
         name: "Current news signal",
         status: degraded ? "degraded" : "operational",
-        freshness: Date.now() - new Date(latestTime).getTime() < 1000 * 60 * 90 ? "live-ish" : "fresh",
+        freshness:
+          Date.now() - new Date(latestTime).getTime() < 1000 * 60 * 60 * 36
+            ? "live-ish"
+            : Date.now() - new Date(latestTime).getTime() < 1000 * 60 * 60 * 72
+              ? "fresh"
+              : Date.now() - new Date(latestTime).getTime() < 1000 * 60 * 60 * 120
+                ? "delayed"
+                : "stale",
         lastSuccessfulSync: toIsoString(new Date(latestTime)),
         lastAttemptAt: new Date().toISOString(),
         outageMessage: degraded ? `${failures.length} country feed${failures.length === 1 ? "" : "s"} failed during refresh.` : null,

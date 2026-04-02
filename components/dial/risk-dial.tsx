@@ -85,9 +85,9 @@ export function RiskDial(props: { score: number; shortLabel: string; confidence:
   const currentBand = Math.min(9, Math.floor(Math.min(animatedScore, 99.999) / 10));
   const cx = 360;
   const cy = 330;
-  const outerRadius = 260;
-  const innerRadius = 148;
-  const hubRadius = 114;
+  const outerRadius = 314;
+  const innerRadius = 178;
+  const hubRadius = 140;
   const pointerAngle = 180 + clamp(animatedScore, 0, 100) * 1.8;
   const pointerEnd = polar(cx, cy, outerRadius - 18, pointerAngle);
   const labelTone = toneForScore(normalizedScore);
@@ -165,9 +165,9 @@ export function RiskDial(props: { score: number; shortLabel: string; confidence:
           </g>
         </svg>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[61%] z-10 flex -translate-y-1/2 justify-center px-4 sm:top-[62%]">
-          <div className="w-full max-w-[18rem] text-center">
-            <p className="dial-score-shadow font-mono text-[clamp(3.5rem,7.8vw,5rem)] font-semibold leading-[0.92] tracking-tight text-ink">{displayScore.toFixed(1)}</p>
+        <div className="pointer-events-none absolute inset-x-0 top-[70%] z-10 flex -translate-y-1/2 justify-center px-4 sm:top-[69%]">
+          <div className="w-full max-w-[16rem] text-center">
+            <p className="dial-score-shadow font-mono text-[clamp(2.9rem,6.3vw,4.1rem)] font-semibold leading-[0.92] tracking-tight text-ink">{displayScore.toFixed(1)}</p>
           </div>
         </div>
       </div>

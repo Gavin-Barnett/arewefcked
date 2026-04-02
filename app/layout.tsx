@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { ADSENSE_CLIENT } from "@/lib/adsense";
 import { getSiteUrl } from "@/lib/site";
@@ -54,7 +55,17 @@ export default function RootLayout(props: Readonly<{ children: React.ReactNode }
       </head>
       <body className="bg-background text-foreground antialiased">
         <div className="min-h-screen">
-          <main className="mx-auto flex min-h-screen max-w-[1500px] flex-col px-4 pb-16 pt-0 sm:px-6 lg:px-8">{props.children}</main>
+          <main className="mx-auto flex min-h-screen max-w-[1500px] flex-col px-4 pb-16 pt-0 sm:px-6 lg:px-8">
+            <div className="flex-1">{props.children}</div>
+            <footer className="mt-12 border-t border-white/10 py-6">
+              <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-[0.24em] text-ink/42">
+                <p>Are we Fcked? Evidence first. Panic optional.</p>
+                <Link className="transition hover:text-ink/80" href="/privacy">
+                  Privacy Policy
+                </Link>
+              </div>
+            </footer>
+          </main>
         </div>
       </body>
     </html>

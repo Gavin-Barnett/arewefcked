@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RiskDomain {
+  conflict_security
+  civil_unrest
+  macroeconomic
+  public_health
+  natural_disaster
+  climate_environment
+  cyber_infra
+  governance
+}
+
+enum FreshnessState {
+  live_ish
+  fresh
+  delayed
+  stale
+}
+
+enum VerdictTone {
+  dry
+  grim
+  wry
+  clinical
+}
+
+enum CoverageState {
+  measured
+  sparse
+  unavailable
+}
+
+enum IngestionStatus {
+  running
+  succeeded
+  failed
+}
+
+enum SourceHealthStatus {
+  operational
+  degraded
+  offline
+}
+
+enum ScoreScope {
+  global
+  country
+}
+
+model Source {
+  id                     String         @id @default(cuid())
+  key                    String         @unique
+  name                   String
+  baseUrl                String?
+  freshnessTargetMinutes Int?
+  isActive               Boolean        @default(true)
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  ingestionRuns          IngestionRun[]
+}
+
+model IngestionRun {
+  id              String          @id @default(cuid())
+  sourceId        String?
+  source          Source?         @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  startedAt       DateTime        @default(now())
+  finishedAt      DateTime?
+  status          IngestionStatus @default(running)
+  rawCount        Int             @default(0)
+  normalizedCount Int             @default(0)
+  error           String?
+  metadata        Json?
+
+  @@index([startedAt])
+}
+
+model RawArticle {
+  id           String   @id
+  sourceKey    String
+  url          String?
+  title        String
+  summary      String?
+  countryCodes String[]
+  clusterKey   String?
+  publishedAt  DateTime?
+  ingestedAt   DateTime @default(now())
+  payload      Json
+
+  @@index([sourceKey, publishedAt])
+}
+
+model RawEvent {
+  id              String   @id
+  sourceKey       String
+  providerEventId String?  @unique
+  title           String
+  occurredAt      DateTime
+  ingestedAt      DateTime @default(now())
+  payload         Json
+
+  @@index([sourceKey, occurredAt])
+}
+
+model NormalizedEvent {
+  id                 String      @id
+  source             String
+  sourceType         String
+  title              String
+  summary            String?
+  url                String?
+  countryCodes       String[]
+  region             String?
+  occurredAt         DateTime
+  ingestedAt         DateTime
+  domain             RiskDomain
+  severityRaw        Float?
+  severityNormalized Float?
+  confidence         Float?
+  tags               String[]
+  metadata           Json?
+
+  @@index([domain, occurredAt])
+}
+
+model GlobalScore {
+  id               String         @id @default(cuid())
+  score            Float
+  band             Int
+  shortLabel       String
+  verdictMessage   String
+  confidence       Float
+  freshness        FreshnessState
+  methodologyBlurb String?
+  sparseReason     String?
+  createdAt        DateTime       @default(now())
+
+  @@index([createdAt])
+}
+
+model CountryScore {
+  id               String         @id @default(cuid())
+  countryCode      String
+  score            Float
+  band             Int
+  shortLabel       String
+  verdictMessage   String
+  confidence       Float
+  freshness        FreshnessState
+  methodologyBlurb String?
+  sparseReason     String?
+  createdAt        DateTime       @default(now())
+  country          Country        @relation(fields: [countryCode], references: [code], onDelete: Cascade)
+
+  @@index([countryCode, createdAt])
+}
+
+model ScoreComponent {
+  id            String        @id @default(cuid())
+  scope         ScoreScope
+  scopeKey      String
+  domain        RiskDomain
+  score         Float
+  weight        Float
+  coverage      CoverageState
+  confidence    Float?
+  evidenceCount Int           @default(0)
+  change24h     Float?
+  change7d      Float?
+  change30d     Float?
+  notes         String?
+  measuredAt    DateTime      @default(now())
+
+  @@index([scope, scopeKey, measuredAt])
+}
+
+model VerdictMessage {
+  id            String      @id
+  band          Int
+  tone          VerdictTone
+  text          String
+  allowedScopes String[]
+  minConfidence Float?
+  tags          String[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([band])
+}
+
+model NewsCluster {
+  id                 String     @id
+  title              String
+  summary            String?
+  affectedDomain     RiskDomain?
+  whyItMatters       String?
+  representativeUrls String[]
+  countryCodes       String[]
+  sourceMix          Json?
+  measuredImpact     Float?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+model Country {
+  code      String         @id
+  name      String
+  region    String
+  latitude  Float
+  longitude Float
+  enabled   Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  scores    CountryScore[]
+}
+
+model SourceHealth {
+  id                 String             @id @default(cuid())
+  sourceKey          String             @unique
+  status             SourceHealthStatus
+  freshness          FreshnessState
+  lastSuccessfulSync DateTime?
+  lastAttemptAt      DateTime?
+  outageMessage      String?
+  latencyMs          Int?
+  metadata           Json?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}

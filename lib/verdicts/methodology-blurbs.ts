@@ -1,0 +1,22 @@
+export const methodologyBlurbs = [
+  "Driven mainly by conflict intensity, disaster events, and elevated economic stress.",
+  "Held down by lower cross-domain severity despite heavy news flow.",
+  "Rising on faster event acceleration across multiple regions.",
+  "Confidence reduced due to sparse or delayed local data.",
+  "Weighted toward structured event feeds over raw headline volume.",
+  "Recent disaster activity is doing more work than sentiment alone.",
+  "Coverage is broad enough to be useful, not broad enough to be smug.",
+  "The score reflects severity, spread, and persistence rather than vibes alone.",
+  "This reading is cautious because several domains remain under-covered in phase one.",
+  "Short-term spikes matter, but repeat events matter more.",
+  "Fresh data is doing the lifting here; older structural baselines are not fully wired yet.",
+  "Cross-domain overlap is adding pressure even where single-domain scores look moderate.",
+  "Weak or patchy source coverage is explicitly lowering confidence instead of being ignored.",
+  "Global conditions are being measured more confidently than local edge cases right now.",
+  "Air quality and geophysical stress are currently better observed than governance shocks.",
+  "The methodology rewards corroborated severity and punishes thin evidence.",
+  "This score should be read as a transparent risk pulse, not a mystical truth machine.",
+  "A calmer score still carries caveats when the source mix is narrow.",
+  "More providers will widen the lens; for now the system is honest about what it can see.",
+  "Phase one prioritizes auditable evidence over false completeness."
+] as const;

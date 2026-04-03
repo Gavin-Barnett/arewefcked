@@ -4,3999 +4,2499 @@
     "band": 0,
     "tone": "dry",
     "text": "Things are not that fucked right now, which feels rare enough to document carefully.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-02",
     "band": 0,
     "tone": "wry",
     "text": "Things are not that fucked right now, and the evidence is annoyingly reasonable about it.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-03",
     "band": 0,
     "tone": "grim",
     "text": "Things are not that fucked right now, though nobody should start writing triumphal editorials.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-04",
     "band": 0,
     "tone": "clinical",
     "text": "Things are not that fucked right now, with fewer active fires than usual across the board.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-05",
     "band": 0,
     "tone": "dry",
     "text": "Things are not that fucked right now, and the meter is refusing to be theatrical.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-06",
     "band": 0,
     "tone": "wry",
     "text": "Things are not that fucked right now, even if several systems still look one bad week away from drama.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-07",
     "band": 0,
     "tone": "grim",
     "text": "Against all odds, the system is mostly holding together, which feels rare enough to document carefully.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-08",
     "band": 0,
     "tone": "clinical",
     "text": "Against all odds, the system is mostly holding together, and the evidence is annoyingly reasonable about it.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-09",
     "band": 0,
     "tone": "dry",
     "text": "Against all odds, the system is mostly holding together, though nobody should start writing triumphal editorials.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-10",
     "band": 0,
     "tone": "wry",
     "text": "Against all odds, the system is mostly holding together, with fewer active fires than usual across the board.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-11",
     "band": 0,
     "tone": "grim",
     "text": "Against all odds, the system is mostly holding together, and the meter is refusing to be theatrical.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-12",
     "band": 0,
     "tone": "clinical",
     "text": "Against all odds, the system is mostly holding together, even if several systems still look one bad week away from drama.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-13",
     "band": 0,
     "tone": "dry",
     "text": "This is a suspiciously calm stretch, which feels rare enough to document carefully.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-14",
     "band": 0,
     "tone": "wry",
     "text": "This is a suspiciously calm stretch, and the evidence is annoyingly reasonable about it.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-15",
     "band": 0,
     "tone": "grim",
     "text": "This is a suspiciously calm stretch, though nobody should start writing triumphal editorials.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-16",
     "band": 0,
     "tone": "clinical",
     "text": "This is a suspiciously calm stretch, with fewer active fires than usual across the board.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-17",
     "band": 0,
     "tone": "dry",
     "text": "This is a suspiciously calm stretch, and the meter is refusing to be theatrical.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-18",
     "band": 0,
     "tone": "wry",
     "text": "This is a suspiciously calm stretch, even if several systems still look one bad week away from drama.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-19",
     "band": 0,
     "tone": "grim",
     "text": "The global dashboard is unusually restrained, which feels rare enough to document carefully.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-20",
     "band": 0,
     "tone": "clinical",
     "text": "The global dashboard is unusually restrained, and the evidence is annoyingly reasonable about it.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-21",
     "band": 0,
     "tone": "dry",
     "text": "The global dashboard is unusually restrained, though nobody should start writing triumphal editorials.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-22",
     "band": 0,
     "tone": "wry",
     "text": "The global dashboard is unusually restrained, with fewer active fires than usual across the board.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-23",
     "band": 0,
     "tone": "grim",
     "text": "The global dashboard is unusually restrained, and the meter is refusing to be theatrical.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-24",
     "band": 0,
     "tone": "clinical",
     "text": "The global dashboard is unusually restrained, even if several systems still look one bad week away from drama.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-25",
     "band": 0,
     "tone": "dry",
     "text": "For the moment, the chaos budget is under control, which feels rare enough to document carefully.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-26",
     "band": 0,
     "tone": "wry",
     "text": "For the moment, the chaos budget is under control, and the evidence is annoyingly reasonable about it.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-27",
     "band": 0,
     "tone": "grim",
     "text": "For the moment, the chaos budget is under control, though nobody should start writing triumphal editorials.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-28",
     "band": 0,
     "tone": "clinical",
     "text": "For the moment, the chaos budget is under control, with fewer active fires than usual across the board.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-29",
     "band": 0,
     "tone": "dry",
     "text": "For the moment, the chaos budget is under control, and the meter is refusing to be theatrical.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-0-30",
     "band": 0,
     "tone": "wry",
     "text": "For the moment, the chaos budget is under control, even if several systems still look one bad week away from drama.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-01",
     "band": 1,
     "tone": "dry",
     "text": "We are slightly fucked, and the score sees stress without calling it a crisis.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-02",
     "band": 1,
     "tone": "wry",
     "text": "We are slightly fucked, with enough warning lights to be irritating rather than catastrophic.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-03",
     "band": 1,
     "tone": "grim",
     "text": "We are slightly fucked, while most domains remain functional if not exactly graceful.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-04",
     "band": 1,
     "tone": "clinical",
     "text": "We are slightly fucked, and the data supports a measured amount of swearing.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-05",
     "band": 1,
     "tone": "dry",
     "text": "We are slightly fucked, without enough cross-domain overlap to call this a full mess.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-06",
     "band": 1,
     "tone": "wry",
     "text": "We are slightly fucked, though stability is doing less work than it was last week.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-07",
     "band": 1,
     "tone": "grim",
     "text": "The vibes are off but still manageable, and the score sees stress without calling it a crisis.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-08",
     "band": 1,
     "tone": "clinical",
     "text": "The vibes are off but still manageable, with enough warning lights to be irritating rather than catastrophic.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-09",
     "band": 1,
     "tone": "dry",
     "text": "The vibes are off but still manageable, while most domains remain functional if not exactly graceful.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-10",
     "band": 1,
     "tone": "wry",
     "text": "The vibes are off but still manageable, and the data supports a measured amount of swearing.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-11",
     "band": 1,
     "tone": "grim",
     "text": "The vibes are off but still manageable, without enough cross-domain overlap to call this a full mess.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-12",
     "band": 1,
     "tone": "clinical",
     "text": "The vibes are off but still manageable, though stability is doing less work than it was last week.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-13",
     "band": 1,
     "tone": "dry",
     "text": "Things are wobbling more than collapsing, and the score sees stress without calling it a crisis.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-14",
     "band": 1,
     "tone": "wry",
     "text": "Things are wobbling more than collapsing, with enough warning lights to be irritating rather than catastrophic.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-15",
     "band": 1,
     "tone": "grim",
     "text": "Things are wobbling more than collapsing, while most domains remain functional if not exactly graceful.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-16",
     "band": 1,
     "tone": "clinical",
     "text": "Things are wobbling more than collapsing, and the data supports a measured amount of swearing.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-17",
     "band": 1,
     "tone": "dry",
     "text": "Things are wobbling more than collapsing, without enough cross-domain overlap to call this a full mess.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-18",
     "band": 1,
     "tone": "wry",
     "text": "Things are wobbling more than collapsing, though stability is doing less work than it was last week.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-19",
     "band": 1,
     "tone": "grim",
     "text": "Mild concern is justified, and the score sees stress without calling it a crisis.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-20",
     "band": 1,
     "tone": "clinical",
     "text": "Mild concern is justified, with enough warning lights to be irritating rather than catastrophic.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-21",
     "band": 1,
     "tone": "dry",
     "text": "Mild concern is justified, while most domains remain functional if not exactly graceful.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-22",
     "band": 1,
     "tone": "wry",
     "text": "Mild concern is justified, and the data supports a measured amount of swearing.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-23",
     "band": 1,
     "tone": "grim",
     "text": "Mild concern is justified, without enough cross-domain overlap to call this a full mess.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-24",
     "band": 1,
     "tone": "clinical",
     "text": "Mild concern is justified, though stability is doing less work than it was last week.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-25",
     "band": 1,
     "tone": "dry",
     "text": "This is a contained amount of trouble, and the score sees stress without calling it a crisis.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-26",
     "band": 1,
     "tone": "wry",
     "text": "This is a contained amount of trouble, with enough warning lights to be irritating rather than catastrophic.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-27",
     "band": 1,
     "tone": "grim",
     "text": "This is a contained amount of trouble, while most domains remain functional if not exactly graceful.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-28",
     "band": 1,
     "tone": "clinical",
     "text": "This is a contained amount of trouble, and the data supports a measured amount of swearing.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-29",
     "band": 1,
     "tone": "dry",
     "text": "This is a contained amount of trouble, without enough cross-domain overlap to call this a full mess.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-1-30",
     "band": 1,
     "tone": "wry",
     "text": "This is a contained amount of trouble, though stability is doing less work than it was last week.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-01",
     "band": 2,
     "tone": "dry",
     "text": "We are entering a noticeable amount of fucked, with stress showing up across more than one lane at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-02",
     "band": 2,
     "tone": "wry",
     "text": "We are entering a noticeable amount of fucked, and the trend line has stopped being politely reassuring.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-03",
     "band": 2,
     "tone": "grim",
     "text": "We are entering a noticeable amount of fucked, while severe outcomes remain unevenly distributed rather than universal.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-04",
     "band": 2,
     "tone": "clinical",
     "text": "We are entering a noticeable amount of fucked, with enough persistence to matter beyond a bad headline cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-05",
     "band": 2,
     "tone": "dry",
     "text": "We are entering a noticeable amount of fucked, and the score is being lifted by repeated rather than isolated shocks.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-06",
     "band": 2,
     "tone": "wry",
     "text": "We are entering a noticeable amount of fucked, without yet tipping into sustained multi-front crisis mode.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-07",
     "band": 2,
     "tone": "grim",
     "text": "The data suggests a developing mess, with stress showing up across more than one lane at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-08",
     "band": 2,
     "tone": "clinical",
     "text": "The data suggests a developing mess, and the trend line has stopped being politely reassuring.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-09",
     "band": 2,
     "tone": "dry",
     "text": "The data suggests a developing mess, while severe outcomes remain unevenly distributed rather than universal.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-10",
     "band": 2,
     "tone": "wry",
     "text": "The data suggests a developing mess, with enough persistence to matter beyond a bad headline cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-11",
     "band": 2,
     "tone": "grim",
     "text": "The data suggests a developing mess, and the score is being lifted by repeated rather than isolated shocks.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-12",
     "band": 2,
     "tone": "clinical",
     "text": "The data suggests a developing mess, without yet tipping into sustained multi-front crisis mode.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-13",
     "band": 2,
     "tone": "dry",
     "text": "Concern has officially graduated from optional to useful, with stress showing up across more than one lane at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-14",
     "band": 2,
     "tone": "wry",
     "text": "Concern has officially graduated from optional to useful, and the trend line has stopped being politely reassuring.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-15",
     "band": 2,
     "tone": "grim",
     "text": "Concern has officially graduated from optional to useful, while severe outcomes remain unevenly distributed rather than universal.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-16",
     "band": 2,
     "tone": "clinical",
     "text": "Concern has officially graduated from optional to useful, with enough persistence to matter beyond a bad headline cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-17",
     "band": 2,
     "tone": "dry",
     "text": "Concern has officially graduated from optional to useful, and the score is being lifted by repeated rather than isolated shocks.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-18",
     "band": 2,
     "tone": "wry",
     "text": "Concern has officially graduated from optional to useful, without yet tipping into sustained multi-front crisis mode.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-19",
     "band": 2,
     "tone": "grim",
     "text": "Things are leaning in the wrong direction, with stress showing up across more than one lane at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-20",
     "band": 2,
     "tone": "clinical",
     "text": "Things are leaning in the wrong direction, and the trend line has stopped being politely reassuring.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-21",
     "band": 2,
     "tone": "dry",
     "text": "Things are leaning in the wrong direction, while severe outcomes remain unevenly distributed rather than universal.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-22",
     "band": 2,
     "tone": "wry",
     "text": "Things are leaning in the wrong direction, with enough persistence to matter beyond a bad headline cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-23",
     "band": 2,
     "tone": "grim",
     "text": "Things are leaning in the wrong direction, and the score is being lifted by repeated rather than isolated shocks.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-24",
     "band": 2,
     "tone": "clinical",
     "text": "Things are leaning in the wrong direction, without yet tipping into sustained multi-front crisis mode.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-25",
     "band": 2,
     "tone": "dry",
     "text": "This is no longer a background level of trouble, with stress showing up across more than one lane at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-26",
     "band": 2,
     "tone": "wry",
     "text": "This is no longer a background level of trouble, and the trend line has stopped being politely reassuring.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-27",
     "band": 2,
     "tone": "grim",
     "text": "This is no longer a background level of trouble, while severe outcomes remain unevenly distributed rather than universal.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-28",
     "band": 2,
     "tone": "clinical",
     "text": "This is no longer a background level of trouble, with enough persistence to matter beyond a bad headline cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-29",
     "band": 2,
     "tone": "dry",
     "text": "This is no longer a background level of trouble, and the score is being lifted by repeated rather than isolated shocks.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "cooler"
-    ]
+    "tags": ["cooler"]
   },
   {
     "id": "band-2-30",
     "band": 2,
     "tone": "wry",
     "text": "This is no longer a background level of trouble, without yet tipping into sustained multi-front crisis mode.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "cooler"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["cooler"]
   },
   {
     "id": "band-3-01",
     "band": 3,
     "tone": "dry",
     "text": "We are pretty fucked, in measurable ways, and the overlap between domains is doing real work here.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-02",
     "band": 3,
     "tone": "wry",
     "text": "We are pretty fucked, in measurable ways, with repeated stress events showing more persistence than anyone wanted.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-03",
     "band": 3,
     "tone": "grim",
     "text": "We are pretty fucked, in measurable ways, while confidence is high enough to make denial feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-04",
     "band": 3,
     "tone": "clinical",
     "text": "We are pretty fucked, in measurable ways, and the score reflects more than a noisy news cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-05",
     "band": 3,
     "tone": "dry",
     "text": "We are pretty fucked, in measurable ways, with enough breadth to move this beyond a localised problem.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-06",
     "band": 3,
     "tone": "wry",
     "text": "We are pretty fucked, in measurable ways, while calmer indicators are no longer offsetting the hotter ones cleanly.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-07",
     "band": 3,
     "tone": "grim",
     "text": "Enough red lights are blinking to ruin the mood, and the overlap between domains is doing real work here.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-08",
     "band": 3,
     "tone": "clinical",
     "text": "Enough red lights are blinking to ruin the mood, with repeated stress events showing more persistence than anyone wanted.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-09",
     "band": 3,
     "tone": "dry",
     "text": "Enough red lights are blinking to ruin the mood, while confidence is high enough to make denial feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-10",
     "band": 3,
     "tone": "wry",
     "text": "Enough red lights are blinking to ruin the mood, and the score reflects more than a noisy news cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-11",
     "band": 3,
     "tone": "grim",
     "text": "Enough red lights are blinking to ruin the mood, with enough breadth to move this beyond a localised problem.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-12",
     "band": 3,
     "tone": "clinical",
     "text": "Enough red lights are blinking to ruin the mood, while calmer indicators are no longer offsetting the hotter ones cleanly.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-13",
     "band": 3,
     "tone": "dry",
     "text": "The dashboard has stopped being reassuring, and the overlap between domains is doing real work here.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-14",
     "band": 3,
     "tone": "wry",
     "text": "The dashboard has stopped being reassuring, with repeated stress events showing more persistence than anyone wanted.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-15",
     "band": 3,
     "tone": "grim",
     "text": "The dashboard has stopped being reassuring, while confidence is high enough to make denial feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-16",
     "band": 3,
     "tone": "clinical",
     "text": "The dashboard has stopped being reassuring, and the score reflects more than a noisy news cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-17",
     "band": 3,
     "tone": "dry",
     "text": "The dashboard has stopped being reassuring, with enough breadth to move this beyond a localised problem.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-18",
     "band": 3,
     "tone": "wry",
     "text": "The dashboard has stopped being reassuring, while calmer indicators are no longer offsetting the hotter ones cleanly.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-19",
     "band": 3,
     "tone": "grim",
     "text": "Several systems are being uncooperative at once, and the overlap between domains is doing real work here.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-20",
     "band": 3,
     "tone": "clinical",
     "text": "Several systems are being uncooperative at once, with repeated stress events showing more persistence than anyone wanted.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-21",
     "band": 3,
     "tone": "dry",
     "text": "Several systems are being uncooperative at once, while confidence is high enough to make denial feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-22",
     "band": 3,
     "tone": "wry",
     "text": "Several systems are being uncooperative at once, and the score reflects more than a noisy news cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-23",
     "band": 3,
     "tone": "grim",
     "text": "Several systems are being uncooperative at once, with enough breadth to move this beyond a localised problem.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-24",
     "band": 3,
     "tone": "clinical",
     "text": "Several systems are being uncooperative at once, while calmer indicators are no longer offsetting the hotter ones cleanly.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-25",
     "band": 3,
     "tone": "dry",
     "text": "This is now a statistically annoying reality, and the overlap between domains is doing real work here.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-26",
     "band": 3,
     "tone": "wry",
     "text": "This is now a statistically annoying reality, with repeated stress events showing more persistence than anyone wanted.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-27",
     "band": 3,
     "tone": "grim",
     "text": "This is now a statistically annoying reality, while confidence is high enough to make denial feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-28",
     "band": 3,
     "tone": "clinical",
     "text": "This is now a statistically annoying reality, and the score reflects more than a noisy news cycle.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-29",
     "band": 3,
     "tone": "dry",
     "text": "This is now a statistically annoying reality, with enough breadth to move this beyond a localised problem.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-3-30",
     "band": 3,
     "tone": "wry",
     "text": "This is now a statistically annoying reality, while calmer indicators are no longer offsetting the hotter ones cleanly.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-01",
     "band": 4,
     "tone": "dry",
     "text": "We are now in serious, evidence-backed fucked, with structured signals backing the bad mood in more than one region.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-02",
     "band": 4,
     "tone": "wry",
     "text": "We are now in serious, evidence-backed fucked, and the meter is climbing on persistence instead of hype alone.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-03",
     "band": 4,
     "tone": "grim",
     "text": "We are now in serious, evidence-backed fucked, while cross-domain stress is broad enough to feel expensive.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-04",
     "band": 4,
     "tone": "clinical",
     "text": "We are now in serious, evidence-backed fucked, with too many meaningful shocks landing inside the same window.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-05",
     "band": 4,
     "tone": "dry",
     "text": "We are now in serious, evidence-backed fucked, and the score has moved past the point where reassurance sounds cheap.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-06",
     "band": 4,
     "tone": "wry",
     "text": "We are now in serious, evidence-backed fucked, while confidence remains tempered by some stubborn blind spots.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-07",
     "band": 4,
     "tone": "grim",
     "text": "Multiple domains are misbehaving simultaneously, with structured signals backing the bad mood in more than one region.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-08",
     "band": 4,
     "tone": "clinical",
     "text": "Multiple domains are misbehaving simultaneously, and the meter is climbing on persistence instead of hype alone.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-09",
     "band": 4,
     "tone": "dry",
     "text": "Multiple domains are misbehaving simultaneously, while cross-domain stress is broad enough to feel expensive.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-10",
     "band": 4,
     "tone": "wry",
     "text": "Multiple domains are misbehaving simultaneously, with too many meaningful shocks landing inside the same window.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-11",
     "band": 4,
     "tone": "grim",
     "text": "Multiple domains are misbehaving simultaneously, and the score has moved past the point where reassurance sounds cheap.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-12",
     "band": 4,
     "tone": "clinical",
     "text": "Multiple domains are misbehaving simultaneously, while confidence remains tempered by some stubborn blind spots.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-13",
     "band": 4,
     "tone": "dry",
     "text": "The trends are worsening faster than is polite, with structured signals backing the bad mood in more than one region.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-14",
     "band": 4,
     "tone": "wry",
     "text": "The trends are worsening faster than is polite, and the meter is climbing on persistence instead of hype alone.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-15",
     "band": 4,
     "tone": "grim",
     "text": "The trends are worsening faster than is polite, while cross-domain stress is broad enough to feel expensive.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-16",
     "band": 4,
     "tone": "clinical",
     "text": "The trends are worsening faster than is polite, with too many meaningful shocks landing inside the same window.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-17",
     "band": 4,
     "tone": "dry",
     "text": "The trends are worsening faster than is polite, and the score has moved past the point where reassurance sounds cheap.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-18",
     "band": 4,
     "tone": "wry",
     "text": "The trends are worsening faster than is polite, while confidence remains tempered by some stubborn blind spots.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-19",
     "band": 4,
     "tone": "grim",
     "text": "The world is currently underperforming expectations, with structured signals backing the bad mood in more than one region.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-20",
     "band": 4,
     "tone": "clinical",
     "text": "The world is currently underperforming expectations, and the meter is climbing on persistence instead of hype alone.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-21",
     "band": 4,
     "tone": "dry",
     "text": "The world is currently underperforming expectations, while cross-domain stress is broad enough to feel expensive.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-22",
     "band": 4,
     "tone": "wry",
     "text": "The world is currently underperforming expectations, with too many meaningful shocks landing inside the same window.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-23",
     "band": 4,
     "tone": "grim",
     "text": "The world is currently underperforming expectations, and the score has moved past the point where reassurance sounds cheap.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-24",
     "band": 4,
     "tone": "clinical",
     "text": "The world is currently underperforming expectations, while confidence remains tempered by some stubborn blind spots.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-25",
     "band": 4,
     "tone": "dry",
     "text": "The situation has graduated from tense to ugly, with structured signals backing the bad mood in more than one region.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-26",
     "band": 4,
     "tone": "wry",
     "text": "The situation has graduated from tense to ugly, and the meter is climbing on persistence instead of hype alone.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-27",
     "band": 4,
     "tone": "grim",
     "text": "The situation has graduated from tense to ugly, while cross-domain stress is broad enough to feel expensive.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-28",
     "band": 4,
     "tone": "clinical",
     "text": "The situation has graduated from tense to ugly, with too many meaningful shocks landing inside the same window.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-29",
     "band": 4,
     "tone": "dry",
     "text": "The situation has graduated from tense to ugly, and the score has moved past the point where reassurance sounds cheap.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-4-30",
     "band": 4,
     "tone": "wry",
     "text": "The situation has graduated from tense to ugly, while confidence remains tempered by some stubborn blind spots.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-01",
     "band": 5,
     "tone": "dry",
     "text": "We are severely fucked, and not just for dramatic effect, with enough simultaneous pressure to make the average week look luxurious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-02",
     "band": 5,
     "tone": "wry",
     "text": "We are severely fucked, and not just for dramatic effect, and the evidence stack is thicker than a one-off spike deserves.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-03",
     "band": 5,
     "tone": "grim",
     "text": "We are severely fucked, and not just for dramatic effect, while the calmer domains are no longer carrying the rest of the dashboard.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-04",
     "band": 5,
     "tone": "clinical",
     "text": "We are severely fucked, and not just for dramatic effect, with sustained disruption doing more work than raw novelty.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-05",
     "band": 5,
     "tone": "dry",
     "text": "We are severely fucked, and not just for dramatic effect, and the latest inputs are reinforcing rather than cancelling one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-06",
     "band": 5,
     "tone": "wry",
     "text": "We are severely fucked, and not just for dramatic effect, while sparse coverage in other lanes is the only thing keeping this from reading worse.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-07",
     "band": 5,
     "tone": "grim",
     "text": "This is not panic, it is pattern recognition, with enough simultaneous pressure to make the average week look luxurious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-08",
     "band": 5,
     "tone": "clinical",
     "text": "This is not panic, it is pattern recognition, and the evidence stack is thicker than a one-off spike deserves.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-09",
     "band": 5,
     "tone": "dry",
     "text": "This is not panic, it is pattern recognition, while the calmer domains are no longer carrying the rest of the dashboard.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-10",
     "band": 5,
     "tone": "wry",
     "text": "This is not panic, it is pattern recognition, with sustained disruption doing more work than raw novelty.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-11",
     "band": 5,
     "tone": "grim",
     "text": "This is not panic, it is pattern recognition, and the latest inputs are reinforcing rather than cancelling one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-12",
     "band": 5,
     "tone": "clinical",
     "text": "This is not panic, it is pattern recognition, while sparse coverage in other lanes is the only thing keeping this from reading worse.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-13",
     "band": 5,
     "tone": "dry",
     "text": "The numbers have become difficult to defend, with enough simultaneous pressure to make the average week look luxurious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-14",
     "band": 5,
     "tone": "wry",
     "text": "The numbers have become difficult to defend, and the evidence stack is thicker than a one-off spike deserves.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-15",
     "band": 5,
     "tone": "grim",
     "text": "The numbers have become difficult to defend, while the calmer domains are no longer carrying the rest of the dashboard.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-16",
     "band": 5,
     "tone": "clinical",
     "text": "The numbers have become difficult to defend, with sustained disruption doing more work than raw novelty.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-17",
     "band": 5,
     "tone": "dry",
     "text": "The numbers have become difficult to defend, and the latest inputs are reinforcing rather than cancelling one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-18",
     "band": 5,
     "tone": "wry",
     "text": "The numbers have become difficult to defend, while sparse coverage in other lanes is the only thing keeping this from reading worse.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-19",
     "band": 5,
     "tone": "grim",
     "text": "The system is absorbing too many shocks at once, with enough simultaneous pressure to make the average week look luxurious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-20",
     "band": 5,
     "tone": "clinical",
     "text": "The system is absorbing too many shocks at once, and the evidence stack is thicker than a one-off spike deserves.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-21",
     "band": 5,
     "tone": "dry",
     "text": "The system is absorbing too many shocks at once, while the calmer domains are no longer carrying the rest of the dashboard.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-22",
     "band": 5,
     "tone": "wry",
     "text": "The system is absorbing too many shocks at once, with sustained disruption doing more work than raw novelty.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-23",
     "band": 5,
     "tone": "grim",
     "text": "The system is absorbing too many shocks at once, and the latest inputs are reinforcing rather than cancelling one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-24",
     "band": 5,
     "tone": "clinical",
     "text": "The system is absorbing too many shocks at once, while sparse coverage in other lanes is the only thing keeping this from reading worse.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-25",
     "band": 5,
     "tone": "dry",
     "text": "Optimism now needs citations, with enough simultaneous pressure to make the average week look luxurious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-26",
     "band": 5,
     "tone": "wry",
     "text": "Optimism now needs citations, and the evidence stack is thicker than a one-off spike deserves.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-27",
     "band": 5,
     "tone": "grim",
     "text": "Optimism now needs citations, while the calmer domains are no longer carrying the rest of the dashboard.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-28",
     "band": 5,
     "tone": "clinical",
     "text": "Optimism now needs citations, with sustained disruption doing more work than raw novelty.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-29",
     "band": 5,
     "tone": "dry",
     "text": "Optimism now needs citations, and the latest inputs are reinforcing rather than cancelling one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-5-30",
     "band": 5,
     "tone": "wry",
     "text": "Optimism now needs citations, while sparse coverage in other lanes is the only thing keeping this from reading worse.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-01",
     "band": 6,
     "tone": "dry",
     "text": "We are intensely fucked across multiple fronts, with severe signals stacking instead of taking turns.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-02",
     "band": 6,
     "tone": "wry",
     "text": "We are intensely fucked across multiple fronts, and the score is being pushed by breadth as much as raw intensity.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-03",
     "band": 6,
     "tone": "grim",
     "text": "We are intensely fucked across multiple fronts, while the remaining quiet zones are not quiet enough to calm the composite.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-04",
     "band": 6,
     "tone": "clinical",
     "text": "We are intensely fucked across multiple fronts, with enough geographic spread to make this feel less containable.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-05",
     "band": 6,
     "tone": "dry",
     "text": "We are intensely fucked across multiple fronts, and recent acceleration is doing damage on top of an already high baseline.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-06",
     "band": 6,
     "tone": "wry",
     "text": "We are intensely fucked across multiple fronts, while confidence is strong where the data is live and candid where it is not.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-07",
     "band": 6,
     "tone": "grim",
     "text": "Too many serious things are happening at the same time, with severe signals stacking instead of taking turns.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-08",
     "band": 6,
     "tone": "clinical",
     "text": "Too many serious things are happening at the same time, and the score is being pushed by breadth as much as raw intensity.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-09",
     "band": 6,
     "tone": "dry",
     "text": "Too many serious things are happening at the same time, while the remaining quiet zones are not quiet enough to calm the composite.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-10",
     "band": 6,
     "tone": "wry",
     "text": "Too many serious things are happening at the same time, with enough geographic spread to make this feel less containable.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-11",
     "band": 6,
     "tone": "grim",
     "text": "Too many serious things are happening at the same time, and recent acceleration is doing damage on top of an already high baseline.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-12",
     "band": 6,
     "tone": "clinical",
     "text": "Too many serious things are happening at the same time, while confidence is strong where the data is live and candid where it is not.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-13",
     "band": 6,
     "tone": "dry",
     "text": "The data has reached the part where sober people swear, with severe signals stacking instead of taking turns.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-14",
     "band": 6,
     "tone": "wry",
     "text": "The data has reached the part where sober people swear, and the score is being pushed by breadth as much as raw intensity.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-15",
     "band": 6,
     "tone": "grim",
     "text": "The data has reached the part where sober people swear, while the remaining quiet zones are not quiet enough to calm the composite.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-16",
     "band": 6,
     "tone": "clinical",
     "text": "The data has reached the part where sober people swear, with enough geographic spread to make this feel less containable.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-17",
     "band": 6,
     "tone": "dry",
     "text": "The data has reached the part where sober people swear, and recent acceleration is doing damage on top of an already high baseline.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-18",
     "band": 6,
     "tone": "wry",
     "text": "The data has reached the part where sober people swear, while confidence is strong where the data is live and candid where it is not.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-19",
     "band": 6,
     "tone": "grim",
     "text": "This is broad, fast, and getting expensive, with severe signals stacking instead of taking turns.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-20",
     "band": 6,
     "tone": "clinical",
     "text": "This is broad, fast, and getting expensive, and the score is being pushed by breadth as much as raw intensity.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-21",
     "band": 6,
     "tone": "dry",
     "text": "This is broad, fast, and getting expensive, while the remaining quiet zones are not quiet enough to calm the composite.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-22",
     "band": 6,
     "tone": "wry",
     "text": "This is broad, fast, and getting expensive, with enough geographic spread to make this feel less containable.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-23",
     "band": 6,
     "tone": "grim",
     "text": "This is broad, fast, and getting expensive, and recent acceleration is doing damage on top of an already high baseline.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-24",
     "band": 6,
     "tone": "clinical",
     "text": "This is broad, fast, and getting expensive, while confidence is strong where the data is live and candid where it is not.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-25",
     "band": 6,
     "tone": "dry",
     "text": "The crisis overlap is no longer subtle, with severe signals stacking instead of taking turns.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-26",
     "band": 6,
     "tone": "wry",
     "text": "The crisis overlap is no longer subtle, and the score is being pushed by breadth as much as raw intensity.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-27",
     "band": 6,
     "tone": "grim",
     "text": "The crisis overlap is no longer subtle, while the remaining quiet zones are not quiet enough to calm the composite.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-28",
     "band": 6,
     "tone": "clinical",
     "text": "The crisis overlap is no longer subtle, with enough geographic spread to make this feel less containable.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-29",
     "band": 6,
     "tone": "dry",
     "text": "The crisis overlap is no longer subtle, and recent acceleration is doing damage on top of an already high baseline.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "midrange"
-    ]
+    "tags": ["midrange"]
   },
   {
     "id": "band-6-30",
     "band": 6,
     "tone": "wry",
     "text": "The crisis overlap is no longer subtle, while confidence is strong where the data is live and candid where it is not.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "midrange"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["midrange"]
   },
   {
     "id": "band-7-01",
     "band": 7,
     "tone": "dry",
     "text": "We are extremely fucked, with receipts, with multiple serious systems deteriorating inside the same frame.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-02",
     "band": 7,
     "tone": "wry",
     "text": "We are extremely fucked, with receipts, and the composite is being driven by problems that reinforce one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-03",
     "band": 7,
     "tone": "grim",
     "text": "We are extremely fucked, with receipts, while the evidence is broad enough to make minimising it feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-04",
     "band": 7,
     "tone": "clinical",
     "text": "We are extremely fucked, with receipts, with repeated severe events preventing any real cooling-off period.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-05",
     "band": 7,
     "tone": "dry",
     "text": "We are extremely fucked, with receipts, and even the cautious reading lands in crisis territory.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-06",
     "band": 7,
     "tone": "wry",
     "text": "We are extremely fucked, with receipts, while the sparse parts of the map are the only meaningful source of restraint.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-07",
     "band": 7,
     "tone": "grim",
     "text": "This is what sustained multi-domain crisis looks like, with multiple serious systems deteriorating inside the same frame.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-08",
     "band": 7,
     "tone": "clinical",
     "text": "This is what sustained multi-domain crisis looks like, and the composite is being driven by problems that reinforce one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-09",
     "band": 7,
     "tone": "dry",
     "text": "This is what sustained multi-domain crisis looks like, while the evidence is broad enough to make minimising it feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-10",
     "band": 7,
     "tone": "wry",
     "text": "This is what sustained multi-domain crisis looks like, with repeated severe events preventing any real cooling-off period.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-11",
     "band": 7,
     "tone": "grim",
     "text": "This is what sustained multi-domain crisis looks like, and even the cautious reading lands in crisis territory.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-12",
     "band": 7,
     "tone": "clinical",
     "text": "This is what sustained multi-domain crisis looks like, while the sparse parts of the map are the only meaningful source of restraint.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-13",
     "band": 7,
     "tone": "dry",
     "text": "The dashboard is no longer asking for calm interpretation, with multiple serious systems deteriorating inside the same frame.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-14",
     "band": 7,
     "tone": "wry",
     "text": "The dashboard is no longer asking for calm interpretation, and the composite is being driven by problems that reinforce one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-15",
     "band": 7,
     "tone": "grim",
     "text": "The dashboard is no longer asking for calm interpretation, while the evidence is broad enough to make minimising it feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-16",
     "band": 7,
     "tone": "clinical",
     "text": "The dashboard is no longer asking for calm interpretation, with repeated severe events preventing any real cooling-off period.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-17",
     "band": 7,
     "tone": "dry",
     "text": "The dashboard is no longer asking for calm interpretation, and even the cautious reading lands in crisis territory.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-18",
     "band": 7,
     "tone": "wry",
     "text": "The dashboard is no longer asking for calm interpretation, while the sparse parts of the map are the only meaningful source of restraint.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-19",
     "band": 7,
     "tone": "grim",
     "text": "Reality is currently outperforming satire, with multiple serious systems deteriorating inside the same frame.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-20",
     "band": 7,
     "tone": "clinical",
     "text": "Reality is currently outperforming satire, and the composite is being driven by problems that reinforce one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-21",
     "band": 7,
     "tone": "dry",
     "text": "Reality is currently outperforming satire, while the evidence is broad enough to make minimising it feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-22",
     "band": 7,
     "tone": "wry",
     "text": "Reality is currently outperforming satire, with repeated severe events preventing any real cooling-off period.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-23",
     "band": 7,
     "tone": "grim",
     "text": "Reality is currently outperforming satire, and even the cautious reading lands in crisis territory.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-24",
     "band": 7,
     "tone": "clinical",
     "text": "Reality is currently outperforming satire, while the sparse parts of the map are the only meaningful source of restraint.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-25",
     "band": 7,
     "tone": "dry",
     "text": "The situation is large, loud, and compounding, with multiple serious systems deteriorating inside the same frame.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-26",
     "band": 7,
     "tone": "wry",
     "text": "The situation is large, loud, and compounding, and the composite is being driven by problems that reinforce one another.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-27",
     "band": 7,
     "tone": "grim",
     "text": "The situation is large, loud, and compounding, while the evidence is broad enough to make minimising it feel unserious.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-28",
     "band": 7,
     "tone": "clinical",
     "text": "The situation is large, loud, and compounding, with repeated severe events preventing any real cooling-off period.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-29",
     "band": 7,
     "tone": "dry",
     "text": "The situation is large, loud, and compounding, and even the cautious reading lands in crisis territory.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-7-30",
     "band": 7,
     "tone": "wry",
     "text": "The situation is large, loud, and compounding, while the sparse parts of the map are the only meaningful source of restraint.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-01",
     "band": 8,
     "tone": "dry",
     "text": "We are catastrophically fucked right now, with enough compounding stress to make the methodology page feel ominous.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-02",
     "band": 8,
     "tone": "wry",
     "text": "We are catastrophically fucked right now, and the score is being lifted by both severity and breadth at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-03",
     "band": 8,
     "tone": "grim",
     "text": "We are catastrophically fucked right now, while calmer indicators are now reduced to cosmetic resistance.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-04",
     "band": 8,
     "tone": "clinical",
     "text": "We are catastrophically fucked right now, with structured evidence supporting the worst reading in several domains.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-05",
     "band": 8,
     "tone": "dry",
     "text": "We are catastrophically fucked right now, and the overall pattern looks less like volatility than sustained breakdown.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-06",
     "band": 8,
     "tone": "wry",
     "text": "We are catastrophically fucked right now, while confidence is only limited by the gaps we are openly admitting.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-07",
     "band": 8,
     "tone": "grim",
     "text": "This is a historically bad clustering of events, with enough compounding stress to make the methodology page feel ominous.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-08",
     "band": 8,
     "tone": "clinical",
     "text": "This is a historically bad clustering of events, and the score is being lifted by both severity and breadth at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-09",
     "band": 8,
     "tone": "dry",
     "text": "This is a historically bad clustering of events, while calmer indicators are now reduced to cosmetic resistance.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-10",
     "band": 8,
     "tone": "wry",
     "text": "This is a historically bad clustering of events, with structured evidence supporting the worst reading in several domains.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-11",
     "band": 8,
     "tone": "grim",
     "text": "This is a historically bad clustering of events, and the overall pattern looks less like volatility than sustained breakdown.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-12",
     "band": 8,
     "tone": "clinical",
     "text": "This is a historically bad clustering of events, while confidence is only limited by the gaps we are openly admitting.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-13",
     "band": 8,
     "tone": "dry",
     "text": "The world has assembled an offensive risk profile, with enough compounding stress to make the methodology page feel ominous.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-14",
     "band": 8,
     "tone": "wry",
     "text": "The world has assembled an offensive risk profile, and the score is being lifted by both severity and breadth at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-15",
     "band": 8,
     "tone": "grim",
     "text": "The world has assembled an offensive risk profile, while calmer indicators are now reduced to cosmetic resistance.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-16",
     "band": 8,
     "tone": "clinical",
     "text": "The world has assembled an offensive risk profile, with structured evidence supporting the worst reading in several domains.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-17",
     "band": 8,
     "tone": "dry",
     "text": "The world has assembled an offensive risk profile, and the overall pattern looks less like volatility than sustained breakdown.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-18",
     "band": 8,
     "tone": "wry",
     "text": "The world has assembled an offensive risk profile, while confidence is only limited by the gaps we are openly admitting.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-19",
     "band": 8,
     "tone": "grim",
     "text": "Multiple severe systems are failing in chorus, with enough compounding stress to make the methodology page feel ominous.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-20",
     "band": 8,
     "tone": "clinical",
     "text": "Multiple severe systems are failing in chorus, and the score is being lifted by both severity and breadth at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-21",
     "band": 8,
     "tone": "dry",
     "text": "Multiple severe systems are failing in chorus, while calmer indicators are now reduced to cosmetic resistance.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-22",
     "band": 8,
     "tone": "wry",
     "text": "Multiple severe systems are failing in chorus, with structured evidence supporting the worst reading in several domains.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-23",
     "band": 8,
     "tone": "grim",
     "text": "Multiple severe systems are failing in chorus, and the overall pattern looks less like volatility than sustained breakdown.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-24",
     "band": 8,
     "tone": "clinical",
     "text": "Multiple severe systems are failing in chorus, while confidence is only limited by the gaps we are openly admitting.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-25",
     "band": 8,
     "tone": "dry",
     "text": "The phrase 'not ideal' has left the building, with enough compounding stress to make the methodology page feel ominous.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-26",
     "band": 8,
     "tone": "wry",
     "text": "The phrase 'not ideal' has left the building, and the score is being lifted by both severity and breadth at once.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-27",
     "band": 8,
     "tone": "grim",
     "text": "The phrase 'not ideal' has left the building, while calmer indicators are now reduced to cosmetic resistance.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-28",
     "band": 8,
     "tone": "clinical",
     "text": "The phrase 'not ideal' has left the building, with structured evidence supporting the worst reading in several domains.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-29",
     "band": 8,
     "tone": "dry",
     "text": "The phrase 'not ideal' has left the building, and the overall pattern looks less like volatility than sustained breakdown.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-8-30",
     "band": 8,
     "tone": "wry",
     "text": "The phrase 'not ideal' has left the building, while confidence is only limited by the gaps we are openly admitting.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-01",
     "band": 9,
     "tone": "dry",
     "text": "We are completely fucked, on several spreadsheets, with almost every available signal pointing in the same awful direction.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-02",
     "band": 9,
     "tone": "wry",
     "text": "We are completely fucked, on several spreadsheets, and the only restraint left in the model comes from missing coverage, not good news.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-03",
     "band": 9,
     "tone": "grim",
     "text": "We are completely fucked, on several spreadsheets, while severe events are stacking faster than calm periods can dilute them.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-04",
     "band": 9,
     "tone": "clinical",
     "text": "We are completely fucked, on several spreadsheets, with the composite reflecting broad, persistent, and compounding failure.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-05",
     "band": 9,
     "tone": "dry",
     "text": "We are completely fucked, on several spreadsheets, and the evidence is ugly enough that understatement becomes misleading.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-06",
     "band": 9,
     "tone": "wry",
     "text": "We are completely fucked, on several spreadsheets, while the dashboard remains sober even as the situation stops deserving that courtesy.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-07",
     "band": 9,
     "tone": "grim",
     "text": "The distinction between crisis and era-defining breakdown is evaporating, with almost every available signal pointing in the same awful direction.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-08",
     "band": 9,
     "tone": "clinical",
     "text": "The distinction between crisis and era-defining breakdown is evaporating, and the only restraint left in the model comes from missing coverage, not good news.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-09",
     "band": 9,
     "tone": "dry",
     "text": "The distinction between crisis and era-defining breakdown is evaporating, while severe events are stacking faster than calm periods can dilute them.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-10",
     "band": 9,
     "tone": "wry",
     "text": "The distinction between crisis and era-defining breakdown is evaporating, with the composite reflecting broad, persistent, and compounding failure.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-11",
     "band": 9,
     "tone": "grim",
     "text": "The distinction between crisis and era-defining breakdown is evaporating, and the evidence is ugly enough that understatement becomes misleading.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-12",
     "band": 9,
     "tone": "clinical",
     "text": "The distinction between crisis and era-defining breakdown is evaporating, while the dashboard remains sober even as the situation stops deserving that courtesy.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-13",
     "band": 9,
     "tone": "dry",
     "text": "The meter has run out of diplomatic phrasing, with almost every available signal pointing in the same awful direction.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-14",
     "band": 9,
     "tone": "wry",
     "text": "The meter has run out of diplomatic phrasing, and the only restraint left in the model comes from missing coverage, not good news.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-15",
     "band": 9,
     "tone": "grim",
     "text": "The meter has run out of diplomatic phrasing, while severe events are stacking faster than calm periods can dilute them.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-16",
     "band": 9,
     "tone": "clinical",
     "text": "The meter has run out of diplomatic phrasing, with the composite reflecting broad, persistent, and compounding failure.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-17",
     "band": 9,
     "tone": "dry",
     "text": "The meter has run out of diplomatic phrasing, and the evidence is ugly enough that understatement becomes misleading.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-18",
     "band": 9,
     "tone": "wry",
     "text": "The meter has run out of diplomatic phrasing, while the dashboard remains sober even as the situation stops deserving that courtesy.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-19",
     "band": 9,
     "tone": "grim",
     "text": "This is what maximal red looks like, with almost every available signal pointing in the same awful direction.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-20",
     "band": 9,
     "tone": "clinical",
     "text": "This is what maximal red looks like, and the only restraint left in the model comes from missing coverage, not good news.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-21",
     "band": 9,
     "tone": "dry",
     "text": "This is what maximal red looks like, while severe events are stacking faster than calm periods can dilute them.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-22",
     "band": 9,
     "tone": "wry",
     "text": "This is what maximal red looks like, with the composite reflecting broad, persistent, and compounding failure.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-23",
     "band": 9,
     "tone": "grim",
     "text": "This is what maximal red looks like, and the evidence is ugly enough that understatement becomes misleading.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-24",
     "band": 9,
     "tone": "clinical",
     "text": "This is what maximal red looks like, while the dashboard remains sober even as the situation stops deserving that courtesy.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-25",
     "band": 9,
     "tone": "dry",
     "text": "The system is now operating beyond defensible levels of bad, with almost every available signal pointing in the same awful direction.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-26",
     "band": 9,
     "tone": "wry",
     "text": "The system is now operating beyond defensible levels of bad, and the only restraint left in the model comes from missing coverage, not good news.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.4,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-27",
     "band": 9,
     "tone": "grim",
     "text": "The system is now operating beyond defensible levels of bad, while severe events are stacking faster than calm periods can dilute them.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-28",
     "band": 9,
     "tone": "clinical",
     "text": "The system is now operating beyond defensible levels of bad, with the composite reflecting broad, persistent, and compounding failure.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-29",
     "band": 9,
     "tone": "dry",
     "text": "The system is now operating beyond defensible levels of bad, and the evidence is ugly enough that understatement becomes misleading.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
+    "allowedScopes": ["global", "country"],
     "minConfidence": 0.55,
-    "tags": [
-      "escalating"
-    ]
+    "tags": ["escalating"]
   },
   {
     "id": "band-9-30",
     "band": 9,
     "tone": "wry",
     "text": "The system is now operating beyond defensible levels of bad, while the dashboard remains sober even as the situation stops deserving that courtesy.",
-    "allowedScopes": [
-      "global",
-      "country"
-    ],
-    "tags": [
-      "escalating"
-    ]
+    "allowedScopes": ["global", "country"],
+    "tags": ["escalating"]
   }
 ]

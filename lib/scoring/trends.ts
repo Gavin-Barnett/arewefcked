@@ -6,7 +6,7 @@ import { round } from "@/lib/utils";
 const trendWindows: Array<{ window: TrendWindow; lookbackMs: number }> = [
   { window: "24h", lookbackMs: 24 * 60 * 60 * 1000 },
   { window: "7d", lookbackMs: 7 * 24 * 60 * 60 * 1000 },
-  { window: "30d", lookbackMs: 30 * 24 * 60 * 60 * 1000 }
+  { window: "30d", lookbackMs: 30 * 24 * 60 * 60 * 1000 },
 ];
 
 type TrendOptions =
@@ -26,7 +26,7 @@ function unavailableTrend(window: TrendWindow, note: string): TrendDelta {
     delta: null,
     direction: "flat",
     available: false,
-    note
+    note,
   };
 }
 
@@ -46,17 +46,27 @@ function formatSnapshotTimestamp(date: Date) {
   return `${date.toISOString().slice(0, 16).replace("T", " ")} UTC`;
 }
 
-export async function buildTrendDeltas(options: TrendOptions): Promise<TrendDelta[]> {
+export async function buildTrendDeltas(
+  options: TrendOptions
+): Promise<TrendDelta[]> {
   if (!process.env.DATABASE_URL) {
     return trendWindows.map(({ window }) =>
-      unavailableTrend(window, "Score drift needs stored history. Set DATABASE_URL and keep recurring score snapshots running.")
+      unavailableTrend(
+        window,
+        "Score drift needs stored history. Set DATABASE_URL and keep recurring score snapshots running."
+      )
     );
   }
 
   const databaseReachable = await canReachConfiguredDatabase();
 
   if (!databaseReachable) {
-    return trendWindows.map(({ window }) => unavailableTrend(window, "Score history storage is offline. Start Postgres and keep score snapshots running."));
+    return trendWindows.map(({ window }) =>
+      unavailableTrend(
+        window,
+        "Score history storage is offline. Start Postgres and keep score snapshots running."
+      )
+    );
   }
 
   try {
@@ -68,35 +78,38 @@ export async function buildTrendDeltas(options: TrendOptions): Promise<TrendDelt
             ? await prisma.globalScore.findFirst({
                 where: {
                   createdAt: {
-                    lte: cutoff
-                  }
+                    lte: cutoff,
+                  },
                 },
                 orderBy: {
-                  createdAt: "desc"
+                  createdAt: "desc",
                 },
                 select: {
                   score: true,
-                  createdAt: true
-                }
+                  createdAt: true,
+                },
               })
             : await prisma.countryScore.findFirst({
                 where: {
                   countryCode: options.countryCode,
                   createdAt: {
-                    lte: cutoff
-                  }
+                    lte: cutoff,
+                  },
                 },
                 orderBy: {
-                  createdAt: "desc"
+                  createdAt: "desc",
                 },
                 select: {
                   score: true,
-                  createdAt: true
-                }
+                  createdAt: true,
+                },
               });
 
         if (!previous) {
-          return unavailableTrend(window, `Need a stored snapshot at least ${window} old to show drift.`);
+          return unavailableTrend(
+            window,
+            `Need a stored snapshot at least ${window} old to show drift.`
+          );
         }
 
         const delta = round(options.score - previous.score, 1);
@@ -106,13 +119,18 @@ export async function buildTrendDeltas(options: TrendOptions): Promise<TrendDelt
           delta,
           direction: directionForDelta(delta),
           available: true,
-          note: `Compared with stored snapshot from ${formatSnapshotTimestamp(previous.createdAt)}.`
+          note: `Compared with stored snapshot from ${formatSnapshotTimestamp(previous.createdAt)}.`,
         } satisfies TrendDelta;
       })
     );
 
     return results;
   } catch {
-    return trendWindows.map(({ window }) => unavailableTrend(window, "Score history storage is offline. Start Postgres and keep score snapshots running."));
+    return trendWindows.map(({ window }) =>
+      unavailableTrend(
+        window,
+        "Score history storage is offline. Start Postgres and keep score snapshots running."
+      )
+    );
   }
 }

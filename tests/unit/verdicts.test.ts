@@ -6,7 +6,9 @@ describe("verdict catalog", () => {
     expect(verdictMessages).toHaveLength(300);
 
     for (let band = 0; band < 10; band += 1) {
-      expect(verdictMessages.filter((message) => message.band === band)).toHaveLength(30);
+      expect(
+        verdictMessages.filter((message) => message.band === band)
+      ).toHaveLength(30);
     }
   });
 
@@ -16,7 +18,7 @@ describe("verdict catalog", () => {
       scope: "global",
       scopeKey: "global",
       confidence: 0.8,
-      salt: "test"
+      salt: "test",
     });
 
     expect(verdict.band).toBe(1);

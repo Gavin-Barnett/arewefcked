@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import { formatDistanceToNow } from "date-fns";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AdSlot } from "@/components/ad-slot";
-import { DomainBreakdownGrid } from "@/components/domain-breakdown-grid";
 import { TrendSummary } from "@/components/charts/trend-summary";
+import { DomainBreakdownGrid } from "@/components/domain-breakdown-grid";
 import { EvidenceGrid } from "@/components/news/evidence-grid";
 import { Panel } from "@/components/panel";
 import { SourceHealthGrid } from "@/components/source-health-grid";
@@ -12,8 +12,8 @@ import { SparseBanner } from "@/components/sparse-banner";
 import { TopDriverGrid } from "@/components/top-driver-grid";
 import { VerdictHero } from "@/components/verdict-hero";
 import { getCountryByCode } from "@/lib/countries/starter-countries";
-import { getSiteUrl } from "@/lib/site";
 import { buildScoreSnapshot } from "@/lib/scoring/engine";
+import { getSiteUrl } from "@/lib/site";
 
 export const revalidate = 900;
 
@@ -25,13 +25,27 @@ function updatedLabel(lastUpdated: string | null) {
   return `Updated ${formatDistanceToNow(new Date(lastUpdated), { addSuffix: true })}`;
 }
 
-export async function generateMetadata(props: { params: Promise<{ iso: string }> }): Promise<Metadata> {
+function comparisonLabel(delta: number) {
+  if (delta > 0) {
+    return "hotter";
+  }
+
+  if (delta < 0) {
+    return "cooler";
+  }
+
+  return "roughly in line";
+}
+
+export async function generateMetadata(props: {
+  params: Promise<{ iso: string }>;
+}): Promise<Metadata> {
   const params = await props.params;
   const country = getCountryByCode(params.iso);
 
   if (!country) {
     return {
-      title: "Country not found"
+      title: "Country not found",
     };
   }
 
@@ -41,32 +55,34 @@ export async function generateMetadata(props: { params: Promise<{ iso: string }>
     url: `/country/${country.code}/opengraph-image`,
     width: 1200,
     height: 630,
-    alt: `${country.name} share card with country risk dial`
+    alt: `${country.name} share card with country risk dial`,
   };
 
   return {
     title: country.name,
     description,
     alternates: {
-      canonical: `/country/${country.code}`
+      canonical: `/country/${country.code}`,
     },
     openGraph: {
       title: `${country.name} | Are we Fcked?`,
       description,
       url: new URL(`/country/${country.code}`, siteUrl).toString(),
       type: "website",
-      images: [socialImage]
+      images: [socialImage],
     },
     twitter: {
       card: "summary_large_image",
       title: `${country.name} | Are we Fcked?`,
       description,
-      images: [socialImage]
-    }
+      images: [socialImage],
+    },
   };
 }
 
-export default async function CountryPage(props: { params: Promise<{ iso: string }> }) {
+export default async function CountryPage(props: {
+  params: Promise<{ iso: string }>;
+}) {
   const params = await props.params;
   const country = getCountryByCode(params.iso);
 
@@ -76,33 +92,42 @@ export default async function CountryPage(props: { params: Promise<{ iso: string
 
   const [countrySnapshot, globalSnapshot] = await Promise.all([
     buildScoreSnapshot({ scope: "country", countryCode: country.code }),
-    buildScoreSnapshot({ scope: "global" })
+    buildScoreSnapshot({ scope: "global" }),
   ]);
 
-  const delta = Number((countrySnapshot.score - globalSnapshot.score).toFixed(1));
+  const delta = Number(
+    (countrySnapshot.score - globalSnapshot.score).toFixed(1)
+  );
 
   return (
     <div className="space-y-8 py-0 sm:space-y-10">
       <VerdictHero
+        confidence={countrySnapshot.confidence}
+        currentCountryCode={country.code}
+        description={countrySnapshot.verdictMessage}
+        freshness={countrySnapshot.freshness}
         heading={
           <>
             <span className="block">{country.name} is</span>
-            <span className="block text-primary">{countrySnapshot.shortLabel}.</span>
+            <span className="block text-primary">
+              {countrySnapshot.shortLabel}.
+            </span>
           </>
         }
-        description={countrySnapshot.verdictMessage}
-        updatedLabel={updatedLabel(countrySnapshot.lastUpdated)}
+        scopeLabel={`${country.name} severity index`}
         score={countrySnapshot.score}
         shortLabel={countrySnapshot.shortLabel}
-        confidence={countrySnapshot.confidence}
-        freshness={countrySnapshot.freshness}
-        scopeLabel={`${country.name} severity index`}
-        currentCountryCode={country.code}
+        updatedLabel={updatedLabel(countrySnapshot.lastUpdated)}
       />
 
       <AdSlot />
 
-      <TopDriverGrid title={`What moved ${country.name}`} eyebrow="Drivers" drivers={countrySnapshot.topDrivers} evidence={countrySnapshot.evidence} />
+      <TopDriverGrid
+        drivers={countrySnapshot.topDrivers}
+        evidence={countrySnapshot.evidence}
+        eyebrow="Drivers"
+        title={`What moved ${country.name}`}
+      />
 
       <div className="grid gap-8 xl:grid-cols-[1.14fr_0.86fr] xl:items-start">
         <div className="space-y-8">
@@ -110,40 +135,67 @@ export default async function CountryPage(props: { params: Promise<{ iso: string
           <DomainBreakdownGrid domains={countrySnapshot.domainBreakdown} />
         </div>
         <div className="space-y-8 xl:sticky xl:top-6">
-          {countrySnapshot.sparseData && countrySnapshot.sparseReason ? <SparseBanner reason={countrySnapshot.sparseReason} /> : null}
+          {countrySnapshot.sparseData && countrySnapshot.sparseReason ? (
+            <SparseBanner reason={countrySnapshot.sparseReason} />
+          ) : null}
           <Panel eyebrow="Context" title={`What is shaping ${country.name}`}>
-            <ul className="space-y-3 text-base leading-7 text-ink/78">
+            <ul className="space-y-3 text-base text-ink/78 leading-7">
               {countrySnapshot.summaryBullets.map((bullet) => (
-                <li key={bullet} className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-4">
+                <li
+                  className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-4"
+                  key={bullet}
+                >
                   {bullet}
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-wrap gap-3 text-sm text-ink/68">
-              <Link className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 transition hover:border-white/20 hover:text-ink" href="/methodology">
+            <div className="mt-6 flex flex-wrap gap-3 text-ink/68 text-sm">
+              <Link
+                className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 transition hover:border-white/20 hover:text-ink"
+                href="/methodology"
+              >
                 Read methodology
               </Link>
-              <Link className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 transition hover:border-white/20 hover:text-ink" href="/">
+              <Link
+                className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 transition hover:border-white/20 hover:text-ink"
+                href="/"
+              >
                 Back to global
               </Link>
             </div>
           </Panel>
 
-          <Panel eyebrow="Comparison" title={`${country.name} versus the global baseline`}>
+          <Panel
+            eyebrow="Comparison"
+            title={`${country.name} versus the global baseline`}
+          >
             <div className="grid gap-4 md:grid-cols-2">
               <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] p-5">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-primary/72">{country.name}</p>
-                <p className="mt-3 font-mono text-4xl text-ink">{countrySnapshot.score.toFixed(1)}</p>
-                <p className="mt-2 text-sm text-ink/60">{countrySnapshot.shortLabel}</p>
+                <p className="font-mono text-[0.68rem] text-primary/72 uppercase tracking-[0.28em]">
+                  {country.name}
+                </p>
+                <p className="mt-3 font-mono text-4xl text-ink">
+                  {countrySnapshot.score.toFixed(1)}
+                </p>
+                <p className="mt-2 text-ink/60 text-sm">
+                  {countrySnapshot.shortLabel}
+                </p>
               </div>
               <div className="rounded-[1rem] border border-white/10 bg-white/[0.04] p-5">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-primary/72">Global baseline</p>
-                <p className="mt-3 font-mono text-4xl text-ink">{globalSnapshot.score.toFixed(1)}</p>
-                <p className="mt-2 text-sm text-ink/60">{globalSnapshot.shortLabel}</p>
+                <p className="font-mono text-[0.68rem] text-primary/72 uppercase tracking-[0.28em]">
+                  Global baseline
+                </p>
+                <p className="mt-3 font-mono text-4xl text-ink">
+                  {globalSnapshot.score.toFixed(1)}
+                </p>
+                <p className="mt-2 text-ink/60 text-sm">
+                  {globalSnapshot.shortLabel}
+                </p>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-6 text-ink/68">
-              {country.name} currently reads {delta >= 0 ? "hotter" : delta < 0 ? "cooler" : "roughly in line"} than the global baseline by {Math.abs(delta).toFixed(1)} points.
+            <p className="mt-4 text-ink/68 text-sm leading-6">
+              {country.name} currently reads {comparisonLabel(delta)} than the
+              global baseline by {Math.abs(delta).toFixed(1)} points.
             </p>
           </Panel>
 

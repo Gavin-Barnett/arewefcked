@@ -1,4 +1,9 @@
-import { bandLabelOptions, getBand, normalizeScore, pickShortLabel } from "@/lib/scoring/bands";
+import {
+  bandLabelOptions,
+  getBand,
+  normalizeScore,
+  pickShortLabel,
+} from "@/lib/scoring/bands";
 
 describe("band helpers", () => {
   it("maps score boundaries to the expected bands", () => {

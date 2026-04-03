@@ -1,7 +1,11 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -12,23 +16,23 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))"
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))"
+          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))"
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))"
+          foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))"
+          foreground: "hsl(var(--destructive-foreground))",
         },
         ink: "hsl(var(--foreground))",
         abyss: "hsl(var(--background))",
@@ -38,18 +42,18 @@ const config: Config = {
         danger: "hsl(var(--destructive))",
         amber: "hsl(var(--warning))",
         moss: "hsl(var(--success))",
-        sky: "hsl(var(--muted-foreground))"
+        sky: "hsl(var(--muted-foreground))",
       },
       boxShadow: {
-        panel: "0 30px 90px rgba(0, 0, 0, 0.48)"
+        panel: "0 30px 90px rgba(0, 0, 0, 0.48)",
       },
       fontFamily: {
         sans: ["Aptos", "IBM Plex Sans", "Segoe UI", "sans-serif"],
-        mono: ["IBM Plex Mono", "Consolas", "monospace"]
-      }
-    }
+        mono: ["IBM Plex Mono", "Consolas", "monospace"],
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
 
 export default config;

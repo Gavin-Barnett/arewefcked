@@ -1,19 +1,20 @@
-const { availabilityMock, buildScoreSnapshotMock, persistScoreSnapshotMock } = vi.hoisted(() => ({
-  availabilityMock: vi.fn(),
-  buildScoreSnapshotMock: vi.fn(),
-  persistScoreSnapshotMock: vi.fn()
-}));
+const { availabilityMock, buildScoreSnapshotMock, persistScoreSnapshotMock } =
+  vi.hoisted(() => ({
+    availabilityMock: vi.fn(),
+    buildScoreSnapshotMock: vi.fn(),
+    persistScoreSnapshotMock: vi.fn(),
+  }));
 
 vi.mock("@/lib/db/availability", () => ({
-  canReachConfiguredDatabase: availabilityMock
+  canReachConfiguredDatabase: availabilityMock,
 }));
 
 vi.mock("@/lib/db/persist", () => ({
-  persistScoreSnapshot: persistScoreSnapshotMock
+  persistScoreSnapshot: persistScoreSnapshotMock,
 }));
 
 vi.mock("@/lib/scoring/engine", () => ({
-  buildScoreSnapshot: buildScoreSnapshotMock
+  buildScoreSnapshot: buildScoreSnapshotMock,
 }));
 
 import { starterCountries } from "@/lib/countries/starter-countries";
@@ -53,13 +54,25 @@ describe("recomputeAndPersistTrackedScores", () => {
   it("persists global and tracked-country snapshots when the database is reachable", async () => {
     vi.stubEnv("DATABASE_URL", "postgresql://example");
     availabilityMock.mockResolvedValue(true);
-    buildScoreSnapshotMock.mockImplementation(async (options: { scope: "global" } | { scope: "country"; countryCode: string }) => {
-      if (options.scope === "global") {
-        return { scope: "global", scopeKey: "global", countryCode: undefined };
-      }
+    buildScoreSnapshotMock.mockImplementation(
+      async (
+        options: { scope: "global" } | { scope: "country"; countryCode: string }
+      ) => {
+        if (options.scope === "global") {
+          return {
+            scope: "global",
+            scopeKey: "global",
+            countryCode: undefined,
+          };
+        }
 
-      return { scope: "country", scopeKey: options.countryCode, countryCode: options.countryCode };
-    });
+        return {
+          scope: "country",
+          scopeKey: options.countryCode,
+          countryCode: options.countryCode,
+        };
+      }
+    );
     persistScoreSnapshotMock.mockResolvedValue(undefined);
 
     const summary = await recomputeAndPersistTrackedScores();
@@ -68,7 +81,11 @@ describe("recomputeAndPersistTrackedScores", () => {
     expect(summary.status).toBe(200);
     expect(summary.persistedGlobal).toBe(true);
     expect(summary.persistedCountryCodes).toHaveLength(starterCountries.length);
-    expect(buildScoreSnapshotMock).toHaveBeenCalledTimes(starterCountries.length + 1);
-    expect(persistScoreSnapshotMock).toHaveBeenCalledTimes(starterCountries.length + 1);
+    expect(buildScoreSnapshotMock).toHaveBeenCalledTimes(
+      starterCountries.length + 1
+    );
+    expect(persistScoreSnapshotMock).toHaveBeenCalledTimes(
+      starterCountries.length + 1
+    );
   });
 });

@@ -1,7 +1,7 @@
-import { Prisma } from "@prisma/client";
-import type { DomainBreakdown, ScoreSnapshot } from "@/lib/types/score";
-import type { SourceFetchResult } from "@/lib/sources/base";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
+import type { SourceFetchResult } from "@/lib/sources/base";
+import type { DomainBreakdown, ScoreSnapshot } from "@/lib/types/score";
 
 function toPrismaJson(value: unknown): Prisma.InputJsonValue {
   return JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
@@ -14,15 +14,15 @@ async function ensureSource(result: SourceFetchResult) {
       name: result.sourceName,
       baseUrl: result.sourceUrl,
       freshnessTargetMinutes: result.sourceKey === "usgs" ? 15 : 30,
-      isActive: true
+      isActive: true,
     },
     create: {
       key: result.sourceKey,
       name: result.sourceName,
       baseUrl: result.sourceUrl,
       freshnessTargetMinutes: result.sourceKey === "usgs" ? 15 : 30,
-      isActive: true
-    }
+      isActive: true,
+    },
   });
 }
 
@@ -34,8 +34,11 @@ export async function persistSourceResult(result: SourceFetchResult) {
       status: "running",
       rawCount: result.events.length,
       normalizedCount: result.events.length,
-      metadata: toPrismaJson({ sourceUrl: result.sourceUrl, notes: result.notes })
-    }
+      metadata: toPrismaJson({
+        sourceUrl: result.sourceUrl,
+        notes: result.notes,
+      }),
+    },
   });
 
   try {
@@ -48,7 +51,7 @@ export async function persistSourceResult(result: SourceFetchResult) {
             providerEventId: event.id,
             title: event.title,
             occurredAt: new Date(event.occurredAt),
-            payload: toPrismaJson(event)
+            payload: toPrismaJson(event),
           },
           create: {
             id: event.id,
@@ -56,8 +59,8 @@ export async function persistSourceResult(result: SourceFetchResult) {
             providerEventId: event.id,
             title: event.title,
             occurredAt: new Date(event.occurredAt),
-            payload: toPrismaJson(event)
-          }
+            payload: toPrismaJson(event),
+          },
         });
 
         await prisma.normalizedEvent.upsert({
@@ -77,7 +80,7 @@ export async function persistSourceResult(result: SourceFetchResult) {
             severityNormalized: event.severityNormalized,
             confidence: event.confidence,
             tags: event.tags ?? [],
-            metadata: event.metadata ? toPrismaJson(event.metadata) : undefined
+            metadata: event.metadata ? toPrismaJson(event.metadata) : undefined,
           },
           create: {
             id: event.id,
@@ -95,8 +98,8 @@ export async function persistSourceResult(result: SourceFetchResult) {
             severityNormalized: event.severityNormalized,
             confidence: event.confidence,
             tags: event.tags ?? [],
-            metadata: event.metadata ? toPrismaJson(event.metadata) : undefined
-          }
+            metadata: event.metadata ? toPrismaJson(event.metadata) : undefined,
+          },
         });
       })
     );
@@ -105,31 +108,53 @@ export async function persistSourceResult(result: SourceFetchResult) {
       where: { sourceKey: result.sourceKey },
       update: {
         status: result.health.status,
-        freshness: result.health.freshness.replace("-", "_") as "live_ish" | "fresh" | "delayed" | "stale",
-        lastSuccessfulSync: result.health.lastSuccessfulSync ? new Date(result.health.lastSuccessfulSync) : null,
-        lastAttemptAt: result.health.lastAttemptAt ? new Date(result.health.lastAttemptAt) : null,
+        freshness: result.health.freshness.replace("-", "_") as
+          | "live_ish"
+          | "fresh"
+          | "delayed"
+          | "stale",
+        lastSuccessfulSync: result.health.lastSuccessfulSync
+          ? new Date(result.health.lastSuccessfulSync)
+          : null,
+        lastAttemptAt: result.health.lastAttemptAt
+          ? new Date(result.health.lastAttemptAt)
+          : null,
         outageMessage: result.health.outageMessage,
         latencyMs: result.health.latencyMs,
-        metadata: toPrismaJson({ active: result.health.active, notes: result.health.notes })
+        metadata: toPrismaJson({
+          active: result.health.active,
+          notes: result.health.notes,
+        }),
       },
       create: {
         sourceKey: result.sourceKey,
         status: result.health.status,
-        freshness: result.health.freshness.replace("-", "_") as "live_ish" | "fresh" | "delayed" | "stale",
-        lastSuccessfulSync: result.health.lastSuccessfulSync ? new Date(result.health.lastSuccessfulSync) : null,
-        lastAttemptAt: result.health.lastAttemptAt ? new Date(result.health.lastAttemptAt) : null,
+        freshness: result.health.freshness.replace("-", "_") as
+          | "live_ish"
+          | "fresh"
+          | "delayed"
+          | "stale",
+        lastSuccessfulSync: result.health.lastSuccessfulSync
+          ? new Date(result.health.lastSuccessfulSync)
+          : null,
+        lastAttemptAt: result.health.lastAttemptAt
+          ? new Date(result.health.lastAttemptAt)
+          : null,
         outageMessage: result.health.outageMessage,
         latencyMs: result.health.latencyMs,
-        metadata: toPrismaJson({ active: result.health.active, notes: result.health.notes })
-      }
+        metadata: toPrismaJson({
+          active: result.health.active,
+          notes: result.health.notes,
+        }),
+      },
     });
 
     await prisma.ingestionRun.update({
       where: { id: run.id },
       data: {
         status: "succeeded",
-        finishedAt: new Date()
-      }
+        finishedAt: new Date(),
+      },
     });
   } catch (error) {
     await prisma.ingestionRun.update({
@@ -137,8 +162,9 @@ export async function persistSourceResult(result: SourceFetchResult) {
       data: {
         status: "failed",
         finishedAt: new Date(),
-        error: error instanceof Error ? error.message : "Unknown ingestion failure"
-      }
+        error:
+          error instanceof Error ? error.message : "Unknown ingestion failure",
+      },
     });
 
     throw error;
@@ -154,10 +180,14 @@ export async function persistScoreSnapshot(snapshot: ScoreSnapshot) {
         shortLabel: snapshot.shortLabel,
         verdictMessage: snapshot.verdictMessage,
         confidence: snapshot.confidence,
-        freshness: snapshot.freshness.replace("-", "_") as "live_ish" | "fresh" | "delayed" | "stale",
+        freshness: snapshot.freshness.replace("-", "_") as
+          | "live_ish"
+          | "fresh"
+          | "delayed"
+          | "stale",
         methodologyBlurb: snapshot.methodologyBlurb,
-        sparseReason: snapshot.sparseReason
-      }
+        sparseReason: snapshot.sparseReason,
+      },
     });
   } else if (snapshot.countryCode) {
     await prisma.countryScore.create({
@@ -168,10 +198,14 @@ export async function persistScoreSnapshot(snapshot: ScoreSnapshot) {
         shortLabel: snapshot.shortLabel,
         verdictMessage: snapshot.verdictMessage,
         confidence: snapshot.confidence,
-        freshness: snapshot.freshness.replace("-", "_") as "live_ish" | "fresh" | "delayed" | "stale",
+        freshness: snapshot.freshness.replace("-", "_") as
+          | "live_ish"
+          | "fresh"
+          | "delayed"
+          | "stale",
         methodologyBlurb: snapshot.methodologyBlurb,
-        sparseReason: snapshot.sparseReason
-      }
+        sparseReason: snapshot.sparseReason,
+      },
     });
   }
 
@@ -185,7 +219,7 @@ export async function persistScoreSnapshot(snapshot: ScoreSnapshot) {
       coverage: domain.coverage,
       confidence: domain.confidence,
       evidenceCount: domain.evidenceCount,
-      notes: domain.summary
-    }))
+      notes: domain.summary,
+    })),
   });
 }

@@ -19,7 +19,7 @@ function isLocalDatabaseUrl(databaseUrl: string) {
     const host = parsed.hostname.toLowerCase();
     const port = parsed.port ? Number(parsed.port) : 5432;
 
-    if (!localDatabaseHosts.has(host) || !Number.isFinite(port)) {
+    if (!(localDatabaseHosts.has(host) && Number.isFinite(port))) {
       return null;
     }
 
@@ -46,7 +46,7 @@ function probePort(host: string, port: number) {
   });
 }
 
-export async function canReachConfiguredDatabase() {
+export function canReachConfiguredDatabase() {
   const databaseUrl = process.env.DATABASE_URL?.trim();
 
   if (!databaseUrl) {
@@ -62,7 +62,11 @@ export async function canReachConfiguredDatabase() {
   const cacheKey = `${localDatabase.host}:${localDatabase.port}`;
   const now = Date.now();
 
-  if (cachedKey === cacheKey && cachedReachable !== null && now - cachedAt < cacheTtlMs) {
+  if (
+    cachedKey === cacheKey &&
+    cachedReachable !== null &&
+    now - cachedAt < cacheTtlMs
+  ) {
     return cachedReachable;
   }
 
@@ -71,12 +75,14 @@ export async function canReachConfiguredDatabase() {
   }
 
   cachedKey = cacheKey;
-  pendingProbe = probePort(localDatabase.host, localDatabase.port).then((reachable) => {
-    cachedReachable = reachable;
-    cachedAt = Date.now();
-    pendingProbe = null;
-    return reachable;
-  });
+  pendingProbe = probePort(localDatabase.host, localDatabase.port).then(
+    (reachable) => {
+      cachedReachable = reachable;
+      cachedAt = Date.now();
+      pendingProbe = null;
+      return reachable;
+    }
+  );
 
   return pendingProbe;
 }

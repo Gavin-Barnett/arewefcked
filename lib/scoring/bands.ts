@@ -10,7 +10,7 @@ export const bandDefinitions = [
   { band: 6, min: 60, max: 69, defaultLabel: "Intensely Fucked" },
   { band: 7, min: 70, max: 79, defaultLabel: "Extremely Fucked" },
   { band: 8, min: 80, max: 89, defaultLabel: "Catastrophically Fucked" },
-  { band: 9, min: 90, max: 100, defaultLabel: "Completely Fucked" }
+  { band: 9, min: 90, max: 100, defaultLabel: "Completely Fucked" },
 ] as const;
 
 export const bandLabelOptions: Record<number, string[]> = {
@@ -24,7 +24,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Minimally Fucked",
     "Still Not Fucked",
     "Remarkably Not Fucked",
-    "Functionally Not Fucked"
+    "Functionally Not Fucked",
   ],
   1: [
     "Slightly Fucked",
@@ -36,7 +36,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Somewhat Fucked",
     "Low-Grade Fucked",
     "Manageably Fucked",
-    "A Touch Fucked"
+    "A Touch Fucked",
   ],
   2: [
     "Moderately Fucked",
@@ -48,7 +48,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Distinctly Fucked",
     "Materially Fucked",
     "Clearly Fucked",
-    "A Fair Bit Fucked"
+    "A Fair Bit Fucked",
   ],
   3: [
     "Pretty Fucked",
@@ -60,7 +60,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Plainly Fucked",
     "Decently Fucked",
     "Badly Fucked",
-    "Well And Truly Fucked"
+    "Well And Truly Fucked",
   ],
   4: [
     "Seriously Fucked",
@@ -72,7 +72,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Markedly Fucked",
     "Quite Seriously Fucked",
     "Firmly Fucked",
-    "Properly Seriously Fucked"
+    "Properly Seriously Fucked",
   ],
   5: [
     "Severely Fucked",
@@ -84,7 +84,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Dangerously Fucked",
     "Exceptionally Fucked",
     "Painfully Fucked",
-    "Badly Fucked"
+    "Badly Fucked",
   ],
   6: [
     "Intensely Fucked",
@@ -96,7 +96,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Alarmingly Fucked",
     "Deeply Fucked",
     "Sharply Fucked",
-    "Very Intensely Fucked"
+    "Very Intensely Fucked",
   ],
   7: [
     "Extremely Fucked",
@@ -108,7 +108,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Across-The-Board Fucked",
     "Full-Tilt Fucked",
     "Disastrously Fucked",
-    "Majorly Fucked"
+    "Majorly Fucked",
   ],
   8: [
     "Catastrophically Fucked",
@@ -120,7 +120,7 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Disaster-Stack Fucked",
     "Absurdly Fucked",
     "Offensively Fucked",
-    "Utterly Fucked"
+    "Utterly Fucked",
   ],
   9: [
     "Completely Fucked",
@@ -132,8 +132,8 @@ export const bandLabelOptions: Record<number, string[]> = {
     "Hopelessly Fucked",
     "Endgame Fucked",
     "Beyond-Salvage Fucked",
-    "Total-System Fucked"
-  ]
+    "Total-System Fucked",
+  ],
 };
 
 export function normalizeScore(score: number) {
@@ -160,12 +160,16 @@ export function getBandByIndex(band: number) {
 
 function ensureHeadlineSafeLabel(label: string, band: number) {
   const clampedBand = clamp(band, 0, 9);
-  return /fucked/i.test(label) ? label : bandDefinitions[clampedBand].defaultLabel;
+  return /fucked/i.test(label)
+    ? label
+    : bandDefinitions[clampedBand].defaultLabel;
 }
 
 export function pickShortLabel(band: number, seed = "global") {
   const clampedBand = clamp(band, 0, 9);
-  const options = bandLabelOptions[clampedBand] ?? [bandDefinitions[clampedBand].defaultLabel];
+  const options = bandLabelOptions[clampedBand] ?? [
+    bandDefinitions[clampedBand].defaultLabel,
+  ];
   const label = options[hashString(seed) % options.length];
   return ensureHeadlineSafeLabel(label, clampedBand);
 }

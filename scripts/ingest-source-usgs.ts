@@ -3,7 +3,17 @@ import { persistSourceResult } from "./persist";
 
 async function main() {
   const result = await usgsAdapter.fetch({ mode: "global" });
-  console.log(JSON.stringify({ source: result.sourceKey, health: result.health, events: result.events.length }, null, 2));
+  console.log(
+    JSON.stringify(
+      {
+        source: result.sourceKey,
+        health: result.health,
+        events: result.events.length,
+      },
+      null,
+      2
+    )
+  );
 
   if (process.env.DATABASE_URL) {
     await persistSourceResult(result);

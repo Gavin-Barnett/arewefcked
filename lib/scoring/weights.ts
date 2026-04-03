@@ -8,7 +8,7 @@ export const domainWeights: Record<RiskDomain, number> = {
   natural_disaster: 0.13,
   climate_environment: 0.1,
   cyber_infra: 0.09,
-  governance: 0.08
+  governance: 0.08,
 };
 
 export const domainLabels: Record<RiskDomain, string> = {
@@ -19,5 +19,5 @@ export const domainLabels: Record<RiskDomain, string> = {
   natural_disaster: "Natural disasters",
   climate_environment: "Climate & environment",
   cyber_infra: "Cyber & infrastructure",
-  governance: "Governance"
+  governance: "Governance",
 };

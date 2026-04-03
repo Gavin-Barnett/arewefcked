@@ -1,19 +1,29 @@
 import { XMLParser } from "fast-xml-parser";
-import { getCountryMatchPhrases, resolveCountryCodesFromText } from "@/lib/countries/match";
+import {
+  getCountryMatchPhrases,
+  resolveCountryCodesFromText,
+} from "@/lib/countries/match";
 import { starterCountries } from "@/lib/countries/starter-countries";
-import { clamp, hashString, toIsoString } from "@/lib/utils";
-import type { CountrySummary, NormalizedEvent, RiskDomain } from "@/lib/types/score";
 import type { SourceAdapter, SourceFetchResult } from "@/lib/sources/base";
 import { fetchWithTimeout } from "@/lib/sources/http";
+import type {
+  CountrySummary,
+  NormalizedEvent,
+  RiskDomain,
+} from "@/lib/types/score";
+import { clamp, hashString, toIsoString } from "@/lib/utils";
 
 const parser = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: "",
   trimValues: true,
-  parseTagValue: false
+  parseTagValue: false,
 });
 
-const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> = {
+const riskKeywords: Record<
+  RiskDomain,
+  Array<{ term: string; weight: number }>
+> = {
   conflict_security: [
     { term: "war", weight: 38 },
     { term: "missile", weight: 40 },
@@ -28,7 +38,7 @@ const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> 
     { term: "strike", weight: 24 },
     { term: "troop", weight: 20 },
     { term: "troops", weight: 20 },
-    { term: "clashes", weight: 24 }
+    { term: "clashes", weight: 24 },
   ],
   civil_unrest: [
     { term: "protest", weight: 28 },
@@ -36,7 +46,7 @@ const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> 
     { term: "unrest", weight: 28 },
     { term: "demonstration", weight: 24 },
     { term: "crackdown", weight: 30 },
-    { term: "clashes", weight: 28 }
+    { term: "clashes", weight: 28 },
   ],
   macroeconomic: [
     { term: "inflation", weight: 30 },
@@ -63,7 +73,7 @@ const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> 
     { term: "trade", weight: 16 },
     { term: "jet fuel", weight: 18 },
     { term: "refiners", weight: 18 },
-    { term: "refiner", weight: 18 }
+    { term: "refiner", weight: 18 },
   ],
   public_health: [
     { term: "outbreak", weight: 34 },
@@ -72,19 +82,19 @@ const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> 
     { term: "hospital", weight: 18 },
     { term: "pandemic", weight: 36 },
     { term: "virus", weight: 24 },
-    { term: "health emergency", weight: 34 }
+    { term: "health emergency", weight: 34 },
   ],
   natural_disaster: [
     { term: "earthquake", weight: 18 },
     { term: "flood", weight: 18 },
     { term: "wildfire", weight: 18 },
-    { term: "storm", weight: 14 }
+    { term: "storm", weight: 14 },
   ],
   climate_environment: [
     { term: "heatwave", weight: 16 },
     { term: "air quality", weight: 18 },
     { term: "drought", weight: 18 },
-    { term: "smoke", weight: 16 }
+    { term: "smoke", weight: 16 },
   ],
   cyber_infra: [
     { term: "cyberattack", weight: 38 },
@@ -93,7 +103,7 @@ const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> 
     { term: "grid", weight: 24 },
     { term: "power outage", weight: 34 },
     { term: "telecom", weight: 24 },
-    { term: "internet shutdown", weight: 34 }
+    { term: "internet shutdown", weight: 34 },
   ],
   governance: [
     { term: "sanctions", weight: 32 },
@@ -105,8 +115,8 @@ const riskKeywords: Record<RiskDomain, Array<{ term: string; weight: number }>> 
     { term: "election violence", weight: 34 },
     { term: "cabinet crisis", weight: 28 },
     { term: "election", weight: 18 },
-    { term: "government", weight: 14 }
-  ]
+    { term: "government", weight: 14 },
+  ],
 };
 
 const searchTerms = [
@@ -134,7 +144,7 @@ const searchTerms = [
   "oil",
   "energy",
   "budget",
-  "cpi"
+  "cpi",
 ];
 
 const directConflictTerms = [
@@ -154,7 +164,7 @@ const directConflictTerms = [
   "killed",
   "attack",
   "strike",
-  "clashes"
+  "clashes",
 ];
 
 const macroSpilloverTerms = [
@@ -176,7 +186,7 @@ const macroSpilloverTerms = [
   "refiner",
   "sector",
   "economy",
-  "economic"
+  "economic",
 ];
 
 const historicalContextTerms = [
@@ -199,10 +209,21 @@ const historicalContextTerms = [
   "woodrow wilson",
   "imperial japan",
   "preceded the war",
-  "revolt that preceded"
+  "revolt that preceded",
 ];
 
-const reliefTerms = ["rally", "rallies", "ease", "eases", "eased", "possible end", "hopes for a possible end", "relief", "showcases strength", "strength"];
+const reliefTerms = [
+  "rally",
+  "rallies",
+  "ease",
+  "eases",
+  "eased",
+  "possible end",
+  "hopes for a possible end",
+  "relief",
+  "showcases strength",
+  "strength",
+];
 const indirectConflictTerms = [
   "exercise",
   "drill",
@@ -273,7 +294,7 @@ const indirectConflictTerms = [
   "shipments",
   "export",
   "exports",
-  "expulsion"
+  "expulsion",
 ];
 const localImpactTerms = [
   "civilian",
@@ -297,11 +318,41 @@ const localImpactTerms = [
   "shelter",
   "targets",
   "targeted",
-  "attrition"
+  "attrition",
 ];
-const indirectCivilUnrestTerms = ["campus", "students", "restaurant", "solidarity", "outside", "diaspora", "overseas", "abroad", "supporters"];
-const legalGovernanceTerms = ["complaint", "complaints", "lawsuit", "court", "tribunal", "legal", "investigation", "sanctions", "parliament", "policy", "policies"];
-const unrestTerms = ["protest", "riot", "unrest", "demonstration", "strike", "clashes", "crackdown"];
+const indirectCivilUnrestTerms = [
+  "campus",
+  "students",
+  "restaurant",
+  "solidarity",
+  "outside",
+  "diaspora",
+  "overseas",
+  "abroad",
+  "supporters",
+];
+const legalGovernanceTerms = [
+  "complaint",
+  "complaints",
+  "lawsuit",
+  "court",
+  "tribunal",
+  "legal",
+  "investigation",
+  "sanctions",
+  "parliament",
+  "policy",
+  "policies",
+];
+const unrestTerms = [
+  "protest",
+  "riot",
+  "unrest",
+  "demonstration",
+  "strike",
+  "clashes",
+  "crackdown",
+];
 
 type ParsedItem = {
   title?: string;
@@ -312,7 +363,11 @@ type ParsedItem = {
 };
 
 type CountryRelevance = "direct" | "indirect" | "absent";
-type ClassificationResult = { domain: RiskDomain; score: number; tags: string[] };
+type ClassificationResult = {
+  domain: RiskDomain;
+  score: number;
+  tags: string[];
+};
 
 function getPublisher(item: ParsedItem) {
   if (!item.source) {
@@ -331,7 +386,11 @@ function stripTags(input: string | undefined) {
     return "";
   }
 
-  return input.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+  return input
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function normalizeHeadline(title: string) {
@@ -343,7 +402,9 @@ function includesAny(text: string, terms: string[]) {
 }
 
 function scoreDomainText(text: string, domain: RiskDomain) {
-  const matches = riskKeywords[domain].filter((keyword) => text.includes(keyword.term));
+  const matches = riskKeywords[domain].filter((keyword) =>
+    text.includes(keyword.term)
+  );
   const score = matches.reduce((total, keyword) => total + keyword.weight, 0);
   return { score, tags: matches.map((keyword) => keyword.term) };
 }
@@ -364,18 +425,26 @@ function escapeRegex(input: string) {
 function sanitizeDescription(input: string | undefined, publisher: string) {
   const stripped = stripTags(input);
 
-  if (!stripped || !publisher || publisher === "Unknown source") {
+  if (!(stripped && publisher) || publisher === "Unknown source") {
     return stripped;
   }
 
-  return stripped.replace(new RegExp(escapeRegex(publisher), "ig"), " ").replace(/\s+/g, " ").trim();
+  return stripped
+    .replace(new RegExp(escapeRegex(publisher), "ig"), " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function toPattern(input: string) {
   return escapeRegex(normalizeRelationText(input));
 }
 
-function hasNearbyPhrase(text: string, leftPhrases: string[], rightPhrases: string[], gap: number) {
+function hasNearbyPhrase(
+  text: string,
+  leftPhrases: string[],
+  rightPhrases: string[],
+  gap: number
+) {
   if (!text || leftPhrases.length === 0 || rightPhrases.length === 0) {
     return false;
   }
@@ -402,7 +471,9 @@ function assessCountryRelevance(
 ): CountryRelevance {
   const normalized = normalizeRelationText(`${title} ${description}`);
   const countryTerms = getCountryMatchPhrases(country.code);
-  const mentionsQueryCountry = detectedCountryCodes.includes(country.code) || countryTerms.some((phrase) => normalized.includes(phrase));
+  const mentionsQueryCountry =
+    detectedCountryCodes.includes(country.code) ||
+    countryTerms.some((phrase) => normalized.includes(phrase));
 
   if (!mentionsQueryCountry) {
     return "absent";
@@ -412,10 +483,17 @@ function assessCountryRelevance(
     return "direct";
   }
 
-  const mentionsOtherCountries = detectedCountryCodes.some((code) => code !== country.code);
+  const mentionsOtherCountries = detectedCountryCodes.some(
+    (code) => code !== country.code
+  );
 
   if (domain === "civil_unrest") {
-    const hasLocalUnrest = hasNearbyPhrase(normalized, countryTerms, unrestTerms, 4);
+    const hasLocalUnrest = hasNearbyPhrase(
+      normalized,
+      countryTerms,
+      unrestTerms,
+      4
+    );
     const looksDiaspora = includesAny(normalized, indirectCivilUnrestTerms);
 
     if (looksDiaspora && mentionsOtherCountries) {
@@ -425,9 +503,24 @@ function assessCountryRelevance(
     return hasLocalUnrest || !mentionsOtherCountries ? "direct" : "indirect";
   }
 
-  const hasLocalImpact = hasNearbyPhrase(normalized, countryTerms, localImpactTerms, 6);
-  const hasLocalCombat = hasNearbyPhrase(normalized, countryTerms, directConflictTerms, 4);
-  const hasLocalPolicyConflict = hasNearbyPhrase(normalized, countryTerms, indirectConflictTerms, 4);
+  const hasLocalImpact = hasNearbyPhrase(
+    normalized,
+    countryTerms,
+    localImpactTerms,
+    6
+  );
+  const hasLocalCombat = hasNearbyPhrase(
+    normalized,
+    countryTerms,
+    directConflictTerms,
+    4
+  );
+  const hasLocalPolicyConflict = hasNearbyPhrase(
+    normalized,
+    countryTerms,
+    indirectConflictTerms,
+    4
+  );
   const looksIndirectConflict = includesAny(normalized, indirectConflictTerms);
 
   if (hasLocalPolicyConflict && !hasLocalImpact) {
@@ -445,7 +538,10 @@ function assessCountryRelevance(
   return "indirect";
 }
 
-function reclassifyIndirectCountrySignal(text: string, title: string): ClassificationResult | null {
+function reclassifyIndirectCountrySignal(
+  text: string,
+  title: string
+): ClassificationResult | null {
   const combined = `${title} ${text}`.toLowerCase();
   const macro = scoreDomainText(combined, "macroeconomic");
   const governance = scoreDomainText(combined, "governance");
@@ -454,7 +550,7 @@ function reclassifyIndirectCountrySignal(text: string, title: string): Classific
     return {
       domain: "macroeconomic",
       score: Math.max(macro.score + 18, 24),
-      tags: [...new Set([...macro.tags, "spillover", "indirect-country"])]
+      tags: [...new Set([...macro.tags, "spillover", "indirect-country"])],
     };
   }
 
@@ -462,7 +558,12 @@ function reclassifyIndirectCountrySignal(text: string, title: string): Classific
     return {
       domain: "governance",
       score: Math.max(governance.score, 20),
-      tags: [...new Set([...(governance.tags.length > 0 ? governance.tags : ["legal"]), "indirect-country"])]
+      tags: [
+        ...new Set([
+          ...(governance.tags.length > 0 ? governance.tags : ["legal"]),
+          "indirect-country",
+        ]),
+      ],
     };
   }
 
@@ -470,14 +571,24 @@ function reclassifyIndirectCountrySignal(text: string, title: string): Classific
     return {
       domain: "governance",
       score: Math.max(governance.score, 18),
-      tags: [...new Set([...(governance.tags.length > 0 ? governance.tags : ["security-posture"]), "indirect-country"])]
+      tags: [
+        ...new Set([
+          ...(governance.tags.length > 0
+            ? governance.tags
+            : ["security-posture"]),
+          "indirect-country",
+        ]),
+      ],
     };
   }
 
   return null;
 }
 
-function classifyArticle(text: string, title: string): ClassificationResult | null {
+function classifyArticle(
+  text: string,
+  title: string
+): ClassificationResult | null {
   const combined = `${title} ${text}`.toLowerCase();
   const hasDirectConflict = includesAny(combined, directConflictTerms);
   const hasMacroSpillover = includesAny(combined, macroSpilloverTerms);
@@ -496,10 +607,11 @@ function classifyArticle(text: string, title: string): ClassificationResult | nu
     .map((domain) => ({ domain, ...scoreDomainText(combined, domain) }))
     .map((entry) => {
       if (entry.domain === "conflict_security" && !hasDirectConflict) {
-        const penalty = (hasMacroSpillover ? 24 : 0) + (looksHistorical ? 30 : 0);
+        const penalty =
+          (hasMacroSpillover ? 24 : 0) + (looksHistorical ? 30 : 0);
         return {
           ...entry,
-          score: Math.max(0, entry.score - penalty)
+          score: Math.max(0, entry.score - penalty),
         };
       }
 
@@ -507,7 +619,7 @@ function classifyArticle(text: string, title: string): ClassificationResult | nu
         return {
           ...entry,
           score: entry.score + 18,
-          tags: [...new Set([...entry.tags, "spillover"])]
+          tags: [...new Set([...entry.tags, "spillover"])],
         };
       }
 
@@ -515,9 +627,12 @@ function classifyArticle(text: string, title: string): ClassificationResult | nu
     })
     .sort((left, right) => right.score - left.score);
 
-  const best = hasMacroSpillover && !hasDirectConflict
-    ? adjustedDomains.find((entry) => entry.domain === "macroeconomic" && entry.score >= 16) ?? adjustedDomains[0]
-    : adjustedDomains[0];
+  const best =
+    hasMacroSpillover && !hasDirectConflict
+      ? (adjustedDomains.find(
+          (entry) => entry.domain === "macroeconomic" && entry.score >= 16
+        ) ?? adjustedDomains[0])
+      : adjustedDomains[0];
 
   if (!best || best.score < 16) {
     return null;
@@ -527,7 +642,9 @@ function classifyArticle(text: string, title: string): ClassificationResult | nu
 }
 
 function buildSeverity(score: number, publishedAt: string | undefined) {
-  const ageHours = publishedAt ? (Date.now() - new Date(publishedAt).getTime()) / (1000 * 60 * 60) : 72;
+  const ageHours = publishedAt
+    ? (Date.now() - new Date(publishedAt).getTime()) / (1000 * 60 * 60)
+    : 72;
   const recencyBoost = clamp(22 - ageHours / 6, 0, 22);
   return clamp(score + recencyBoost, 8, 92);
 }
@@ -551,9 +668,9 @@ async function fetchFeed(country: CountrySummary) {
   const response = await fetchWithTimeout(url, {
     headers: {
       Accept: "application/rss+xml, application/xml, text/xml",
-      "User-Agent": "Mozilla/5.0 (compatible; AreWeFcked/0.1)"
+      "User-Agent": "Mozilla/5.0 (compatible; AreWeFcked/0.1)",
     },
-    next: { revalidate: 86400 }
+    next: { revalidate: 86_400 },
   });
 
   if (!response.ok) {
@@ -579,7 +696,7 @@ async function fetchFeed(country: CountrySummary) {
     url,
     latencyMs: Date.now() - startedAt,
     lastBuildDate: parsed.rss?.channel?.lastBuildDate,
-    items
+    items,
   };
 }
 
@@ -605,8 +722,16 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
         return null;
       }
 
-      const detectedCountryCodes = resolveCountryCodesFromText(`${title} ${description}`);
-      const relevance = assessCountryRelevance(country, title, description, classification.domain, detectedCountryCodes);
+      const detectedCountryCodes = resolveCountryCodesFromText(
+        `${title} ${description}`
+      );
+      const relevance = assessCountryRelevance(
+        country,
+        title,
+        description,
+        classification.domain,
+        detectedCountryCodes
+      );
 
       if (relevance === "absent") {
         return null;
@@ -614,8 +739,15 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
 
       let finalClassification = classification;
 
-      if ((classification.domain === "conflict_security" || classification.domain === "civil_unrest") && relevance === "indirect") {
-        const reclassified = reclassifyIndirectCountrySignal(description, title);
+      if (
+        (classification.domain === "conflict_security" ||
+          classification.domain === "civil_unrest") &&
+        relevance === "indirect"
+      ) {
+        const reclassified = reclassifyIndirectCountrySignal(
+          description,
+          title
+        );
 
         if (!reclassified) {
           return null;
@@ -630,8 +762,13 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
         return null;
       }
 
-      const publishedAt = item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString();
-      const severityNormalized = buildSeverity(finalClassification.score, publishedAt);
+      const publishedAt = item.pubDate
+        ? new Date(item.pubDate).toISOString()
+        : new Date().toISOString();
+      const severityNormalized = buildSeverity(
+        finalClassification.score,
+        publishedAt
+      );
 
       return {
         id: `current-news:${country.code}:${hashString(`${title}:${publishedAt}`)}`,
@@ -653,8 +790,8 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
           publisher,
           description,
           queryCountry: country.name,
-          countryRelevance: relevance
-        }
+          countryRelevance: relevance,
+        },
       } satisfies NormalizedEvent;
     })
     .flatMap((item) => (item ? [item] : []))
@@ -665,8 +802,13 @@ export function dedupeCurrentNewsEvents(events: NormalizedEvent[]) {
   const merged = new Map<string, NormalizedEvent>();
 
   for (const event of events) {
-    const publisher = typeof event.metadata?.publisher === "string" ? event.metadata.publisher : "Unknown source";
-    const key = event.url?.toLowerCase() ?? `${event.title.toLowerCase()}:${publisher.toLowerCase()}`;
+    const publisher =
+      typeof event.metadata?.publisher === "string"
+        ? event.metadata.publisher
+        : "Unknown source";
+    const key =
+      event.url?.toLowerCase() ??
+      `${event.title.toLowerCase()}:${publisher.toLowerCase()}`;
     const existing = merged.get(key);
 
     if (!existing) {
@@ -676,14 +818,22 @@ export function dedupeCurrentNewsEvents(events: NormalizedEvent[]) {
 
     merged.set(key, {
       ...existing,
-      countryCodes: [...new Set([...existing.countryCodes, ...event.countryCodes])],
+      countryCodes: [
+        ...new Set([...existing.countryCodes, ...event.countryCodes]),
+      ],
       tags: [...new Set([...(existing.tags ?? []), ...(event.tags ?? [])])],
       severityRaw: Math.max(existing.severityRaw ?? 0, event.severityRaw ?? 0),
-      severityNormalized: Math.max(existing.severityNormalized ?? 0, event.severityNormalized ?? 0),
+      severityNormalized: Math.max(
+        existing.severityNormalized ?? 0,
+        event.severityNormalized ?? 0
+      ),
       confidence: Math.max(existing.confidence ?? 0, event.confidence ?? 0),
-      occurredAt: new Date(existing.occurredAt) > new Date(event.occurredAt) ? existing.occurredAt : event.occurredAt,
+      occurredAt:
+        new Date(existing.occurredAt) > new Date(event.occurredAt)
+          ? existing.occurredAt
+          : event.occurredAt,
       ingestedAt: new Date().toISOString(),
-      summary: existing.summary
+      summary: existing.summary,
     });
   }
 
@@ -694,10 +844,17 @@ export const currentNewsAdapter: SourceAdapter = {
   key: "current_news",
   name: "Current news signal",
   async fetch(scope): Promise<SourceFetchResult> {
-    const countries = scope.mode === "global" ? starterCountries : [scope.country];
-    const settled = await Promise.allSettled(countries.map((country) => fetchFeed(country)));
-    const successes = settled.flatMap((result) => (result.status === "fulfilled" ? [result.value] : []));
-    const failures = settled.flatMap((result) => (result.status === "rejected" ? [result.reason] : []));
+    const countries =
+      scope.mode === "global" ? starterCountries : [scope.country];
+    const settled = await Promise.allSettled(
+      countries.map((country) => fetchFeed(country))
+    );
+    const successes = settled.flatMap((result) =>
+      result.status === "fulfilled" ? [result.value] : []
+    );
+    const failures = settled.flatMap((result) =>
+      result.status === "rejected" ? [result.reason] : []
+    );
 
     if (successes.length === 0) {
       const firstFailure = failures[0];
@@ -714,20 +871,33 @@ export const currentNewsAdapter: SourceAdapter = {
           freshness: "stale",
           lastSuccessfulSync: null,
           lastAttemptAt: new Date().toISOString(),
-          outageMessage: firstFailure instanceof Error ? firstFailure.message : "Unknown current-news error",
+          outageMessage:
+            firstFailure instanceof Error
+              ? firstFailure.message
+              : "Unknown current-news error",
           latencyMs: null,
           active: true,
-          notes: "Current-news fetch or XML parsing failed."
-        }
+          notes: "Current-news fetch or XML parsing failed.",
+        },
       };
     }
 
-    const events = dedupeCurrentNewsEvents(successes.flatMap((result) => normalizeItems(result.country, result.items)));
-    const latestTime = successes
-      .map((result) => result.lastBuildDate)
-      .filter((value): value is string => Boolean(value))
-      .sort((left, right) => new Date(right).getTime() - new Date(left).getTime())[0] ?? new Date().toUTCString();
-    const avgLatency = Math.round(successes.reduce((total, result) => total + result.latencyMs, 0) / Math.max(successes.length, 1));
+    const events = dedupeCurrentNewsEvents(
+      successes.flatMap((result) =>
+        normalizeItems(result.country, result.items)
+      )
+    );
+    const latestTime =
+      successes
+        .map((result) => result.lastBuildDate)
+        .filter((value): value is string => Boolean(value))
+        .sort(
+          (left, right) => new Date(right).getTime() - new Date(left).getTime()
+        )[0] ?? new Date().toUTCString();
+    const avgLatency = Math.round(
+      successes.reduce((total, result) => total + result.latencyMs, 0) /
+        Math.max(successes.length, 1)
+    );
     const degraded = failures.length > 0;
 
     return {
@@ -739,7 +909,11 @@ export const currentNewsAdapter: SourceAdapter = {
         "This adapter adds extra headline context across conflict, governance, macro, health, and infrastructure alongside the stronger structured and official feeds.",
         "Headline-derived domains still stay marked as sparse rather than measured.",
         "Indirect war spillover coverage is pushed into macro stress or governance instead of being treated as local active combat.",
-        ...(degraded ? [`${failures.length} country feed${failures.length === 1 ? "" : "s"} failed during this refresh, so surviving headline signals were kept instead of dropping the source entirely.`] : [])
+        ...(degraded
+          ? [
+              `${failures.length} country feed${failures.length === 1 ? "" : "s"} failed during this refresh, so surviving headline signals were kept instead of dropping the source entirely.`,
+            ]
+          : []),
       ],
       health: {
         sourceKey: "current_news",
@@ -750,16 +924,19 @@ export const currentNewsAdapter: SourceAdapter = {
             ? "live-ish"
             : Date.now() - new Date(latestTime).getTime() < 1000 * 60 * 60 * 72
               ? "fresh"
-              : Date.now() - new Date(latestTime).getTime() < 1000 * 60 * 60 * 120
+              : Date.now() - new Date(latestTime).getTime() <
+                  1000 * 60 * 60 * 120
                 ? "delayed"
                 : "stale",
         lastSuccessfulSync: toIsoString(new Date(latestTime)),
         lastAttemptAt: new Date().toISOString(),
-        outageMessage: degraded ? `${failures.length} country feed${failures.length === 1 ? "" : "s"} failed during refresh.` : null,
+        outageMessage: degraded
+          ? `${failures.length} country feed${failures.length === 1 ? "" : "s"} failed during refresh.`
+          : null,
         latencyMs: avgLatency,
         active: true,
-        notes: `${events.length} classified headline signal${events.length === 1 ? "" : "s"} captured across ${successes.length} successful countr${successes.length === 1 ? "y" : "ies"}.`
-      }
+        notes: `${events.length} classified headline signal${events.length === 1 ? "" : "s"} captured across ${successes.length} successful countr${successes.length === 1 ? "y" : "ies"}.`,
+      },
     };
-  }
+  },
 };

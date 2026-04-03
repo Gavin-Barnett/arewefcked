@@ -38,7 +38,7 @@ export async function recomputeAndPersistTrackedScores(): Promise<ScoreRecompute
       persistedGlobal: false,
       trackedCountryCount: starterCountries.length,
       persistedCountryCodes: [],
-      failedCountries: []
+      failedCountries: [],
     };
   }
 
@@ -57,7 +57,7 @@ export async function recomputeAndPersistTrackedScores(): Promise<ScoreRecompute
       persistedGlobal: false,
       trackedCountryCount: starterCountries.length,
       persistedCountryCodes: [],
-      failedCountries: []
+      failedCountries: [],
     };
   }
 
@@ -69,11 +69,17 @@ export async function recomputeAndPersistTrackedScores(): Promise<ScoreRecompute
 
   for (const country of starterCountries) {
     try {
-      const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: country.code });
+      const snapshot = await buildScoreSnapshot({
+        scope: "country",
+        countryCode: country.code,
+      });
       await persistScoreSnapshot(snapshot);
       persistedCountryCodes.push(country.code);
     } catch (error) {
-      failedCountries.push({ code: country.code, error: getErrorMessage(error) });
+      failedCountries.push({
+        code: country.code,
+        error: getErrorMessage(error),
+      });
     }
   }
 
@@ -84,13 +90,15 @@ export async function recomputeAndPersistTrackedScores(): Promise<ScoreRecompute
     ok: !partial,
     partial,
     status: partial ? 207 : 200,
-    message: partial ? "Persisted global and some country score snapshots." : "Persisted global and tracked-country score snapshots.",
+    message: partial
+      ? "Persisted global and some country score snapshots."
+      : "Persisted global and tracked-country score snapshots.",
     startedAt: startedAt.toISOString(),
     finishedAt: finishedAt.toISOString(),
     durationMs: finishedAt.getTime() - startedAt.getTime(),
     persistedGlobal: true,
     trackedCountryCount: starterCountries.length,
     persistedCountryCodes,
-    failedCountries
+    failedCountries,
   };
 }

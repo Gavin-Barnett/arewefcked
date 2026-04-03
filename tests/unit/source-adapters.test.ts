@@ -1,5 +1,8 @@
 import { starterCountries } from "@/lib/countries/starter-countries";
-import { currentNewsAdapter, dedupeCurrentNewsEvents } from "@/lib/sources/current-news";
+import {
+  currentNewsAdapter,
+  dedupeCurrentNewsEvents,
+} from "@/lib/sources/current-news";
 import { gdeltAdapter } from "@/lib/sources/gdelt";
 import { globalMonitorPoints } from "@/lib/sources/monitor-points";
 import { openMeteoAdapter } from "@/lib/sources/openmeteo";
@@ -11,18 +14,25 @@ import type { NormalizedEvent } from "@/lib/types/score";
 function jsonResponse(body: unknown) {
   return new Response(JSON.stringify(body), {
     status: 200,
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
   });
 }
 
 function xmlResponse(body: string) {
   return new Response(body, {
     status: 200,
-    headers: { "Content-Type": "application/rss+xml" }
+    headers: { "Content-Type": "application/rss+xml" },
   });
 }
 
-function worldBankResponse(indicatorId: string, indicatorLabel: string, countryCode: string, countryName: string, value: number | null, date = "2024") {
+function worldBankResponse(
+  indicatorId: string,
+  indicatorLabel: string,
+  countryCode: string,
+  countryName: string,
+  value: number | null,
+  date = "2024"
+) {
   return [
     {
       page: 1,
@@ -30,26 +40,26 @@ function worldBankResponse(indicatorId: string, indicatorLabel: string, countryC
       per_page: 4,
       total: 1,
       sourceid: "2",
-      lastupdated: "2026-02-24"
+      lastupdated: "2026-02-24",
     },
     [
       {
         indicator: {
           id: indicatorId,
-          value: indicatorLabel
+          value: indicatorLabel,
         },
         country: {
           id: countryCode,
-          value: countryName
+          value: countryName,
         },
         countryiso3code: `${countryCode}X`,
         date,
         value,
         unit: "",
         obs_status: "",
-        decimal: 1
-      }
-    ]
+        decimal: 1,
+      },
+    ],
   ];
 }
 
@@ -66,7 +76,7 @@ describe("source adapters", () => {
           metadata: {
             generated: Date.now(),
             title: "USGS Feed",
-            url: "https://earthquake.usgs.gov/"
+            url: "https://earthquake.usgs.gov/",
           },
           features: [
             {
@@ -80,13 +90,13 @@ describe("source adapters", () => {
                 felt: 12,
                 tsunami: 0,
                 alert: null,
-                title: "M 6.2 - 100 km S of Test City"
+                title: "M 6.2 - 100 km S of Test City",
               },
               geometry: {
-                coordinates: [10, 20, 30]
-              }
-            }
-          ]
+                coordinates: [10, 20, 30],
+              },
+            },
+          ],
         })
       )
     );
@@ -102,7 +112,12 @@ describe("source adapters", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("air-quality")) {
           return Promise.resolve(
@@ -114,8 +129,8 @@ describe("source adapters", () => {
                 us_aqi: 92,
                 pm2_5: 34,
                 pm10: 46,
-                ozone: 12
-              }
+                ozone: 12,
+              },
             })
           );
         }
@@ -129,8 +144,8 @@ describe("source adapters", () => {
               temperature_2m: 31,
               apparent_temperature: 35,
               wind_speed_10m: 14,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
@@ -149,7 +164,12 @@ describe("source adapters", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("air-quality")) {
           return Promise.resolve(
@@ -161,8 +181,8 @@ describe("source adapters", () => {
                 us_aqi: 55,
                 pm2_5: 18,
                 pm10: 20,
-                ozone: 10
-              }
+                ozone: 10,
+              },
             })
           );
         }
@@ -182,8 +202,8 @@ describe("source adapters", () => {
               temperature_2m: 28,
               apparent_temperature: 31,
               wind_speed_10m: 12,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
@@ -209,15 +229,18 @@ describe("source adapters", () => {
                 seendate: "20260402T120000Z",
                 domain: "example.com",
                 language: "English",
-                sourcecountry: "US"
-              }
-            ]
+                sourcecountry: "US",
+              },
+            ],
           })
         )
       )
     );
 
-    const result = await gdeltAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "UA")! });
+    const result = await gdeltAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "UA")!,
+    });
 
     expect(result.health.status).toBe("operational");
     expect(result.events).toHaveLength(1);
@@ -236,11 +259,13 @@ describe("source adapters", () => {
               Title: "Mpox update - United Kingdom",
               ItemDefaultUrl: "/2026-DON595",
               PublicationDate: new Date().toISOString(),
-              Summary: "WHO confirmed a new mpox development in the United Kingdom.",
-              Overview: "The United Kingdom is investigating additional exposures.",
-              Assessment: "WHO assesses the public health risk as moderate."
-            }
-          ]
+              Summary:
+                "WHO confirmed a new mpox development in the United Kingdom.",
+              Overview:
+                "The United Kingdom is investigating additional exposures.",
+              Assessment: "WHO assesses the public health risk as moderate.",
+            },
+          ],
         })
       )
     );
@@ -257,10 +282,25 @@ describe("source adapters", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "UA", "Ukraine", 12.8)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "UA",
+                "Ukraine",
+                12.8
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
@@ -268,14 +308,37 @@ describe("source adapters", () => {
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "UA", "Ukraine", -3.4)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "UA",
+                "Ukraine",
+                -3.4
+              )
+            )
+          );
         }
 
-        return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "UA", "Ukraine", 12.6)));
+        return Promise.resolve(
+          jsonResponse(
+            worldBankResponse(
+              "TM.VAL.FUEL.ZS.UN",
+              "Fuel imports (% of merchandise imports)",
+              "UA",
+              "Ukraine",
+              12.6
+            )
+          )
+        );
       })
     );
 
-    const result = await worldBankAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "UA")! });
+    const result = await worldBankAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "UA")!,
+    });
 
     expect(result.health.status).toBe("degraded");
     expect(result.events).toHaveLength(1);
@@ -318,7 +381,10 @@ describe("source adapters", () => {
 
     expect(result.health.status).toBe("degraded");
     expect(result.events).toHaveLength(1);
-    expect(result.events[0]?.countryCodes).toEqual([starterCountries[0]?.code, starterCountries[1]?.code]);
+    expect(result.events[0]?.countryCodes).toEqual([
+      starterCountries[0]?.code,
+      starterCountries[1]?.code,
+    ]);
   });
 
   it("keeps indirect war spillover headlines out of direct conflict scoring", async () => {
@@ -354,7 +420,10 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "KR")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "KR")!,
+    });
 
     expect(result.events).toHaveLength(1);
     expect(result.events[0]?.domain).toBe("macroeconomic");
@@ -393,11 +462,20 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "FR")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "FR")!,
+    });
 
-    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
-    expect(result.events.some((event) => event.domain === "macroeconomic")).toBe(true);
-    expect(result.events.some((event) => event.tags?.includes("country:indirect"))).toBe(true);
+    expect(
+      result.events.some((event) => event.domain === "conflict_security")
+    ).toBe(false);
+    expect(
+      result.events.some((event) => event.domain === "macroeconomic")
+    ).toBe(true);
+    expect(
+      result.events.some((event) => event.tags?.includes("country:indirect"))
+    ).toBe(true);
   });
 
   it("treats military capability headlines as indirect country signals instead of live combat", async () => {
@@ -419,11 +497,20 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "JP")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "JP")!,
+    });
 
-    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
-    expect(result.events.some((event) => event.domain === "governance")).toBe(true);
-    expect(result.events.some((event) => event.tags?.includes("security-posture"))).toBe(true);
+    expect(
+      result.events.some((event) => event.domain === "conflict_security")
+    ).toBe(false);
+    expect(result.events.some((event) => event.domain === "governance")).toBe(
+      true
+    );
+    expect(
+      result.events.some((event) => event.tags?.includes("security-posture"))
+    ).toBe(true);
   });
 
   it("treats arms-transfer coverage as indirect security posture instead of local combat", async () => {
@@ -445,10 +532,17 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "AU")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "AU")!,
+    });
 
-    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
-    expect(result.events.some((event) => event.domain === "governance")).toBe(true);
+    expect(
+      result.events.some((event) => event.domain === "conflict_security")
+    ).toBe(false);
+    expect(result.events.some((event) => event.domain === "governance")).toBe(
+      true
+    );
   });
 
   it("treats weapons-test coverage as indirect security posture instead of live conflict", async () => {
@@ -470,10 +564,17 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "CN")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "CN")!,
+    });
 
-    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
-    expect(result.events.some((event) => event.domain === "governance")).toBe(true);
+    expect(
+      result.events.some((event) => event.domain === "conflict_security")
+    ).toBe(false);
+    expect(result.events.some((event) => event.domain === "governance")).toBe(
+      true
+    );
   });
 
   it("reclassifies regional war spillover with another country intercepting missiles as macro stress", async () => {
@@ -495,11 +596,20 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "EG")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "EG")!,
+    });
 
-    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
-    expect(result.events.some((event) => event.domain === "macroeconomic")).toBe(true);
-    expect(result.events.some((event) => event.tags?.includes("country:indirect"))).toBe(true);
+    expect(
+      result.events.some((event) => event.domain === "conflict_security")
+    ).toBe(false);
+    expect(
+      result.events.some((event) => event.domain === "macroeconomic")
+    ).toBe(true);
+    expect(
+      result.events.some((event) => event.tags?.includes("country:indirect"))
+    ).toBe(true);
   });
 
   it("drops historical war archive coverage instead of treating it as current conflict", async () => {
@@ -521,7 +631,10 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "DE")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "DE")!,
+    });
 
     expect(result.events).toHaveLength(0);
   });
@@ -545,7 +658,10 @@ describe("source adapters", () => {
 
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
 
-    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "CN")! });
+    const result = await currentNewsAdapter.fetch({
+      mode: "country",
+      country: starterCountries.find((country) => country.code === "CN")!,
+    });
 
     expect(result.events).toHaveLength(0);
   });
@@ -558,14 +674,17 @@ describe("source adapters", () => {
           value: [
             {
               Id: "who-global-1",
-              Title: "Middle East respiratory syndrome coronavirus - Global update",
+              Title:
+                "Middle East respiratory syndrome coronavirus - Global update",
               ItemDefaultUrl: "/2025-DON591",
               PublicationDate: new Date().toISOString(),
-              Summary: "WHO reports a global update with cases in Saudi Arabia and France.",
-              Overview: "Historical references include the Republic of Korea and other previously affected countries.",
-              Assessment: "WHO assesses the public health risk as moderate."
-            }
-          ]
+              Summary:
+                "WHO reports a global update with cases in Saudi Arabia and France.",
+              Overview:
+                "Historical references include the Republic of Korea and other previously affected countries.",
+              Assessment: "WHO assesses the public health risk as moderate.",
+            },
+          ],
         })
       )
     );
@@ -593,7 +712,7 @@ describe("source adapters", () => {
         severityNormalized: 60,
         confidence: 0.42,
         tags: ["Example News", "war"],
-        metadata: { publisher: "Example News" }
+        metadata: { publisher: "Example News" },
       },
       {
         id: "b",
@@ -610,8 +729,8 @@ describe("source adapters", () => {
         severityNormalized: 68,
         confidence: 0.42,
         tags: ["Example News", "missile"],
-        metadata: { publisher: "Example News" }
-      }
+        metadata: { publisher: "Example News" },
+      },
     ];
 
     const merged = dedupeCurrentNewsEvents(events);
@@ -622,5 +741,3 @@ describe("source adapters", () => {
     expect(merged[0]?.tags).toContain("missile");
   });
 });
-
-

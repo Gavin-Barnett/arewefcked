@@ -1,2 +1,4 @@
-console.error("GDELT ingestion is scaffolded but not implemented yet. Phase one runtime stays honest and leaves this source disabled.");
+console.error(
+  "GDELT ingestion is scaffolded but not implemented yet. Phase one runtime stays honest and leaves this source disabled."
+);
 process.exitCode = 1;

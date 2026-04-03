@@ -24,8 +24,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       needleEnd: "#86efac",
       hubTop: "#0d1611",
       hubBottom: "#040806",
-      outline: "rgba(134, 239, 172, 0.35)"
-    }
+      outline: "rgba(134, 239, 172, 0.35)",
+    },
   },
   {
     max: 39,
@@ -38,8 +38,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       needleEnd: "#bef264",
       hubTop: "#15170c",
       hubBottom: "#060704",
-      outline: "rgba(190, 242, 100, 0.34)"
-    }
+      outline: "rgba(190, 242, 100, 0.34)",
+    },
   },
   {
     max: 59,
@@ -52,8 +52,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       needleEnd: "#fbbf24",
       hubTop: "#181008",
       hubBottom: "#060403",
-      outline: "rgba(251, 191, 36, 0.36)"
-    }
+      outline: "rgba(251, 191, 36, 0.36)",
+    },
   },
   {
     max: 79,
@@ -66,8 +66,8 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       needleEnd: "#fb923c",
       hubTop: "#1a0d08",
       hubBottom: "#050302",
-      outline: "rgba(251, 146, 60, 0.36)"
-    }
+      outline: "rgba(251, 146, 60, 0.36)",
+    },
   },
   {
     max: 100,
@@ -80,12 +80,16 @@ const severityThemes: Array<{ max: number; theme: SeverityTheme }> = [
       needleEnd: "#f87171",
       hubTop: "#180909",
       hubBottom: "#050202",
-      outline: "rgba(248, 113, 113, 0.36)"
-    }
-  }
+      outline: "rgba(248, 113, 113, 0.36)",
+    },
+  },
 ];
 
 export function getSeverityTheme(score: number) {
   const normalized = clamp(score, 0, 100);
-  return severityThemes.find((entry) => normalized <= entry.max)?.theme ?? severityThemes[severityThemes.length - 1].theme;
+  return (
+    severityThemes.find((entry) => normalized <= entry.max)?.theme ??
+    severityThemes.at(-1)?.theme ??
+    severityThemes[0].theme
+  );
 }

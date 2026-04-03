@@ -2,7 +2,14 @@ import { countries } from "@/lib/countries/starter-countries";
 
 const countryAliases: Partial<Record<string, string[]>> = {
   GB: ["United Kingdom", "Britain", "Great Britain", "UK"],
-  IL: ["Israeli", "IDF", "Tel Aviv", "Jerusalem", "West Jerusalem", "Netanyahu"],
+  IL: [
+    "Israeli",
+    "IDF",
+    "Tel Aviv",
+    "Jerusalem",
+    "West Jerusalem",
+    "Netanyahu",
+  ],
   IR: ["Islamic Republic of Iran"],
   KR: ["South Korea", "Republic of Korea"],
   KP: ["North Korea", "Democratic People's Republic of Korea"],
@@ -12,7 +19,17 @@ const countryAliases: Partial<Record<string, string[]>> = {
   TR: ["Turkey", "Turkiye"],
   TW: ["Taiwan", "Republic of China"],
   UA: ["Ukraine", "Kyiv", "Kiev"],
-  US: ["United States", "United States of America", "US", "U.S.", "USA", "U.S.A.", "Washington DC", "Washington, DC", "Washington"]
+  US: [
+    "United States",
+    "United States of America",
+    "US",
+    "U.S.",
+    "USA",
+    "U.S.A.",
+    "Washington DC",
+    "Washington, DC",
+    "Washington",
+  ],
 };
 
 function normalizeText(input: string) {
@@ -26,12 +43,20 @@ function normalizeText(input: string) {
 
 const preparedCountries = countries.map((country) => ({
   code: country.code,
-  phrases: [...new Set([country.name, country.focalCity, ...(countryAliases[country.code] ?? [])])]
+  phrases: [
+    ...new Set([
+      country.name,
+      country.focalCity,
+      ...(countryAliases[country.code] ?? []),
+    ]),
+  ]
     .map(normalizeText)
-    .filter(Boolean)
+    .filter(Boolean),
 }));
 
-const preparedCountryPhraseMap = new Map(preparedCountries.map((country) => [country.code, country.phrases]));
+const preparedCountryPhraseMap = new Map(
+  preparedCountries.map((country) => [country.code, country.phrases])
+);
 
 export function getCountryMatchPhrases(code: string) {
   return preparedCountryPhraseMap.get(code.toUpperCase()) ?? [];
@@ -47,11 +72,16 @@ export function detectCountryCodesInText(input: string) {
   const haystack = ` ${normalized} `;
 
   return preparedCountries
-    .filter((country) => country.phrases.some((phrase) => haystack.includes(` ${phrase} `)))
+    .filter((country) =>
+      country.phrases.some((phrase) => haystack.includes(` ${phrase} `))
+    )
     .map((country) => country.code);
 }
 
-export function resolveCountryCodesFromText(input: string, fallbackCode?: string) {
+export function resolveCountryCodesFromText(
+  input: string,
+  fallbackCode?: string
+) {
   const matches = detectCountryCodesInText(input);
 
   if (matches.length > 0) {

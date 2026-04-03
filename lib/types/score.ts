@@ -8,11 +8,16 @@ export const riskDomains = [
   "natural_disaster",
   "climate_environment",
   "cyber_infra",
-  "governance"
+  "governance",
 ] as const;
 
 export const verdictTones = ["dry", "grim", "wry", "clinical"] as const;
-export const freshnessStates = ["live-ish", "fresh", "delayed", "stale"] as const;
+export const freshnessStates = [
+  "live-ish",
+  "fresh",
+  "delayed",
+  "stale",
+] as const;
 export const coverageStates = ["measured", "sparse", "unavailable"] as const;
 export const verdictScopes = ["global", "country"] as const;
 export const trendWindows = ["24h", "7d", "30d"] as const;
@@ -40,7 +45,7 @@ export const normalizedEventSchema = z.object({
   severityNormalized: z.number().min(0).max(100).optional(),
   confidence: z.number().min(0).max(1).optional(),
   tags: z.array(z.string()).optional(),
-  metadata: z.record(z.string(), z.unknown()).optional()
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 export type NormalizedEvent = z.infer<typeof normalizedEventSchema>;
@@ -55,7 +60,7 @@ export const sourceHealthEntrySchema = z.object({
   outageMessage: z.string().nullable(),
   latencyMs: z.number().int().nonnegative().nullable(),
   active: z.boolean(),
-  notes: z.string().optional()
+  notes: z.string().optional(),
 });
 
 export type SourceHealthEntry = z.infer<typeof sourceHealthEntrySchema>;
@@ -70,7 +75,7 @@ export const domainBreakdownSchema = z.object({
   evidenceCount: z.number().int().nonnegative(),
   summary: z.string(),
   topEvidenceIds: z.array(z.string()),
-  lastUpdated: z.string().datetime().nullable()
+  lastUpdated: z.string().datetime().nullable(),
 });
 
 export type DomainBreakdown = z.infer<typeof domainBreakdownSchema>;
@@ -82,7 +87,7 @@ export const topDriverSchema = z.object({
   summary: z.string(),
   direction: z.enum(["up", "down"]),
   effect: z.number(),
-  evidenceIds: z.array(z.string())
+  evidenceIds: z.array(z.string()),
 });
 
 export type TopDriver = z.infer<typeof topDriverSchema>;
@@ -97,7 +102,7 @@ export const evidenceItemSchema = z.object({
   occurredAt: z.string().datetime(),
   severity: z.number().min(0).max(100),
   countryCodes: z.array(z.string().length(2)),
-  tags: z.array(z.string())
+  tags: z.array(z.string()),
 });
 
 export type EvidenceItem = z.infer<typeof evidenceItemSchema>;
@@ -107,7 +112,7 @@ export const trendDeltaSchema = z.object({
   delta: z.number().nullable(),
   direction: z.enum(["up", "down", "flat"]),
   available: z.boolean(),
-  note: z.string().optional()
+  note: z.string().optional(),
 });
 
 export type TrendDelta = z.infer<typeof trendDeltaSchema>;
@@ -119,7 +124,7 @@ export const verdictMessageSchema = z.object({
   text: z.string(),
   allowedScopes: z.array(z.enum(verdictScopes)),
   minConfidence: z.number().min(0).max(1).optional(),
-  tags: z.array(z.string()).optional()
+  tags: z.array(z.string()).optional(),
 });
 
 export type VerdictMessage = z.infer<typeof verdictMessageSchema>;
@@ -144,7 +149,7 @@ export const scoreSnapshotSchema = z.object({
   methodologyBlurb: z.string(),
   sparseData: z.boolean(),
   sparseReason: z.string().optional(),
-  lastUpdated: z.string().datetime().nullable()
+  lastUpdated: z.string().datetime().nullable(),
 });
 
 export type ScoreSnapshot = z.infer<typeof scoreSnapshotSchema>;
@@ -155,7 +160,7 @@ export const countrySummarySchema = z.object({
   region: z.string(),
   latitude: z.number(),
   longitude: z.number(),
-  focalCity: z.string()
+  focalCity: z.string(),
 });
 
 export type CountrySummary = z.infer<typeof countrySummarySchema>;

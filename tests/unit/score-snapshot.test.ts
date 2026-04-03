@@ -3,7 +3,7 @@ import { buildScoreSnapshot } from "@/lib/scoring/engine";
 function jsonResponse(body: unknown) {
   return new Response(JSON.stringify(body), {
     status: 200,
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
   });
 }
 
@@ -129,7 +129,14 @@ const japanCapabilityRss = `<?xml version="1.0" encoding="UTF-8"?>
   </channel>
 </rss>`;
 
-function worldBankResponse(indicatorId: string, indicatorLabel: string, countryCode: string, countryName: string, value: number | null, date = "2024") {
+function worldBankResponse(
+  indicatorId: string,
+  indicatorLabel: string,
+  countryCode: string,
+  countryName: string,
+  value: number | null,
+  date = "2024"
+) {
   return [
     {
       page: 1,
@@ -137,26 +144,26 @@ function worldBankResponse(indicatorId: string, indicatorLabel: string, countryC
       per_page: 4,
       total: 1,
       sourceid: "2",
-      lastupdated: "2026-02-24"
+      lastupdated: "2026-02-24",
     },
     [
       {
         indicator: {
           id: indicatorId,
-          value: indicatorLabel
+          value: indicatorLabel,
         },
         country: {
           id: countryCode,
-          value: countryName
+          value: countryName,
         },
         countryiso3code: `${countryCode}X`,
         date,
         value,
         unit: "",
         obs_status: "",
-        decimal: 1
-      }
-    ]
+        decimal: 1,
+      },
+    ],
   ];
 }
 
@@ -169,7 +176,12 @@ describe("score snapshot", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("earthquake.usgs.gov")) {
           return Promise.resolve(
@@ -178,7 +190,7 @@ describe("score snapshot", () => {
                 generated: Date.now(),
                 title: "USGS Feed",
                 url: "https://earthquake.usgs.gov/",
-                count: 1
+                count: 1,
               },
               features: [
                 {
@@ -192,19 +204,24 @@ describe("score snapshot", () => {
                     felt: 4,
                     tsunami: 0,
                     alert: null,
-                    title: "M 6.1 - Near Test Region"
+                    title: "M 6.1 - Near Test Region",
                   },
                   geometry: {
-                    coordinates: [10, 20, 30]
-                  }
-                }
-              ]
+                    coordinates: [10, 20, 30],
+                  },
+                },
+              ],
             })
           );
         }
 
         if (url.includes("news.google.com")) {
-          return Promise.resolve(new Response(sampleRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+          return Promise.resolve(
+            new Response(sampleRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
         }
 
         if (url.includes("api.gdeltproject.org")) {
@@ -217,9 +234,9 @@ describe("score snapshot", () => {
                   seendate: "20260402T120000Z",
                   domain: "example.com",
                   language: "English",
-                  sourcecountry: "US"
-                }
-              ]
+                  sourcecountry: "US",
+                },
+              ],
             })
           );
         }
@@ -233,29 +250,72 @@ describe("score snapshot", () => {
                   Title: "Mpox update - United Kingdom",
                   ItemDefaultUrl: "/2026-DON595",
                   PublicationDate: new Date().toISOString(),
-                  Summary: "WHO confirmed a new mpox development in the United Kingdom.",
-                  Overview: "The United Kingdom is investigating additional exposures.",
-                  Assessment: "WHO assesses the public health risk as moderate."
-                }
-              ]
+                  Summary:
+                    "WHO confirmed a new mpox development in the United Kingdom.",
+                  Overview:
+                    "The United Kingdom is investigating additional exposures.",
+                  Assessment:
+                    "WHO assesses the public health risk as moderate.",
+                },
+              ],
             })
           );
         }
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "UA", "Ukraine", 12.8)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "UA",
+                "Ukraine",
+                12.8
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "UA", "Ukraine", 8.6)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "UA",
+                "Ukraine",
+                8.6
+              )
+            )
+          );
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "UA", "Ukraine", -3.4)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "UA",
+                "Ukraine",
+                -3.4
+              )
+            )
+          );
         }
 
         if (url.includes("TM.VAL.FUEL.ZS.UN")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "UA", "Ukraine", 12.6)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "UA",
+                "Ukraine",
+                12.6
+              )
+            )
+          );
         }
 
         if (url.includes("air-quality")) {
@@ -268,8 +328,8 @@ describe("score snapshot", () => {
                 us_aqi: 88,
                 pm2_5: 28,
                 pm10: 42,
-                ozone: 16
-              }
+                ozone: 16,
+              },
             })
           );
         }
@@ -283,8 +343,8 @@ describe("score snapshot", () => {
               temperature_2m: 29,
               apparent_temperature: 33,
               wind_speed_10m: 18,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
@@ -294,18 +354,40 @@ describe("score snapshot", () => {
 
     expect(snapshot.scope).toBe("global");
     expect(snapshot.sparseData).toBe(false);
-    expect(snapshot.domainBreakdown.find((item) => item.domain === "natural_disaster")?.coverage).toBe("measured");
-    expect(snapshot.domainBreakdown.find((item) => item.domain === "climate_environment")?.coverage).toBe("measured");
-    expect(snapshot.domainBreakdown.find((item) => item.domain === "macroeconomic")?.coverage).toBe("measured");
-    expect(snapshot.domainBreakdown.find((item) => item.domain === "public_health")?.coverage).toBe("measured");
-    expect(snapshot.domainBreakdown.find((item) => item.domain === "governance")?.coverage).toBe("sparse");
+    expect(
+      snapshot.domainBreakdown.find(
+        (item) => item.domain === "natural_disaster"
+      )?.coverage
+    ).toBe("measured");
+    expect(
+      snapshot.domainBreakdown.find(
+        (item) => item.domain === "climate_environment"
+      )?.coverage
+    ).toBe("measured");
+    expect(
+      snapshot.domainBreakdown.find((item) => item.domain === "macroeconomic")
+        ?.coverage
+    ).toBe("measured");
+    expect(
+      snapshot.domainBreakdown.find((item) => item.domain === "public_health")
+        ?.coverage
+    ).toBe("measured");
+    expect(
+      snapshot.domainBreakdown.find((item) => item.domain === "governance")
+        ?.coverage
+    ).toBe("sparse");
   });
 
   it("treats active Israel war coverage as sustained conflict instead of a mild headline spike", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("earthquake.usgs.gov")) {
           return Promise.resolve(
@@ -313,15 +395,20 @@ describe("score snapshot", () => {
               metadata: {
                 generated: Date.now(),
                 title: "USGS Feed",
-                url: "https://earthquake.usgs.gov/"
+                url: "https://earthquake.usgs.gov/",
               },
-              features: []
+              features: [],
             })
           );
         }
 
         if (url.includes("news.google.com")) {
-          return Promise.resolve(new Response(israelConflictRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+          return Promise.resolve(
+            new Response(israelConflictRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
         }
 
         if (url.includes("api.gdeltproject.org")) {
@@ -333,19 +420,59 @@ describe("score snapshot", () => {
         }
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "IL", "Israel", 2.8)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "IL",
+                "Israel",
+                2.8
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "IL", "Israel", 3.5)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "IL",
+                "Israel",
+                3.5
+              )
+            )
+          );
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "IL", "Israel", 1.4)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "IL",
+                "Israel",
+                1.4
+              )
+            )
+          );
         }
 
         if (url.includes("TM.VAL.FUEL.ZS.UN")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "IL", "Israel", 6.2)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "IL",
+                "Israel",
+                6.2
+              )
+            )
+          );
         }
 
         if (url.includes("air-quality")) {
@@ -358,8 +485,8 @@ describe("score snapshot", () => {
                 us_aqi: 58,
                 pm2_5: 18,
                 pm10: 24,
-                ozone: 11
-              }
+                ozone: 11,
+              },
             })
           );
         }
@@ -373,28 +500,42 @@ describe("score snapshot", () => {
               temperature_2m: 24,
               apparent_temperature: 27,
               wind_speed_10m: 8,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
     );
 
-    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "IL" });
-    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+    const snapshot = await buildScoreSnapshot({
+      scope: "country",
+      countryCode: "IL",
+    });
+    const conflictDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "conflict_security"
+    );
 
     expect(snapshot.score).toBeGreaterThan(40);
-    expect(snapshot.summaryBullets[2]).toContain("Sustained active-war reporting");
+    expect(snapshot.summaryBullets[2]).toContain(
+      "Sustained active-war reporting"
+    );
     expect(conflictDomain?.score).toBeGreaterThanOrEqual(80);
     expect(conflictDomain?.confidence).toBeGreaterThanOrEqual(0.58);
-    expect(snapshot.evidence.some((item) => item.countryCodes.includes("PS"))).toBe(true);
+    expect(
+      snapshot.evidence.some((item) => item.countryCodes.includes("PS"))
+    ).toBe(true);
   });
 
   it("does not let indirect France war references trigger a sustained-war country score", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("earthquake.usgs.gov")) {
           return Promise.resolve(
@@ -402,15 +543,20 @@ describe("score snapshot", () => {
               metadata: {
                 generated: Date.now(),
                 title: "USGS Feed",
-                url: "https://earthquake.usgs.gov/"
+                url: "https://earthquake.usgs.gov/",
               },
-              features: []
+              features: [],
             })
           );
         }
 
         if (url.includes("news.google.com")) {
-          return Promise.resolve(new Response(franceIndirectRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+          return Promise.resolve(
+            new Response(franceIndirectRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
         }
 
         if (url.includes("api.gdeltproject.org")) {
@@ -422,19 +568,59 @@ describe("score snapshot", () => {
         }
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "FR", "France", 2.0)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "FR",
+                "France",
+                2.0
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "FR", "France", 7.5)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "FR",
+                "France",
+                7.5
+              )
+            )
+          );
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "FR", "France", 1.2)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "FR",
+                "France",
+                1.2
+              )
+            )
+          );
         }
 
         if (url.includes("TM.VAL.FUEL.ZS.UN")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "FR", "France", 12.7)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "FR",
+                "France",
+                12.7
+              )
+            )
+          );
         }
 
         if (url.includes("air-quality")) {
@@ -447,8 +633,8 @@ describe("score snapshot", () => {
                 us_aqi: 40,
                 pm2_5: 8,
                 pm10: 12,
-                ozone: 10
-              }
+                ozone: 10,
+              },
             })
           );
         }
@@ -462,18 +648,25 @@ describe("score snapshot", () => {
               temperature_2m: 12,
               apparent_temperature: 13,
               wind_speed_10m: 8,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
     );
 
-    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "FR" });
-    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+    const snapshot = await buildScoreSnapshot({
+      scope: "country",
+      countryCode: "FR",
+    });
+    const conflictDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "conflict_security"
+    );
 
     expect(snapshot.score).toBeLessThan(45);
-    expect(snapshot.summaryBullets[2]).not.toContain("Sustained active-war reporting");
+    expect(snapshot.summaryBullets[2]).not.toContain(
+      "Sustained active-war reporting"
+    );
     expect(conflictDomain?.score).toBeLessThan(30);
   });
 
@@ -481,7 +674,12 @@ describe("score snapshot", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("earthquake.usgs.gov")) {
           return Promise.resolve(
@@ -489,15 +687,20 @@ describe("score snapshot", () => {
               metadata: {
                 generated: Date.now(),
                 title: "USGS Feed",
-                url: "https://earthquake.usgs.gov/"
+                url: "https://earthquake.usgs.gov/",
               },
-              features: []
+              features: [],
             })
           );
         }
 
         if (url.includes("news.google.com")) {
-          return Promise.resolve(new Response(japanCapabilityRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+          return Promise.resolve(
+            new Response(japanCapabilityRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
         }
 
         if (url.includes("api.gdeltproject.org")) {
@@ -509,19 +712,59 @@ describe("score snapshot", () => {
         }
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "JP", "Japan", 2.6)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "JP",
+                "Japan",
+                2.6
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "JP", "Japan", 2.5)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "JP",
+                "Japan",
+                2.5
+              )
+            )
+          );
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "JP", "Japan", 0.9)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "JP",
+                "Japan",
+                0.9
+              )
+            )
+          );
         }
 
         if (url.includes("TM.VAL.FUEL.ZS.UN")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "JP", "Japan", 17.5)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "JP",
+                "Japan",
+                17.5
+              )
+            )
+          );
         }
 
         if (url.includes("air-quality")) {
@@ -534,8 +777,8 @@ describe("score snapshot", () => {
                 us_aqi: 28,
                 pm2_5: 6,
                 pm10: 10,
-                ozone: 8
-              }
+                ozone: 8,
+              },
             })
           );
         }
@@ -549,19 +792,28 @@ describe("score snapshot", () => {
               temperature_2m: 16,
               apparent_temperature: 17,
               wind_speed_10m: 6,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
     );
 
-    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "JP" });
-    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
-    const governanceDomain = snapshot.domainBreakdown.find((item) => item.domain === "governance");
+    const snapshot = await buildScoreSnapshot({
+      scope: "country",
+      countryCode: "JP",
+    });
+    const conflictDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "conflict_security"
+    );
+    const governanceDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "governance"
+    );
 
     expect(snapshot.score).toBeLessThan(40);
-    expect(snapshot.summaryBullets[2]).not.toContain("Sustained active-war reporting");
+    expect(snapshot.summaryBullets[2]).not.toContain(
+      "Sustained active-war reporting"
+    );
     expect(conflictDomain?.score).toBeLessThan(25);
     expect(governanceDomain?.score).toBeGreaterThan(0);
   });
@@ -584,7 +836,12 @@ describe("score snapshot", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("earthquake.usgs.gov")) {
           return Promise.resolve(
@@ -592,15 +849,20 @@ describe("score snapshot", () => {
               metadata: {
                 generated: Date.now(),
                 title: "USGS Feed",
-                url: "https://earthquake.usgs.gov/"
+                url: "https://earthquake.usgs.gov/",
               },
-              features: []
+              features: [],
             })
           );
         }
 
         if (url.includes("news.google.com")) {
-          return Promise.resolve(new Response(iranSingleWarRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+          return Promise.resolve(
+            new Response(iranSingleWarRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
         }
 
         if (url.includes("api.gdeltproject.org")) {
@@ -612,19 +874,59 @@ describe("score snapshot", () => {
         }
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "IR", "Iran", 3.8)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "IR",
+                "Iran",
+                3.8
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "IR", "Iran", 9.1)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "IR",
+                "Iran",
+                9.1
+              )
+            )
+          );
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "IR", "Iran", 0.6)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "IR",
+                "Iran",
+                0.6
+              )
+            )
+          );
         }
 
         if (url.includes("TM.VAL.FUEL.ZS.UN")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "IR", "Iran", 6.4)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "IR",
+                "Iran",
+                6.4
+              )
+            )
+          );
         }
 
         if (url.includes("air-quality")) {
@@ -637,8 +939,8 @@ describe("score snapshot", () => {
                 us_aqi: 34,
                 pm2_5: 9,
                 pm10: 15,
-                ozone: 12
-              }
+                ozone: 12,
+              },
             })
           );
         }
@@ -652,18 +954,25 @@ describe("score snapshot", () => {
               temperature_2m: 24,
               apparent_temperature: 26,
               wind_speed_10m: 7,
-              weather_code: 1
-            }
+              weather_code: 1,
+            },
           })
         );
       })
     );
 
-    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "IR" });
-    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+    const snapshot = await buildScoreSnapshot({
+      scope: "country",
+      countryCode: "IR",
+    });
+    const conflictDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "conflict_security"
+    );
 
     expect(snapshot.score).toBeGreaterThan(40);
-    expect(snapshot.summaryBullets[2]).toContain("Direct active-war reporting is materially lifting");
+    expect(snapshot.summaryBullets[2]).toContain(
+      "Direct active-war reporting is materially lifting"
+    );
     expect(conflictDomain?.summary).toContain("active-war stress");
   });
 
@@ -671,7 +980,12 @@ describe("score snapshot", () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockImplementation((input: URL | RequestInfo) => {
-        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
 
         if (url.includes("earthquake.usgs.gov")) {
           return Promise.resolve(
@@ -679,15 +993,20 @@ describe("score snapshot", () => {
               metadata: {
                 generated: Date.now(),
                 title: "USGS Feed",
-                url: "https://earthquake.usgs.gov/"
+                url: "https://earthquake.usgs.gov/",
               },
-              features: []
+              features: [],
             })
           );
         }
 
         if (url.includes("news.google.com")) {
-          return Promise.resolve(new Response(ukraineConflictRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+          return Promise.resolve(
+            new Response(ukraineConflictRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
         }
 
         if (url.includes("api.gdeltproject.org")) {
@@ -700,7 +1019,7 @@ describe("score snapshot", () => {
                   seendate: "20260402T120000Z",
                   domain: "example.com",
                   language: "English",
-                  sourcecountry: "US"
+                  sourcecountry: "US",
                 },
                 {
                   url: "https://example.com/ukraine-conflict-2",
@@ -708,9 +1027,9 @@ describe("score snapshot", () => {
                   seendate: "20260402T090000Z",
                   domain: "example.com",
                   language: "English",
-                  sourcecountry: "GB"
-                }
-              ]
+                  sourcecountry: "GB",
+                },
+              ],
             })
           );
         }
@@ -724,29 +1043,72 @@ describe("score snapshot", () => {
                   Title: "Multi-country mpox situation update",
                   ItemDefaultUrl: "/2026-DON600",
                   PublicationDate: new Date().toISOString(),
-                  Summary: "WHO is tracking a multi-country mpox situation across several regions.",
-                  Overview: "This bulletin does not identify Ukraine specifically.",
-                  Assessment: "WHO assesses the public health risk as moderate."
-                }
-              ]
+                  Summary:
+                    "WHO is tracking a multi-country mpox situation across several regions.",
+                  Overview:
+                    "This bulletin does not identify Ukraine specifically.",
+                  Assessment:
+                    "WHO assesses the public health risk as moderate.",
+                },
+              ],
             })
           );
         }
 
         if (url.includes("FP.CPI.TOTL.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "UA", "Ukraine", 12.8)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "UA",
+                "Ukraine",
+                12.8
+              )
+            )
+          );
         }
 
         if (url.includes("SL.UEM.TOTL.ZS")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "UA", "Ukraine", 8.6)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "UA",
+                "Ukraine",
+                8.6
+              )
+            )
+          );
         }
 
         if (url.includes("NY.GDP.MKTP.KD.ZG")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "UA", "Ukraine", -3.4)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "UA",
+                "Ukraine",
+                -3.4
+              )
+            )
+          );
         }
 
         if (url.includes("TM.VAL.FUEL.ZS.UN")) {
-          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "UA", "Ukraine", 12.6)));
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "UA",
+                "Ukraine",
+                12.6
+              )
+            )
+          );
         }
 
         if (url.includes("air-quality")) {
@@ -759,8 +1121,8 @@ describe("score snapshot", () => {
                 us_aqi: 70,
                 pm2_5: 22,
                 pm10: 31,
-                ozone: 14
-              }
+                ozone: 14,
+              },
             })
           );
         }
@@ -774,25 +1136,38 @@ describe("score snapshot", () => {
               temperature_2m: 26,
               apparent_temperature: 29,
               wind_speed_10m: 10,
-              weather_code: 2
-            }
+              weather_code: 2,
+            },
           })
         );
       })
     );
 
-    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "UA" });
-    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
-    const macroDomain = snapshot.domainBreakdown.find((item) => item.domain === "macroeconomic");
+    const snapshot = await buildScoreSnapshot({
+      scope: "country",
+      countryCode: "UA",
+    });
+    const conflictDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "conflict_security"
+    );
+    const macroDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "macroeconomic"
+    );
 
     expect(snapshot.scope).toBe("country");
     expect(snapshot.countryCode).toBe("UA");
     expect(snapshot.score).toBeGreaterThan(40);
-    expect(snapshot.summaryBullets[2]).toContain("Sustained active-war reporting");
+    expect(snapshot.summaryBullets[2]).toContain(
+      "Sustained active-war reporting"
+    );
     expect(conflictDomain?.score).toBeGreaterThanOrEqual(70);
     expect(conflictDomain?.summary).toContain("sustained active-war stress");
     expect(macroDomain?.score).toBeGreaterThan(0);
-    expect(snapshot.evidence.every((item) => item.countryCodes.includes("UA"))).toBe(true);
-    expect(snapshot.evidence.some((item) => item.source === "who_don")).toBe(false);
+    expect(
+      snapshot.evidence.every((item) => item.countryCodes.includes("UA"))
+    ).toBe(true);
+    expect(snapshot.evidence.some((item) => item.source === "who_don")).toBe(
+      false
+    );
   });
 });

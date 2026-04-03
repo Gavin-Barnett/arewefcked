@@ -1,5 +1,5 @@
-﻿import type { CountrySummary } from "@/lib/types/score";
-import { allCountries } from "@/lib/countries/all-countries";
+﻿import { allCountries } from "@/lib/countries/all-countries";
+import type { CountrySummary } from "@/lib/types/score";
 
 const trackedCountryCodes = [
   "AU",
@@ -23,10 +23,12 @@ const trackedCountryCodes = [
   "TR",
   "UA",
   "US",
-  "ZA"
+  "ZA",
 ] as const;
 
-const countryMap = new Map(allCountries.map((country) => [country.code, country]));
+const countryMap = new Map(
+  allCountries.map((country) => [country.code, country])
+);
 
 export const countries = allCountries;
 export const trackedCountries = trackedCountryCodes
@@ -79,14 +81,30 @@ function searchRank(country: CountrySummary, normalizedQuery: string) {
   const focalCity = normalizeForMatch(country.focalCity);
   const region = normalizeForMatch(country.region);
 
-  if (code === normalizedQuery) return 0;
-  if (name === normalizedQuery) return 1;
-  if (name.startsWith(normalizedQuery)) return 2;
-  if (code.startsWith(normalizedQuery)) return 3;
-  if (focalCity.startsWith(normalizedQuery)) return 4;
-  if (name.includes(normalizedQuery)) return 5;
-  if (focalCity.includes(normalizedQuery)) return 6;
-  if (region.includes(normalizedQuery)) return 7;
+  if (code === normalizedQuery) {
+    return 0;
+  }
+  if (name === normalizedQuery) {
+    return 1;
+  }
+  if (name.startsWith(normalizedQuery)) {
+    return 2;
+  }
+  if (code.startsWith(normalizedQuery)) {
+    return 3;
+  }
+  if (focalCity.startsWith(normalizedQuery)) {
+    return 4;
+  }
+  if (name.includes(normalizedQuery)) {
+    return 5;
+  }
+  if (focalCity.includes(normalizedQuery)) {
+    return 6;
+  }
+  if (region.includes(normalizedQuery)) {
+    return 7;
+  }
   return 99;
 }
 
@@ -107,7 +125,8 @@ export function searchCountries(query: string) {
       );
     })
     .sort((left, right) => {
-      const rankDelta = searchRank(left, normalized) - searchRank(right, normalized);
+      const rankDelta =
+        searchRank(left, normalized) - searchRank(right, normalized);
 
       if (rankDelta !== 0) {
         return rankDelta;

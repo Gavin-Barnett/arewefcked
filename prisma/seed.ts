@@ -1,6 +1,6 @@
 import { starterCountries } from "../lib/countries/starter-countries";
-import { verdictMessages } from "../lib/verdicts/catalog";
 import { prisma } from "../lib/db/prisma";
+import { verdictMessages } from "../lib/verdicts/catalog";
 
 async function main() {
   for (const country of starterCountries) {
@@ -11,7 +11,7 @@ async function main() {
         region: country.region,
         latitude: country.latitude,
         longitude: country.longitude,
-        enabled: true
+        enabled: true,
       },
       create: {
         code: country.code,
@@ -19,8 +19,8 @@ async function main() {
         region: country.region,
         latitude: country.latitude,
         longitude: country.longitude,
-        enabled: true
-      }
+        enabled: true,
+      },
     });
   }
 
@@ -33,7 +33,7 @@ async function main() {
         text: message.text,
         allowedScopes: message.allowedScopes,
         minConfidence: message.minConfidence,
-        tags: message.tags ?? []
+        tags: message.tags ?? [],
       },
       create: {
         id: message.id,
@@ -42,12 +42,14 @@ async function main() {
         text: message.text,
         allowedScopes: message.allowedScopes,
         minConfidence: message.minConfidence,
-        tags: message.tags ?? []
-      }
+        tags: message.tags ?? [],
+      },
     });
   }
 
-  console.log(`Seeded ${starterCountries.length} countries and ${verdictMessages.length} verdict messages.`);
+  console.log(
+    `Seeded ${starterCountries.length} countries and ${verdictMessages.length} verdict messages.`
+  );
 }
 
 main()

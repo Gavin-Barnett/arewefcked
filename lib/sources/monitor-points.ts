@@ -1,4 +1,7 @@
-import { getCountryByCode, starterCountries } from "@/lib/countries/starter-countries";
+import {
+  getCountryByCode,
+  starterCountries,
+} from "@/lib/countries/starter-countries";
 
 export const globalMonitorPoints = starterCountries;
 

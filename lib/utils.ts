@@ -1,4 +1,4 @@
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
@@ -37,7 +37,9 @@ export function toIsoString(value: Date | string | null | undefined) {
     return null;
   }
 
-  return typeof value === "string" ? new Date(value).toISOString() : value.toISOString();
+  return typeof value === "string"
+    ? new Date(value).toISOString()
+    : value.toISOString();
 }
 
 export function directionFromDelta(delta: number | null) {

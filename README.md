@@ -2,7 +2,7 @@
 
 A live global severity index for how bad things are right now, built from real-world events, environmental stress, health alerts, macro signals, and current news.
 
-Live site: [https://arewefcked.vercel.app/](https://arewefcked.vercel.app/)
+Live site: [https://arewefcked.com/](https://arewefcked.com/)
 
 ## What this project is
 
@@ -160,6 +160,10 @@ The app deliberately caches expensive upstream calls and degrades gracefully whe
 
 Current news-style sources are on daily cache windows to stay within conservative Vercel cron/update expectations.
 Other measured sources can refresh on shorter windows where that improves the score without hammering providers.
+
+## Notes
+
+- ESLint has been swapped out for the far superior Ultracite, with Biome handling linting and formatting across the repo.
 
 ## Known limits
 

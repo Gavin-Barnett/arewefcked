@@ -7,7 +7,7 @@ const envSchema = z.object({
   ACLED_EMAIL: z.string().default(""),
   FRED_API_KEY: z.string().default(""),
   CRON_SECRET: z.string().default(""),
-  RELIEFWEB_APPNAME: z.string().default("are-we-fcked/0.1")
+  RELIEFWEB_APPNAME: z.string().default("are-we-fcked/0.1"),
 });
 
 export const env = envSchema.parse({
@@ -17,5 +17,5 @@ export const env = envSchema.parse({
   ACLED_EMAIL: process.env.ACLED_EMAIL,
   FRED_API_KEY: process.env.FRED_API_KEY,
   CRON_SECRET: process.env.CRON_SECRET,
-  RELIEFWEB_APPNAME: process.env.RELIEFWEB_APPNAME
+  RELIEFWEB_APPNAME: process.env.RELIEFWEB_APPNAME,
 });

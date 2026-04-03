@@ -18,5 +18,5 @@ export const methodologyBlurbs = [
   "This score should be read as a transparent risk pulse, not a mystical truth machine.",
   "A calmer score still carries caveats when the source mix is narrow.",
   "More providers will widen the lens; for now the system is honest about what it can see.",
-  "Phase one prioritizes auditable evidence over false completeness."
+  "Phase one prioritizes auditable evidence over false completeness.",
 ] as const;

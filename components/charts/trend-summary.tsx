@@ -50,9 +50,11 @@ export function TrendSummary(props: { trend: TrendDelta[] }) {
                 tone={directionTone(item.direction, item.available)}
               />
             </div>
-            <p className="mt-4 flex-1 text-ink/68 text-sm leading-6">
-              {item.note ?? "Historical comparisons are available."}
-            </p>
+            {item.available ? (
+              <p className="mt-4 flex-1 text-ink/68 text-sm leading-6">
+                {item.note ?? "Historical comparisons are available."}
+              </p>
+            ) : null}
           </article>
         ))}
       </div>

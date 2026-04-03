@@ -41,42 +41,6 @@ function confidenceLabel(confidence: number) {
   return "Thin confidence";
 }
 
-function viewerSummary(domain: DomainBreakdown) {
-  if (domain.coverage === "unavailable") {
-    return "This lane is not fully wired into the live model yet.";
-  }
-
-  if (domain.score >= 75) {
-    return "This is one of the main forces pushing the overall reading higher.";
-  }
-
-  if (domain.score >= 50) {
-    return "This lane is materially worsening the overall reading.";
-  }
-
-  if (domain.score >= 25) {
-    return "This lane is adding noticeable pressure right now.";
-  }
-
-  if (domain.score > 0) {
-    return "This lane is present, but it is not steering the whole picture.";
-  }
-
-  return "This lane is quiet in the current window.";
-}
-
-function recentMovementCopy(domain: DomainBreakdown) {
-  if (domain.evidenceCount === 0) {
-    return "No recent event cleared the surfacing threshold here.";
-  }
-
-  if (domain.evidenceCount === 1) {
-    return "1 recent event is shaping this lane.";
-  }
-
-  return `${domain.evidenceCount} recent events are shaping this lane.`;
-}
-
 function domainAccent(score: number) {
   if (score >= 70) {
     return "linear-gradient(90deg, rgba(239,68,68,0.2), rgba(239,68,68,0.95))";
@@ -95,7 +59,7 @@ export function DomainBreakdownGrid(props: { domains: DomainBreakdown[] }) {
       <div className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-4">
         {props.domains.map((domain) => (
           <article
-            className="relative flex min-h-[20rem] flex-col overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-panel"
+            className="relative flex min-h-[17.5rem] flex-col overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.04] shadow-panel"
             key={domain.domain}
           >
             <div
@@ -106,7 +70,7 @@ export function DomainBreakdownGrid(props: { domains: DomainBreakdown[] }) {
               }}
             />
             <div className="relative flex h-full flex-col p-5">
-              <div className="space-y-2">
+              <div className="h-[6.5rem] space-y-2">
                 <h3 className="max-w-[11ch] font-semibold text-[1.3rem] text-ink leading-[1.2] tracking-tight">
                   {domain.label}
                 </h3>
@@ -115,26 +79,21 @@ export function DomainBreakdownGrid(props: { domains: DomainBreakdown[] }) {
                 </p>
               </div>
 
-              <div className="mt-6 space-y-4">
+              <div className="mt-4 h-[8.5rem]">
                 <p className="font-mono text-[2.8rem] text-ink leading-none">
                   {domain.score.toFixed(1)}
                 </p>
-                <div className="flex flex-wrap items-center gap-2 text-[0.72rem] uppercase tracking-[0.24em]">
-                  <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-ink/80">
+                <div className="mt-5 flex flex-col items-start gap-3">
+                  <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[0.72rem] text-ink/80 uppercase tracking-[0.24em]">
                     {statusLabel(domain.score)}
                   </span>
-                  <span className="text-ink/45">
+                  <p className="text-[0.72rem] text-ink/45 uppercase tracking-[0.24em]">
                     {confidenceLabel(domain.confidence)}
-                  </span>
+                  </p>
                 </div>
               </div>
 
-              <div className="mt-5 flex flex-1 flex-col gap-3 text-sm leading-6">
-                <p className="text-ink/78">{viewerSummary(domain)}</p>
-                <p className="text-ink/58">{recentMovementCopy(domain)}</p>
-              </div>
-
-              <p className="mt-5 text-ink/55 text-sm">
+              <p className="mt-auto border-white/8 border-t pt-4 text-ink/55 text-sm">
                 Confidence {Math.round(domain.confidence * 100)}%
               </p>
             </div>

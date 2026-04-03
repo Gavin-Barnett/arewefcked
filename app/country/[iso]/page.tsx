@@ -1,6 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AdSlot } from "@/components/ad-slot";
 import { TrendSummary } from "@/components/charts/trend-summary";
@@ -149,20 +148,6 @@ export default async function CountryPage(props: {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex flex-wrap gap-3 text-ink/68 text-sm">
-              <Link
-                className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 transition hover:border-white/20 hover:text-ink"
-                href="/methodology"
-              >
-                Read methodology
-              </Link>
-              <Link
-                className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 transition hover:border-white/20 hover:text-ink"
-                href="/"
-              >
-                Back to global
-              </Link>
-            </div>
           </Panel>
 
           <Panel

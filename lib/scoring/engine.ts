@@ -41,6 +41,7 @@ const sustainedWarTags = ["war", "missile", "drone", "airstrike", "shelling", "i
 const canUseNextCache = process.env.NODE_ENV !== "test" && process.env.VITEST !== "true";
 
 type SustainedConflictProfile = {
+  mode: "active_theater" | "sustained";
   signalCount: number;
   averageSeverity: number;
   conflictFloor: number;
@@ -115,7 +116,7 @@ function isRecentEvent(occurredAt: string, hours: number) {
 }
 
 function isWarLinkedConflict(event: EvidenceItem) {
-  if (event.domain !== "conflict_security") {
+  if (event.domain !== "conflict_security" || event.tags.includes("country:indirect")) {
     return false;
   }
 
@@ -130,7 +131,7 @@ function buildSustainedConflictProfile(evidence: EvidenceItem[], scope: SourceFe
 
   const warSignals = evidence.filter((event) => isWarLinkedConflict(event) && isRecentEvent(event.occurredAt, 21 * 24));
 
-  if (warSignals.length < 3) {
+  if (warSignals.length === 0) {
     return null;
   }
 
@@ -138,11 +139,27 @@ function buildSustainedConflictProfile(evidence: EvidenceItem[], scope: SourceFe
   const peakSeverity = Math.max(...warSignals.map((event) => event.severity));
   const severeSignalCount = warSignals.filter((event) => event.severity >= 70).length;
 
+  if (warSignals.length === 1) {
+    if (peakSeverity < 72) {
+      return null;
+    }
+
+    return {
+      mode: "active_theater",
+      signalCount: 1,
+      averageSeverity,
+      conflictFloor: clamp(62 + (peakSeverity - 72) * 0.7, 62, 78),
+      sparseMultiplier: 1,
+      scoreBoost: clamp(14 + (peakSeverity - 72) * 0.35, 14, 20)
+    };
+  }
+
   if (averageSeverity < 45 || peakSeverity < 55) {
     return null;
   }
 
   return {
+    mode: "sustained",
     signalCount: warSignals.length,
     averageSeverity,
     conflictFloor: clamp(66 + warSignals.length * 2.1 + severeSignalCount * 2.5 + (averageSeverity - 45) * 0.45, 66, 90),
@@ -297,7 +314,9 @@ async function buildScoreSnapshotInternal(scope: SourceFetchScope, options: { sc
       evidenceCount: domainEvidence.length,
       summary:
         scope.mode === "country" && domain === "conflict_security" && sustainedConflictProfile
-          ? `${sustainedConflictProfile.signalCount} recent war-linked signals are recurring often enough to treat this as sustained active-war stress, even before fuller structured conflict coverage lands.`
+          ? sustainedConflictProfile.mode === "sustained"
+            ? `${sustainedConflictProfile.signalCount} recent war-linked signals are recurring often enough to treat this as sustained active-war stress, even before fuller structured conflict coverage lands.`
+            : "A smaller number of direct war-linked signals are still severe enough to treat this as active-war stress, even before fuller structured conflict coverage lands."
           : summarizeDomain(domain, domainEvidence, coverage, scope),
       topEvidenceIds: domainEvidence.slice(0, 3).map((item) => item.id),
       lastUpdated: domainEvidence[0]?.occurredAt ?? null
@@ -347,7 +366,9 @@ async function buildScoreSnapshotInternal(scope: SourceFetchScope, options: { sc
     `${hottestDomain?.label ?? "No measured domain"} is currently the hottest live lane.`,
     `${evidence.length} live evidence item${evidence.length === 1 ? "" : "s"} are shaping this reading across ${supportedDomains.length} covered domain${supportedDomains.length === 1 ? "" : "s"}.`,
     sustainedConflictProfile && scope.mode === "country"
-      ? "Sustained active-war reporting is materially lifting the country score rather than being treated as a one-off headline spike."
+      ? sustainedConflictProfile.mode === "sustained"
+        ? "Sustained active-war reporting is materially lifting the country score rather than being treated as a one-off headline spike."
+        : "Direct active-war reporting is materially lifting the country score even though the live proxy count is still thin."
       : sparseReason ?? `Live inputs now include ${liveSourceNames}.`
   ];
   const shortLabel = selectShortLabel(score, options.scope === "global" ? "global" : options.countryCode);

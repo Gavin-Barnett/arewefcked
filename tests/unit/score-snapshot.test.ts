@@ -79,6 +79,55 @@ const israelConflictRss = `<?xml version="1.0" encoding="UTF-8"?>
     </item>
   </channel>
 </rss>`;
+const franceIndirectRss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>France feed</title>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <item>
+      <title>French army combat exercise highlights drone warfare shortcomings - Example Outlet</title>
+      <link>https://news.example.com/france-1</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Ukraine lessons are reshaping military planning in France.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+    <item>
+      <title>War crimes complaint filed in France over a deadly Israeli strike in Beirut - Example Outlet</title>
+      <link>https://news.example.com/france-2</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Legal complaint filed in France over an Israeli strike in Beirut.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+    <item>
+      <title>France braces for higher oil prices as Hormuz threat jolts Europe - Example Outlet</title>
+      <link>https://news.example.com/france-3</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Oil prices and energy costs are rising across France.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+    <item>
+      <title>Norovirus outbreak affects dozens of teenagers in France - Example Outlet</title>
+      <link>https://news.example.com/france-4</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Public health officials are monitoring a virus outbreak in France.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+  </channel>
+</rss>`;
+const japanCapabilityRss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Japan feed</title>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <item>
+      <title>Japan's counterstrike capability takes shape with missile deployments - Example Outlet</title>
+      <link>https://news.example.com/japan-1</link>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+      <description>Japan's military planners are expanding counterstrike capability and readiness.</description>
+      <source url="https://news.example.com">Example Outlet</source>
+    </item>
+  </channel>
+</rss>`;
 
 function worldBankResponse(indicatorId: string, indicatorLabel: string, countryCode: string, countryName: string, value: number | null, date = "2024") {
   return [
@@ -339,6 +388,283 @@ describe("score snapshot", () => {
     expect(conflictDomain?.score).toBeGreaterThanOrEqual(80);
     expect(conflictDomain?.confidence).toBeGreaterThanOrEqual(0.58);
     expect(snapshot.evidence.some((item) => item.countryCodes.includes("PS"))).toBe(true);
+  });
+
+  it("does not let indirect France war references trigger a sustained-war country score", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: URL | RequestInfo) => {
+        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+        if (url.includes("earthquake.usgs.gov")) {
+          return Promise.resolve(
+            jsonResponse({
+              metadata: {
+                generated: Date.now(),
+                title: "USGS Feed",
+                url: "https://earthquake.usgs.gov/"
+              },
+              features: []
+            })
+          );
+        }
+
+        if (url.includes("news.google.com")) {
+          return Promise.resolve(new Response(franceIndirectRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+        }
+
+        if (url.includes("api.gdeltproject.org")) {
+          return Promise.reject(new Error("GDELT timeout"));
+        }
+
+        if (url.includes("diseaseoutbreaknews")) {
+          return Promise.resolve(jsonResponse({ value: [] }));
+        }
+
+        if (url.includes("FP.CPI.TOTL.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "FR", "France", 2.0)));
+        }
+
+        if (url.includes("SL.UEM.TOTL.ZS")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "FR", "France", 7.5)));
+        }
+
+        if (url.includes("NY.GDP.MKTP.KD.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "FR", "France", 1.2)));
+        }
+
+        if (url.includes("TM.VAL.FUEL.ZS.UN")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "FR", "France", 12.7)));
+        }
+
+        if (url.includes("air-quality")) {
+          return Promise.resolve(
+            jsonResponse({
+              latitude: 0,
+              longitude: 0,
+              current: {
+                time: new Date().toISOString(),
+                us_aqi: 40,
+                pm2_5: 8,
+                pm10: 12,
+                ozone: 10
+              }
+            })
+          );
+        }
+
+        return Promise.resolve(
+          jsonResponse({
+            latitude: 0,
+            longitude: 0,
+            current: {
+              time: new Date().toISOString(),
+              temperature_2m: 12,
+              apparent_temperature: 13,
+              wind_speed_10m: 8,
+              weather_code: 2
+            }
+          })
+        );
+      })
+    );
+
+    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "FR" });
+    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+
+    expect(snapshot.score).toBeLessThan(45);
+    expect(snapshot.summaryBullets[2]).not.toContain("Sustained active-war reporting");
+    expect(conflictDomain?.score).toBeLessThan(30);
+  });
+
+  it("does not treat military capability coverage as live combat for Japan", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: URL | RequestInfo) => {
+        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+        if (url.includes("earthquake.usgs.gov")) {
+          return Promise.resolve(
+            jsonResponse({
+              metadata: {
+                generated: Date.now(),
+                title: "USGS Feed",
+                url: "https://earthquake.usgs.gov/"
+              },
+              features: []
+            })
+          );
+        }
+
+        if (url.includes("news.google.com")) {
+          return Promise.resolve(new Response(japanCapabilityRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+        }
+
+        if (url.includes("api.gdeltproject.org")) {
+          return Promise.reject(new Error("GDELT timeout"));
+        }
+
+        if (url.includes("diseaseoutbreaknews")) {
+          return Promise.resolve(jsonResponse({ value: [] }));
+        }
+
+        if (url.includes("FP.CPI.TOTL.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "JP", "Japan", 2.6)));
+        }
+
+        if (url.includes("SL.UEM.TOTL.ZS")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "JP", "Japan", 2.5)));
+        }
+
+        if (url.includes("NY.GDP.MKTP.KD.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "JP", "Japan", 0.9)));
+        }
+
+        if (url.includes("TM.VAL.FUEL.ZS.UN")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "JP", "Japan", 17.5)));
+        }
+
+        if (url.includes("air-quality")) {
+          return Promise.resolve(
+            jsonResponse({
+              latitude: 0,
+              longitude: 0,
+              current: {
+                time: new Date().toISOString(),
+                us_aqi: 28,
+                pm2_5: 6,
+                pm10: 10,
+                ozone: 8
+              }
+            })
+          );
+        }
+
+        return Promise.resolve(
+          jsonResponse({
+            latitude: 0,
+            longitude: 0,
+            current: {
+              time: new Date().toISOString(),
+              temperature_2m: 16,
+              apparent_temperature: 17,
+              wind_speed_10m: 6,
+              weather_code: 2
+            }
+          })
+        );
+      })
+    );
+
+    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "JP" });
+    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+    const governanceDomain = snapshot.domainBreakdown.find((item) => item.domain === "governance");
+
+    expect(snapshot.score).toBeLessThan(40);
+    expect(snapshot.summaryBullets[2]).not.toContain("Sustained active-war reporting");
+    expect(conflictDomain?.score).toBeLessThan(25);
+    expect(governanceDomain?.score).toBeGreaterThan(0);
+  });
+  it("lifts a country with one severe direct war signal even before the feed becomes sustained", async () => {
+    const iranSingleWarRss = `<?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0">
+      <channel>
+        <title>Iran feed</title>
+        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+        <item>
+          <title>Officials warn US is running out of targets to strike in Iran - Example Outlet</title>
+          <link>https://news.example.com/iran-1</link>
+          <pubDate>${new Date().toUTCString()}</pubDate>
+          <description>Direct strike planning against Iran is escalating.</description>
+          <source url="https://news.example.com">Example Outlet</source>
+        </item>
+      </channel>
+    </rss>`;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: URL | RequestInfo) => {
+        const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+        if (url.includes("earthquake.usgs.gov")) {
+          return Promise.resolve(
+            jsonResponse({
+              metadata: {
+                generated: Date.now(),
+                title: "USGS Feed",
+                url: "https://earthquake.usgs.gov/"
+              },
+              features: []
+            })
+          );
+        }
+
+        if (url.includes("news.google.com")) {
+          return Promise.resolve(new Response(iranSingleWarRss, { status: 200, headers: { "Content-Type": "application/rss+xml" } }));
+        }
+
+        if (url.includes("api.gdeltproject.org")) {
+          return Promise.reject(new Error("GDELT timeout"));
+        }
+
+        if (url.includes("diseaseoutbreaknews")) {
+          return Promise.resolve(jsonResponse({ value: [] }));
+        }
+
+        if (url.includes("FP.CPI.TOTL.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("FP.CPI.TOTL.ZG", "Inflation, consumer prices (annual %)", "IR", "Iran", 3.8)));
+        }
+
+        if (url.includes("SL.UEM.TOTL.ZS")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("SL.UEM.TOTL.ZS", "Unemployment, total (% of total labor force)", "IR", "Iran", 9.1)));
+        }
+
+        if (url.includes("NY.GDP.MKTP.KD.ZG")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("NY.GDP.MKTP.KD.ZG", "GDP growth (annual %)", "IR", "Iran", 0.6)));
+        }
+
+        if (url.includes("TM.VAL.FUEL.ZS.UN")) {
+          return Promise.resolve(jsonResponse(worldBankResponse("TM.VAL.FUEL.ZS.UN", "Fuel imports (% of merchandise imports)", "IR", "Iran", 6.4)));
+        }
+
+        if (url.includes("air-quality")) {
+          return Promise.resolve(
+            jsonResponse({
+              latitude: 0,
+              longitude: 0,
+              current: {
+                time: new Date().toISOString(),
+                us_aqi: 34,
+                pm2_5: 9,
+                pm10: 15,
+                ozone: 12
+              }
+            })
+          );
+        }
+
+        return Promise.resolve(
+          jsonResponse({
+            latitude: 0,
+            longitude: 0,
+            current: {
+              time: new Date().toISOString(),
+              temperature_2m: 24,
+              apparent_temperature: 26,
+              wind_speed_10m: 7,
+              weather_code: 1
+            }
+          })
+        );
+      })
+    );
+
+    const snapshot = await buildScoreSnapshot({ scope: "country", countryCode: "IR" });
+    const conflictDomain = snapshot.domainBreakdown.find((item) => item.domain === "conflict_security");
+
+    expect(snapshot.score).toBeGreaterThan(40);
+    expect(snapshot.summaryBullets[2]).toContain("Direct active-war reporting is materially lifting");
+    expect(conflictDomain?.summary).toContain("active-war stress");
   });
 
   it("keeps country scoring focused on direct country evidence and lifts sustained war conditions", async () => {

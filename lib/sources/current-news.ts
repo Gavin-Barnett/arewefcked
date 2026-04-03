@@ -1,5 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
-import { resolveCountryCodesFromText } from "@/lib/countries/match";
+import { getCountryMatchPhrases, resolveCountryCodesFromText } from "@/lib/countries/match";
 import { starterCountries } from "@/lib/countries/starter-countries";
 import { clamp, hashString, toIsoString } from "@/lib/utils";
 import type { CountrySummary, NormalizedEvent, RiskDomain } from "@/lib/types/score";
@@ -179,8 +179,129 @@ const macroSpilloverTerms = [
   "economic"
 ];
 
-const historicalContextTerms = ["battle site", "remains recovery", "memorial", "anniversary", "veteran", "museum", "commemoration", "historic", "epic", "documentary", "film", "novel", "book", "review", "preceded the war", "revolt that preceded"];
+const historicalContextTerms = [
+  "battle site",
+  "remains recovery",
+  "memorial",
+  "anniversary",
+  "veteran",
+  "museum",
+  "commemoration",
+  "historic",
+  "epic",
+  "documentary",
+  "film",
+  "novel",
+  "book",
+  "review",
+  "world war i",
+  "world war ii",
+  "woodrow wilson",
+  "imperial japan",
+  "preceded the war",
+  "revolt that preceded"
+];
+
 const reliefTerms = ["rally", "rallies", "ease", "eases", "eased", "possible end", "hopes for a possible end", "relief", "showcases strength", "strength"];
+const indirectConflictTerms = [
+  "exercise",
+  "drill",
+  "drills",
+  "training",
+  "briefing",
+  "talks",
+  "summit",
+  "meeting",
+  "diplomacy",
+  "diplomatic",
+  "complaint",
+  "complaints",
+  "lawsuit",
+  "court",
+  "tribunal",
+  "legal",
+  "investigation",
+  "analysis",
+  "assessment",
+  "policy",
+  "policies",
+  "plan",
+  "plans",
+  "planning",
+  "rethink",
+  "arrives",
+  "visit",
+  "visited",
+  "conference",
+  "address",
+  "timeline",
+  "takeaways",
+  "capability",
+  "capabilities",
+  "counterstrike",
+  "readiness",
+  "deterrence",
+  "procurement",
+  "rearm",
+  "rearmament",
+  "military",
+  "base",
+  "bases",
+  "deploy",
+  "deploys",
+  "deployed",
+  "deployment",
+  "deployments",
+  "demonstrates",
+  "demonstration",
+  "test",
+  "tests",
+  "testing",
+  "show off",
+  "shows off",
+  "designates",
+  "alliance",
+  "supplier",
+  "suppliers",
+  "aid",
+  "sent",
+  "send",
+  "sends",
+  "delivery",
+  "deliveries",
+  "shipment",
+  "shipments",
+  "export",
+  "exports",
+  "expulsion"
+];
+const localImpactTerms = [
+  "civilian",
+  "civilians",
+  "casualty",
+  "casualties",
+  "killed",
+  "dead",
+  "deaths",
+  "injured",
+  "wounded",
+  "launched",
+  "launches",
+  "retaliation",
+  "retaliatory",
+  "damage",
+  "damaged",
+  "sirens",
+  "evacuation",
+  "evacuations",
+  "shelter",
+  "targets",
+  "targeted",
+  "attrition"
+];
+const indirectCivilUnrestTerms = ["campus", "students", "restaurant", "solidarity", "outside", "diaspora", "overseas", "abroad", "supporters"];
+const legalGovernanceTerms = ["complaint", "complaints", "lawsuit", "court", "tribunal", "legal", "investigation", "sanctions", "parliament", "policy", "policies"];
+const unrestTerms = ["protest", "riot", "unrest", "demonstration", "strike", "clashes", "crackdown"];
 
 type ParsedItem = {
   title?: string;
@@ -189,6 +310,9 @@ type ParsedItem = {
   description?: string;
   source?: string | { "#text"?: string; url?: string };
 };
+
+type CountryRelevance = "direct" | "indirect" | "absent";
+type ClassificationResult = { domain: RiskDomain; score: number; tags: string[] };
 
 function getPublisher(item: ParsedItem) {
   if (!item.source) {
@@ -224,7 +348,136 @@ function scoreDomainText(text: string, domain: RiskDomain) {
   return { score, tags: matches.map((keyword) => keyword.term) };
 }
 
-function classifyArticle(text: string, title: string) {
+function normalizeRelationText(input: string) {
+  return input
+    .toLowerCase()
+    .replace(/&amp;/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function escapeRegex(input: string) {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function sanitizeDescription(input: string | undefined, publisher: string) {
+  const stripped = stripTags(input);
+
+  if (!stripped || !publisher || publisher === "Unknown source") {
+    return stripped;
+  }
+
+  return stripped.replace(new RegExp(escapeRegex(publisher), "ig"), " ").replace(/\s+/g, " ").trim();
+}
+
+function toPattern(input: string) {
+  return escapeRegex(normalizeRelationText(input));
+}
+
+function hasNearbyPhrase(text: string, leftPhrases: string[], rightPhrases: string[], gap: number) {
+  if (!text || leftPhrases.length === 0 || rightPhrases.length === 0) {
+    return false;
+  }
+
+  return leftPhrases.some((leftPhrase) => {
+    const leftPattern = toPattern(leftPhrase);
+
+    return rightPhrases.some((rightPhrase) => {
+      const rightPattern = toPattern(rightPhrase);
+      const pattern = new RegExp(
+        `(?:^| )${leftPattern}(?: \\w+){0,${gap}} ${rightPattern}(?: |$)|(?:^| )${rightPattern}(?: \\w+){0,${gap}} ${leftPattern}(?: |$)`
+      );
+      return pattern.test(text);
+    });
+  });
+}
+
+function assessCountryRelevance(
+  country: CountrySummary,
+  title: string,
+  description: string,
+  domain: RiskDomain,
+  detectedCountryCodes: string[]
+): CountryRelevance {
+  const normalized = normalizeRelationText(`${title} ${description}`);
+  const countryTerms = getCountryMatchPhrases(country.code);
+  const mentionsQueryCountry = detectedCountryCodes.includes(country.code) || countryTerms.some((phrase) => normalized.includes(phrase));
+
+  if (!mentionsQueryCountry) {
+    return "absent";
+  }
+
+  if (domain !== "conflict_security" && domain !== "civil_unrest") {
+    return "direct";
+  }
+
+  const mentionsOtherCountries = detectedCountryCodes.some((code) => code !== country.code);
+
+  if (domain === "civil_unrest") {
+    const hasLocalUnrest = hasNearbyPhrase(normalized, countryTerms, unrestTerms, 4);
+    const looksDiaspora = includesAny(normalized, indirectCivilUnrestTerms);
+
+    if (looksDiaspora && mentionsOtherCountries) {
+      return "indirect";
+    }
+
+    return hasLocalUnrest || !mentionsOtherCountries ? "direct" : "indirect";
+  }
+
+  const hasLocalImpact = hasNearbyPhrase(normalized, countryTerms, localImpactTerms, 6);
+  const hasLocalCombat = hasNearbyPhrase(normalized, countryTerms, directConflictTerms, 4);
+  const hasLocalPolicyConflict = hasNearbyPhrase(normalized, countryTerms, indirectConflictTerms, 4);
+  const looksIndirectConflict = includesAny(normalized, indirectConflictTerms);
+
+  if (hasLocalPolicyConflict && !hasLocalImpact) {
+    return "indirect";
+  }
+
+  if (looksIndirectConflict && !hasLocalImpact) {
+    return mentionsOtherCountries || !hasLocalCombat ? "indirect" : "direct";
+  }
+
+  if (hasLocalImpact || hasLocalCombat) {
+    return "direct";
+  }
+
+  return "indirect";
+}
+
+function reclassifyIndirectCountrySignal(text: string, title: string): ClassificationResult | null {
+  const combined = `${title} ${text}`.toLowerCase();
+  const macro = scoreDomainText(combined, "macroeconomic");
+  const governance = scoreDomainText(combined, "governance");
+
+  if (includesAny(combined, macroSpilloverTerms) && macro.score >= 16) {
+    return {
+      domain: "macroeconomic",
+      score: Math.max(macro.score + 18, 24),
+      tags: [...new Set([...macro.tags, "spillover", "indirect-country"])]
+    };
+  }
+
+  if (includesAny(combined, legalGovernanceTerms)) {
+    return {
+      domain: "governance",
+      score: Math.max(governance.score, 20),
+      tags: [...new Set([...(governance.tags.length > 0 ? governance.tags : ["legal"]), "indirect-country"])]
+    };
+  }
+
+  if (includesAny(combined, indirectConflictTerms)) {
+    return {
+      domain: "governance",
+      score: Math.max(governance.score, 18),
+      tags: [...new Set([...(governance.tags.length > 0 ? governance.tags : ["security-posture"]), "indirect-country"])]
+    };
+  }
+
+  return null;
+}
+
+function classifyArticle(text: string, title: string): ClassificationResult | null {
   const combined = `${title} ${text}`.toLowerCase();
   const hasDirectConflict = includesAny(combined, directConflictTerms);
   const hasMacroSpillover = includesAny(combined, macroSpilloverTerms);
@@ -344,38 +597,63 @@ function normalizeItems(country: CountrySummary, items: ParsedItem[]) {
 
       seen.add(normalizedTitle);
 
-      const description = stripTags(item.description);
+      const publisher = getPublisher(item);
+      const description = sanitizeDescription(item.description, publisher);
       const classification = classifyArticle(description, title);
 
       if (!classification) {
         return null;
       }
 
+      const detectedCountryCodes = resolveCountryCodesFromText(`${title} ${description}`);
+      const relevance = assessCountryRelevance(country, title, description, classification.domain, detectedCountryCodes);
+
+      if (relevance === "absent") {
+        return null;
+      }
+
+      let finalClassification = classification;
+
+      if ((classification.domain === "conflict_security" || classification.domain === "civil_unrest") && relevance === "indirect") {
+        const reclassified = reclassifyIndirectCountrySignal(description, title);
+
+        if (!reclassified) {
+          return null;
+        }
+
+        finalClassification = reclassified;
+      }
+
+      const countryCodes = [...new Set(detectedCountryCodes)];
+
+      if (!countryCodes.includes(country.code)) {
+        return null;
+      }
+
       const publishedAt = item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString();
-      const severityNormalized = buildSeverity(classification.score, publishedAt);
-      const publisher = getPublisher(item);
-      const countryCodes = resolveCountryCodesFromText(`${title} ${description}`, country.code);
+      const severityNormalized = buildSeverity(finalClassification.score, publishedAt);
 
       return {
         id: `current-news:${country.code}:${hashString(`${title}:${publishedAt}`)}`,
         source: "current_news",
         sourceType: "news",
         title,
-        summary: `${publisher} reported a recent ${classification.domain.replaceAll("_", " ")} signal connected to ${country.name}.`,
+        summary: `${publisher} reported a recent ${finalClassification.domain.replaceAll("_", " ")} signal connected to ${country.name}.`,
         url: item.link,
         countryCodes,
         region: country.region,
         occurredAt: publishedAt,
         ingestedAt: new Date().toISOString(),
-        domain: classification.domain,
-        severityRaw: classification.score,
+        domain: finalClassification.domain,
+        severityRaw: finalClassification.score,
         severityNormalized,
         confidence: 0.42,
-        tags: [publisher, ...classification.tags],
+        tags: [publisher, ...finalClassification.tags, `country:${relevance}`],
         metadata: {
           publisher,
           description,
-          queryCountry: country.name
+          queryCountry: country.name,
+          countryRelevance: relevance
         }
       } satisfies NormalizedEvent;
     })
@@ -460,7 +738,7 @@ export const currentNewsAdapter: SourceAdapter = {
       notes: [
         "This adapter adds extra headline context across conflict, governance, macro, health, and infrastructure alongside the stronger structured and official feeds.",
         "Headline-derived domains still stay marked as sparse rather than measured.",
-        "Indirect war spillover coverage is pushed into macro stress instead of being treated as local active combat.",
+        "Indirect war spillover coverage is pushed into macro stress or governance instead of being treated as local active combat.",
         ...(degraded ? [`${failures.length} country feed${failures.length === 1 ? "" : "s"} failed during this refresh, so surviving headline signals were kept instead of dropping the source entirely.`] : [])
       ],
       health: {

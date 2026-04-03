@@ -291,10 +291,10 @@ describe("source adapters", () => {
         <channel>
           <lastBuildDate>${publishedAt}</lastBuildDate>
           <item>
-            <title>War escalates near border - Example News</title>
+            <title>War shock hits Australia and Brazil after missile attack - Example News</title>
             <link>https://example.com/story</link>
             <pubDate>${publishedAt}</pubDate>
-            <description>Missile attack and war escalation continue.</description>
+            <description>Missile attack and war escalation continue across Australia and Brazil.</description>
             <source url="https://example.com">Example News</source>
           </item>
         </channel>
@@ -359,6 +359,195 @@ describe("source adapters", () => {
     expect(result.events).toHaveLength(1);
     expect(result.events[0]?.domain).toBe("macroeconomic");
     expect(result.events[0]?.title).toContain("inflation rises");
+  });
+  it("drops indirect France war references instead of treating them as local active conflict", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>French army combat exercise highlights drone warfare shortcomings - Example News</title>
+            <link>https://example.com/fr-exercise</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>Ukraine lessons are reshaping military planning in France.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+          <item>
+            <title>War crimes complaint filed in France over a deadly Israeli strike in Beirut - Example News</title>
+            <link>https://example.com/fr-complaint</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>Legal complaint filed in France over an Israeli strike in Beirut.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+          <item>
+            <title>France braces for higher oil prices as Hormuz threat jolts Europe - Example News</title>
+            <link>https://example.com/fr-oil</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>Oil prices and energy costs are rising across France.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "FR")! });
+
+    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
+    expect(result.events.some((event) => event.domain === "macroeconomic")).toBe(true);
+    expect(result.events.some((event) => event.tags?.includes("country:indirect"))).toBe(true);
+  });
+
+  it("treats military capability headlines as indirect country signals instead of live combat", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>Japan's counterstrike capability takes shape with missile deployments - Example News</title>
+            <link>https://example.com/jp-capability</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>Japan's military planners are expanding counterstrike capability and readiness.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "JP")! });
+
+    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
+    expect(result.events.some((event) => event.domain === "governance")).toBe(true);
+    expect(result.events.some((event) => event.tags?.includes("security-posture"))).toBe(true);
+  });
+
+  it("treats arms-transfer coverage as indirect security posture instead of local combat", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>Australia Sent 49 M1A1 Abrams Tanks to Ukraine and They Are Becoming Drone-Proof Assault Weapons - Example News</title>
+            <link>https://example.com/au-tanks</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>Australia sent tanks to Ukraine as military aid and delivery planning continues, with drone-proof upgrades underway.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "AU")! });
+
+    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
+    expect(result.events.some((event) => event.domain === "governance")).toBe(true);
+  });
+
+  it("treats weapons-test coverage as indirect security posture instead of live conflict", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>China tests heaviest cargo drone suited to island operations - Example News</title>
+            <link>https://example.com/cn-drone</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>China tests a heavy cargo drone for military logistics and future operations.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "CN")! });
+
+    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
+    expect(result.events.some((event) => event.domain === "governance")).toBe(true);
+  });
+
+  it("reclassifies regional war spillover with another country intercepting missiles as macro stress", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>Regional War With Iran Ripples Across Arab States as Jordan Intercepts Missiles and Egypt Feels Economic Shock - Example News</title>
+            <link>https://example.com/eg-spillover</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>Jordan intercepts missiles while Egypt absorbs higher oil prices and a wider economic shock.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "EG")! });
+
+    expect(result.events.some((event) => event.domain === "conflict_security")).toBe(false);
+    expect(result.events.some((event) => event.domain === "macroeconomic")).toBe(true);
+    expect(result.events.some((event) => event.tags?.includes("country:indirect"))).toBe(true);
+  });
+
+  it("drops historical war archive coverage instead of treating it as current conflict", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>Woodrow Wilson Asks Congress to Declare War on Germany - Example News</title>
+            <link>https://example.com/de-history</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>World War I archive coverage about the 1917 declaration of war on Germany.</description>
+            <source url="https://example.com">Example News</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "DE")! });
+
+    expect(result.events).toHaveLength(0);
+  });
+
+  it("does not classify publisher names like War on the Rocks as live conflict keywords", async () => {
+    const publishedAt = new Date().toUTCString();
+    const feed = `
+      <rss>
+        <channel>
+          <lastBuildDate>${publishedAt}</lastBuildDate>
+          <item>
+            <title>China's AI Is Spreading Fast. Here's How to Stop the Security Risks - Example News</title>
+            <link>https://example.com/cn-ai</link>
+            <pubDate>${publishedAt}</pubDate>
+            <description>War on the Rocks analysis of China's AI security risks and technology policy.</description>
+            <source url="https://warontherocks.com">War on the Rocks</source>
+          </item>
+        </channel>
+      </rss>
+    `;
+
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(xmlResponse(feed)));
+
+    const result = await currentNewsAdapter.fetch({ mode: "country", country: starterCountries.find((country) => country.code === "CN")! });
+
+    expect(result.events).toHaveLength(0);
   });
 
   it("does not pin WHO global updates onto countries named only in supporting text", async () => {

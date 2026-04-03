@@ -31,6 +31,12 @@ const preparedCountries = countries.map((country) => ({
     .filter(Boolean)
 }));
 
+const preparedCountryPhraseMap = new Map(preparedCountries.map((country) => [country.code, country.phrases]));
+
+export function getCountryMatchPhrases(code: string) {
+  return preparedCountryPhraseMap.get(code.toUpperCase()) ?? [];
+}
+
 export function detectCountryCodesInText(input: string) {
   const normalized = normalizeText(input);
 

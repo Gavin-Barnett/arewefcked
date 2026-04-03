@@ -1,12 +1,80 @@
 import { Panel } from "@/components/panel";
 import type { DomainBreakdown } from "@/lib/types/score";
 
-function evidenceCopy(count: number, coverage: DomainBreakdown["coverage"]) {
-  if (coverage === "sparse") {
-    return `${count} live proxy signal${count === 1 ? "" : "s"} in this window`;
+function statusLabel(score: number) {
+  if (score >= 80) {
+    return "Critical pressure";
   }
 
-  return `${count} evidence item${count === 1 ? "" : "s"} in this window`;
+  if (score >= 60) {
+    return "Heavy pressure";
+  }
+
+  if (score >= 35) {
+    return "Elevated";
+  }
+
+  if (score >= 15) {
+    return "Active";
+  }
+
+  if (score > 0) {
+    return "Low";
+  }
+
+  return "Quiet";
+}
+
+function confidenceLabel(confidence: number) {
+  if (confidence >= 0.8) {
+    return "High confidence";
+  }
+
+  if (confidence >= 0.55) {
+    return "Solid confidence";
+  }
+
+  if (confidence >= 0.3) {
+    return "Limited confidence";
+  }
+
+  return "Thin confidence";
+}
+
+function viewerSummary(domain: DomainBreakdown) {
+  if (domain.coverage === "unavailable") {
+    return "This lane is not fully wired into the live model yet.";
+  }
+
+  if (domain.score >= 75) {
+    return "This is one of the main forces pushing the overall reading higher.";
+  }
+
+  if (domain.score >= 50) {
+    return "This lane is materially worsening the overall reading.";
+  }
+
+  if (domain.score >= 25) {
+    return "This lane is adding noticeable pressure right now.";
+  }
+
+  if (domain.score > 0) {
+    return "This lane is present, but it is not steering the whole picture.";
+  }
+
+  return "This lane is quiet in the current window.";
+}
+
+function recentMovementCopy(domain: DomainBreakdown) {
+  if (domain.evidenceCount === 0) {
+    return "No recent event cleared the surfacing threshold here.";
+  }
+
+  if (domain.evidenceCount === 1) {
+    return "1 recent event is shaping this lane.";
+  }
+
+  return `${domain.evidenceCount} recent events are shaping this lane.`;
 }
 
 function domainAccent(score: number) {
@@ -43,23 +111,31 @@ export function DomainBreakdownGrid(props: { domains: DomainBreakdown[] }) {
                   {domain.label}
                 </h3>
                 <p className="text-ink/55 text-sm">
-                  Weight {Math.round(domain.weight * 100)}%
+                  Share of overall score {Math.round(domain.weight * 100)}%
                 </p>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 space-y-4">
                 <p className="font-mono text-[2.8rem] text-ink leading-none">
                   {domain.score.toFixed(1)}
                 </p>
-                <div className="mt-3 space-y-1 text-ink/60 text-sm">
-                  <p>Confidence {Math.round(domain.confidence * 100)}%</p>
-                  <p>Coverage {domain.coverage}</p>
-                  <p>{evidenceCopy(domain.evidenceCount, domain.coverage)}</p>
+                <div className="flex flex-wrap items-center gap-2 text-[0.72rem] uppercase tracking-[0.24em]">
+                  <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-ink/80">
+                    {statusLabel(domain.score)}
+                  </span>
+                  <span className="text-ink/45">
+                    {confidenceLabel(domain.confidence)}
+                  </span>
                 </div>
               </div>
 
-              <p className="mt-5 flex-1 text-ink/70 text-sm leading-6">
-                {domain.summary}
+              <div className="mt-5 flex flex-1 flex-col gap-3 text-sm leading-6">
+                <p className="text-ink/78">{viewerSummary(domain)}</p>
+                <p className="text-ink/58">{recentMovementCopy(domain)}</p>
+              </div>
+
+              <p className="mt-5 text-ink/55 text-sm">
+                Confidence {Math.round(domain.confidence * 100)}%
               </p>
             </div>
           </article>

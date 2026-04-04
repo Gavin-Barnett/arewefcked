@@ -93,7 +93,7 @@ export function DomainBreakdownGrid(props: { domains: DomainBreakdown[] }) {
                 </div>
               </div>
 
-              <p className="mt-auto border-white/8 border-t pt-4 text-ink/55 text-sm">
+              <p className="mt-auto pt-4 text-ink/55 text-sm">
                 Confidence {Math.round(domain.confidence * 100)}%
               </p>
             </div>

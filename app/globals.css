@@ -165,10 +165,3 @@ a {
 .animate-dial-needle-in {
   animation: dial-needle-in 1380ms cubic-bezier(0.16, 0.9, 0.2, 1) 120ms both;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-dial-body-in,
-  .animate-dial-needle-in {
-    animation: none !important;
-  }
-}

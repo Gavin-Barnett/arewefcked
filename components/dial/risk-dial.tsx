@@ -88,16 +88,8 @@ function freshnessLabel(freshness: string) {
   }
 }
 
-function shouldReduceMotion() {
-  if (process.env.NODE_ENV === "test") {
-    return true;
-  }
-
-  if (typeof window === "undefined") {
-    return true;
-  }
-
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function shouldSkipDialAnimation() {
+  return process.env.NODE_ENV === "test" || typeof window === "undefined";
 }
 
 function easeOutCubic(progress: number) {
@@ -134,29 +126,36 @@ export function RiskDial(props: {
   const freshnessText = freshnessLabel(props.freshness);
 
   useEffect(() => {
-    if (shouldReduceMotion()) {
+    if (shouldSkipDialAnimation()) {
       setAnimatedScore(normalizedScore);
       return;
     }
 
     let frame = 0;
+    let timeout = 0;
     const durationMs = 1500;
-    const startAt = performance.now();
+    const delayMs = 120;
+
     setAnimatedScore(0);
 
-    const tick = (now: number) => {
-      const progress = Math.min((now - startAt) / durationMs, 1);
-      const easedProgress = easeOutCubic(progress);
-      setAnimatedScore(normalizedScore * easedProgress);
+    timeout = window.setTimeout(() => {
+      const startAt = performance.now();
 
-      if (progress < 1) {
-        frame = window.requestAnimationFrame(tick);
-      }
-    };
+      const tick = (now: number) => {
+        const progress = Math.min((now - startAt) / durationMs, 1);
+        const easedProgress = easeOutCubic(progress);
+        setAnimatedScore(normalizedScore * easedProgress);
 
-    frame = window.requestAnimationFrame(tick);
+        if (progress < 1) {
+          frame = window.requestAnimationFrame(tick);
+        }
+      };
+
+      frame = window.requestAnimationFrame(tick);
+    }, delayMs);
 
     return () => {
+      window.clearTimeout(timeout);
       window.cancelAnimationFrame(frame);
     };
   }, [normalizedScore]);

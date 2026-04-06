@@ -5,6 +5,7 @@ import {
 } from "@/lib/sources/current-news";
 import { gdeltAdapter } from "@/lib/sources/gdelt";
 import { globalMonitorPoints } from "@/lib/sources/monitor-points";
+import { ochaOptAdapter } from "@/lib/sources/ocha-opt";
 import { openMeteoAdapter } from "@/lib/sources/openmeteo";
 import { usgsAdapter } from "@/lib/sources/usgs";
 import { whoDonAdapter } from "@/lib/sources/who-don";
@@ -344,6 +345,112 @@ describe("source adapters", () => {
     expect(result.events).toHaveLength(1);
     expect(result.events[0]?.domain).toBe("macroeconomic");
     expect(result.events[0]?.summary).toContain("inflation");
+  });
+
+  it("normalizes OCHA OPT humanitarian reports for Palestine", async () => {
+    const listingHtml = `
+      <div class="view-content">
+        <h3><a href="/content/humanitarian-situation-report-2-april-2026" hreflang="en">Humanitarian Situation Report | 2 April 2026</a></h3>
+        <h3><a href="/content/humanitarian-situation-report-27-march-2026" hreflang="en">Humanitarian Situation Report | 27 March 2026</a></h3>
+      </div>
+    `;
+    const detailOne = `
+      <html>
+        <head>
+          <meta property="og:title" content="Humanitarian Situation Report | 2 April 2026" />
+          <meta name="description" content="Military advances in Gaza displaced families, destroyed shelters, and left injured civilians needing medical evacuation." />
+        </head>
+        <body>
+          <div  class="layout__region layout__region--content">
+            <time datetime="2026-04-02T12:00:00Z"></time>
+            <p>Military advances in Gaza displaced hundreds of families.</p>
+            <p>Tents were destroyed and injured civilians needed medical evacuation and psychosocial support.</p>
+            <p>Humanitarian access remained constrained at crossings.</p>
+          </div>
+          <div class="dexp-region col-12 col-lg-3 region region-sidebar-second"></div>
+        </body>
+      </html>
+    `;
+    const detailTwo = `
+      <html>
+        <head>
+          <meta property="og:title" content="Humanitarian Situation Report | 27 March 2026" />
+          <meta name="description" content="Acute malnutrition and hospital pressure worsened in Gaza as displacement persisted." />
+        </head>
+        <body>
+          <div  class="layout__region layout__region--content">
+            <time datetime="2026-03-27T12:00:00Z"></time>
+            <p>Acute malnutrition worsened and hospitals struggled with patient load.</p>
+            <p>Displacement and demolished shelters continued across Gaza.</p>
+          </div>
+          <div class="dexp-region col-12 col-lg-3 region region-sidebar-second"></div>
+        </body>
+      </html>
+    `;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: URL | RequestInfo) => {
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
+
+        if (url.includes("/publications/situation-reports")) {
+          return Promise.resolve(
+            new Response(listingHtml, {
+              status: 200,
+              headers: { "Content-Type": "text/html" },
+            })
+          );
+        }
+
+        if (url.includes("2-april-2026")) {
+          return Promise.resolve(
+            new Response(detailOne, {
+              status: 200,
+              headers: { "Content-Type": "text/html" },
+            })
+          );
+        }
+
+        return Promise.resolve(
+          new Response(detailTwo, {
+            status: 200,
+            headers: { "Content-Type": "text/html" },
+          })
+        );
+      })
+    );
+
+    const result = await ochaOptAdapter.fetch({
+      mode: "country",
+      country: {
+        code: "PS",
+        name: "Palestine",
+        region: "Middle East",
+        latitude: 31.5,
+        longitude: 34.47,
+        focalCity: "Gaza",
+      },
+    });
+
+    expect(result.health.status).toBe("operational");
+    expect(
+      result.events.some((event) => event.domain === "conflict_security")
+    ).toBe(true);
+    expect(
+      result.events.some((event) => event.domain === "public_health")
+    ).toBe(true);
+    expect(
+      result.events.every((event) => event.countryCodes.includes("PS"))
+    ).toBe(true);
+    expect(
+      result.events.find((event) => event.domain === "conflict_security")
+        ?.severityNormalized
+    ).toBeGreaterThan(60);
   });
 
   it("dedupes duplicate current-news stories and survives partial feed failure", async () => {

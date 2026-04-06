@@ -1,5 +1,6 @@
 import { currentNewsAdapter } from "@/lib/sources/current-news";
 import { gdeltAdapter } from "@/lib/sources/gdelt";
+import { ochaOptAdapter } from "@/lib/sources/ocha-opt";
 import { openMeteoAdapter } from "@/lib/sources/openmeteo";
 import { usgsAdapter } from "@/lib/sources/usgs";
 import { whoDonAdapter } from "@/lib/sources/who-don";
@@ -11,5 +12,6 @@ export const activeSourceAdapters = [
   gdeltAdapter,
   whoDonAdapter,
   worldBankAdapter,
+  ochaOptAdapter,
   currentNewsAdapter,
 ];

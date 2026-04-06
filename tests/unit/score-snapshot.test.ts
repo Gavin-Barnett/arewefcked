@@ -976,6 +976,236 @@ describe("score snapshot", () => {
     expect(conflictDomain?.summary).toContain("active-war stress");
   });
 
+  it("uses OCHA OPT humanitarian reports to lift Palestine conflict confidence and score", async () => {
+    const palestineConflictRss = `<?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0">
+      <channel>
+        <title>Palestine feed</title>
+        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+        <item>
+          <title>Israeli air strike hits crowd in Gaza City - Example Outlet</title>
+          <link>https://news.example.com/palestine-1</link>
+          <pubDate>${new Date().toUTCString()}</pubDate>
+          <description>Air strike casualties continue in Gaza.</description>
+          <source url="https://news.example.com">Example Outlet</source>
+        </item>
+      </channel>
+    </rss>`;
+    const ochaListing = `
+      <div class="view-content">
+        <h3><a href="/content/humanitarian-situation-report-2-april-2026" hreflang="en">Humanitarian Situation Report | 2 April 2026</a></h3>
+        <h3><a href="/content/humanitarian-situation-report-27-march-2026" hreflang="en">Humanitarian Situation Report | 27 March 2026</a></h3>
+      </div>
+    `;
+    const ochaDetailOne = `
+      <html>
+        <head>
+          <meta property="og:title" content="Humanitarian Situation Report | 2 April 2026" />
+          <meta name="description" content="Military advances in Gaza displaced families, destroyed shelters, and left injured civilians needing medical evacuation." />
+        </head>
+        <body>
+          <div  class="layout__region layout__region--content">
+            <time datetime="2026-04-02T12:00:00Z"></time>
+            <p>Military advances in Gaza displaced hundreds of families.</p>
+            <p>Tents were destroyed and injured civilians needed medical evacuation and psychosocial support.</p>
+            <p>Humanitarian access remained constrained at crossings.</p>
+          </div>
+          <div class="dexp-region col-12 col-lg-3 region region-sidebar-second"></div>
+        </body>
+      </html>
+    `;
+    const ochaDetailTwo = `
+      <html>
+        <head>
+          <meta property="og:title" content="Humanitarian Situation Report | 27 March 2026" />
+          <meta name="description" content="Acute malnutrition and hospital pressure worsened in Gaza as displacement persisted." />
+        </head>
+        <body>
+          <div  class="layout__region layout__region--content">
+            <time datetime="2026-03-27T12:00:00Z"></time>
+            <p>Acute malnutrition worsened and hospitals struggled with patient load.</p>
+            <p>Displacement and demolished shelters continued across Gaza.</p>
+          </div>
+          <div class="dexp-region col-12 col-lg-3 region region-sidebar-second"></div>
+        </body>
+      </html>
+    `;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockImplementation((input: URL | RequestInfo) => {
+        const url =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.toString()
+              : input.url;
+
+        if (url.includes("earthquake.usgs.gov")) {
+          return Promise.resolve(
+            jsonResponse({
+              metadata: {
+                generated: Date.now(),
+                title: "USGS Feed",
+                url: "https://earthquake.usgs.gov/",
+              },
+              features: [],
+            })
+          );
+        }
+
+        if (url.includes("news.google.com")) {
+          return Promise.resolve(
+            new Response(palestineConflictRss, {
+              status: 200,
+              headers: { "Content-Type": "application/rss+xml" },
+            })
+          );
+        }
+
+        if (url.includes("api.gdeltproject.org")) {
+          return Promise.reject(new Error("GDELT timeout"));
+        }
+
+        if (url.includes("diseaseoutbreaknews")) {
+          return Promise.resolve(jsonResponse({ value: [] }));
+        }
+
+        if (url.includes("FP.CPI.TOTL.ZG")) {
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "FP.CPI.TOTL.ZG",
+                "Inflation, consumer prices (annual %)",
+                "PS",
+                "Palestine",
+                53.7
+              )
+            )
+          );
+        }
+
+        if (url.includes("SL.UEM.TOTL.ZS")) {
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "SL.UEM.TOTL.ZS",
+                "Unemployment, total (% of total labor force)",
+                "PS",
+                "Palestine",
+                24.4
+              )
+            )
+          );
+        }
+
+        if (url.includes("NY.GDP.MKTP.KD.ZG")) {
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "NY.GDP.MKTP.KD.ZG",
+                "GDP growth (annual %)",
+                "PS",
+                "Palestine",
+                -26.6
+              )
+            )
+          );
+        }
+
+        if (url.includes("TM.VAL.FUEL.ZS.UN")) {
+          return Promise.resolve(
+            jsonResponse(
+              worldBankResponse(
+                "TM.VAL.FUEL.ZS.UN",
+                "Fuel imports (% of merchandise imports)",
+                "PS",
+                "Palestine",
+                21.2
+              )
+            )
+          );
+        }
+
+        if (url.includes("air-quality")) {
+          return Promise.resolve(
+            jsonResponse({
+              latitude: 0,
+              longitude: 0,
+              current: {
+                time: new Date().toISOString(),
+                us_aqi: 42,
+                pm2_5: 9,
+                pm10: 13,
+                ozone: 8,
+              },
+            })
+          );
+        }
+
+        if (url.includes("/publications/situation-reports")) {
+          return Promise.resolve(
+            new Response(ochaListing, {
+              status: 200,
+              headers: { "Content-Type": "text/html" },
+            })
+          );
+        }
+
+        if (url.includes("2-april-2026")) {
+          return Promise.resolve(
+            new Response(ochaDetailOne, {
+              status: 200,
+              headers: { "Content-Type": "text/html" },
+            })
+          );
+        }
+
+        if (url.includes("27-march-2026")) {
+          return Promise.resolve(
+            new Response(ochaDetailTwo, {
+              status: 200,
+              headers: { "Content-Type": "text/html" },
+            })
+          );
+        }
+
+        return Promise.resolve(
+          jsonResponse({
+            latitude: 0,
+            longitude: 0,
+            current: {
+              time: new Date().toISOString(),
+              temperature_2m: 21,
+              apparent_temperature: 23,
+              wind_speed_10m: 5,
+              weather_code: 1,
+            },
+          })
+        );
+      })
+    );
+
+    const snapshot = await buildScoreSnapshot({
+      scope: "country",
+      countryCode: "PS",
+    });
+    const conflictDomain = snapshot.domainBreakdown.find(
+      (item) => item.domain === "conflict_security"
+    );
+
+    expect(snapshot.score).toBeGreaterThan(50);
+    expect(snapshot.confidence).toBeGreaterThan(0.4);
+    expect(conflictDomain?.coverage).toBe("measured");
+    expect(conflictDomain?.score).toBeGreaterThanOrEqual(70);
+    expect(
+      snapshot.sourceHealth.some((item) => item.sourceKey === "ocha_opt")
+    ).toBe(true);
+    expect(snapshot.evidence.some((item) => item.source === "ocha_opt")).toBe(
+      true
+    );
+  });
+
   it("keeps country scoring focused on direct country evidence and lifts sustained war conditions", async () => {
     vi.stubGlobal(
       "fetch",
@@ -1171,3 +1401,4 @@ describe("score snapshot", () => {
     );
   });
 });
+

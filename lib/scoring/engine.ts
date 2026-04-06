@@ -37,6 +37,7 @@ const sourceDomainMap: Record<string, RiskDomain[]> = {
   ],
   who_don: ["public_health"],
   world_bank: ["macroeconomic"],
+  ocha_opt: ["conflict_security", "public_health", "governance"],
   current_news: [
     "conflict_security",
     "civil_unrest",
@@ -53,6 +54,7 @@ const sourceCoverageMode: Record<string, "measured" | "sparse"> = {
   gdelt: "sparse",
   who_don: "measured",
   world_bank: "measured",
+  ocha_opt: "measured",
   current_news: "sparse",
 };
 
@@ -96,8 +98,10 @@ function getSupportedResultsForDomain(
   domain: RiskDomain,
   results: SourceFetchResult[]
 ) {
-  return results.filter((result) =>
-    (sourceDomainMap[result.sourceKey] ?? []).includes(domain)
+  return results.filter(
+    (result) =>
+      result.health.active &&
+      (sourceDomainMap[result.sourceKey] ?? []).includes(domain)
   );
 }
 
@@ -409,14 +413,21 @@ async function buildScoreSnapshotInternal(
   options: { scope: "global" } | { scope: "country"; countryCode: string }
 ) {
   const sourceResults = await collectSourceResults(scope);
-  const evidence = toEvidenceItems(sourceResults, scope);
+  const activeSourceResults = sourceResults.filter(
+    (result) => result.health.active
+  );
+  const evidence = toEvidenceItems(activeSourceResults, scope);
   const sustainedConflictProfile = buildSustainedConflictProfile(
     evidence,
     scope
   );
 
   const domainBreakdown: DomainBreakdown[] = allDomains.map((domain) => {
-    const coverage = computeOperationalCoverage(domain, sourceResults, scope);
+    const coverage = computeOperationalCoverage(
+      domain,
+      activeSourceResults,
+      scope
+    );
     const domainEvidence = evidence.filter((event) => event.domain === domain);
     const baseScore = scoreDomain(domainEvidence, coverage);
     const score =
@@ -529,14 +540,14 @@ async function buildScoreSnapshotInternal(
     2
   );
   const lastUpdated =
-    sourceResults
+    activeSourceResults
       .map((result) => result.health.lastSuccessfulSync)
       .filter((value): value is string => Boolean(value))
       .sort(
         (left, right) => new Date(right).getTime() - new Date(left).getTime()
       )[0] ?? null;
   const freshness = mergeFreshness(
-    sourceResults.map((result) => result.health)
+    activeSourceResults.map((result) => result.health)
   );
   const sparseData = measuredWeight < 0.45 || effectiveWeight < 0.72;
   const sparseReason = sparseData
@@ -550,7 +561,7 @@ async function buildScoreSnapshotInternal(
   const supportedDomains = domainBreakdown.filter(
     (entry) => entry.coverage !== "unavailable"
   );
-  const liveSourceNames = sourceResults
+  const liveSourceNames = activeSourceResults
     .filter((result) => result.health.status !== "offline")
     .map((result) => result.sourceName)
     .join(", ");
@@ -593,7 +604,7 @@ async function buildScoreSnapshotInternal(
     domainBreakdown,
     topDrivers: buildTopDrivers(evidence),
     evidence: evidence.slice(0, 10),
-    sourceHealth: sourceResults.map((result) => result.health),
+    sourceHealth: activeSourceResults.map((result) => result.health),
     trend:
       options.scope === "global"
         ? await buildTrendDeltas({ scope: "global", score })
@@ -672,14 +683,18 @@ const buildSourceHealthSnapshotCached = canUseNextCache
   ? unstable_cache(
       async () => {
         const results = await collectSourceResults({ mode: "global" });
-        return results.map((result) => result.health);
+        return results
+          .filter((result) => result.health.active)
+          .map((result) => result.health);
       },
       ["source-health"],
       { revalidate: 300, tags: ["source-health"] }
     )
   : async () => {
       const results = await collectSourceResults({ mode: "global" });
-      return results.map((result) => result.health);
+      return results
+        .filter((result) => result.health.active)
+        .map((result) => result.health);
     };
 
 export async function buildScoreSnapshot(
